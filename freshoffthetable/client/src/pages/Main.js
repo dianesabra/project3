@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Input, FormBtn } from "../component/Form";
 import API from "../utils/API";
 import { List, ListItem } from "../component/List";
@@ -9,6 +9,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import RecipeReviewCard from "../component/FoodCard/recipeCard";
 
 class Main extends Component {
   state = {
@@ -275,15 +276,18 @@ class Main extends Component {
         <FormBtn onClick={this.createUser}>Create User</FormBtn>
 
         {this.state.meals.length ? (
-          <List>
+          <Fragment>
             {this.state.meals.map(meal => (
-              <ListItem key={meal._id}>
-                <p>{meal.mealName}</p>
-                <p>{meal.cookName}</p>
-                <p>{meal.qtyOutstanding}</p>
-                <p>{meal.price}</p>
-                <p>{meal.mealDesc}</p>
-                <p>{meal.dietRestrictions}</p>
+              <Fragment>
+                <RecipeReviewCard
+                  key={meal._id}
+                  mealName={meal.mealName}
+                  cookName={meal.cookName}
+                  qtyOutstanding={meal.qtyOutstanding}
+                  price={meal.price}
+                  mealDesc={meal.mealDesc}
+                  dietRestrictions={meal.dietRestrictions}
+                />
                 <Button
                   variant="outlined"
                   color="primary"
@@ -366,9 +370,9 @@ class Main extends Component {
                     </Button>
                   </DialogActions>
                 </Dialog>
-              </ListItem>
+              </Fragment>
             ))}
-          </List>
+          </Fragment>
         ) : (
           <h3>None</h3>
         )}

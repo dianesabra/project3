@@ -6,6 +6,7 @@ import Customer from "./pages/Customer";
 import Cook from "./pages/Cook";
 import NoMatch from "./pages/NoMatch";
 import LeftPanel from "./component/leftpanel";
+// import MiniDrawer from "./component/HomePage";
 
 import "./App.css";
 
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/cook" component={Cook} />
           <Route component={NoMatch} />
         </Switch>
+        {/* <MiniDrawer /> */}
       </Fragment>
     </Router>
   );
