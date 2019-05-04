@@ -5,6 +5,11 @@ module.exports = {
       res.json(dbMeals);
     });
   },
+  // getMealByUser(req, res) {
+  //   db.Meals.find({ name: "john" }).then(function(dbMeals) {
+  //     res.json(dbMeals);
+  //   });
+  // },
   postMeal(req, res) {
     db.Meals.create(req.body).then(function(dbMeals) {
       res.json(dbMeals);
@@ -26,8 +31,13 @@ module.exports = {
     });
   },
   deleteOrders(req, res) {
-    db.Meals.deleteOne(req.body).then(function(dbOrders) {
+    db.Orders.deleteOne(req.body).then(function(dbOrders) {
       res.json(dbOrders);
+    });
+  },
+  postUser(req, res) {
+    db.User.create(req.body).then(function(dbUser) {
+      res.json(dbUser);
     });
   }
 };

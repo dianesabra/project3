@@ -7,7 +7,11 @@ const mealSchema = new Schema({
   dietRestrictions: { type: String },
   mealDesc: { type: String, required: true },
   qtyOutstanding: { type: Number, required: true },
-  price: { type: Number, required: true }
+  price: { type: Number, required: true },
+  _userID: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
 module.exports = mongoose.model("Meal", mealSchema);

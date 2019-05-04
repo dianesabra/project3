@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
-const userSchema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const UserSchema = new userSchema({
+const UserSchema = new Schema({
   userName: { type: String, required: true },
+  password: { type: String, required: true },
   GlutenFree: { type: Boolean },
   Vegan: { type: Boolean },
   TreeNuts: { type: Boolean },

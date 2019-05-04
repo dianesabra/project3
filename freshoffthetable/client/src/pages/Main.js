@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import { Input, FormBtn } from "../component/Form";
 import API from "../utils/API";
 import { List, ListItem } from "../component/List";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 class Main extends Component {
   state = {
@@ -13,12 +20,32 @@ class Main extends Component {
     qtyOutstanding: "",
     price: "",
     meals: [],
-    orders: []
+    orders: [],
+    open: false,
+    status: false,
+    userName: "",
+    password: ""
   };
 
   componentDidMount() {
     this.loadData();
   }
+
+  handleClickOpenMeal = () => {
+    this.setState({ open: true });
+  };
+
+  handleCloseMeal = () => {
+    this.setState({ open: false });
+  };
+
+  handleClickOpenOrder = () => {
+    this.setState({ open: true });
+  };
+
+  handleCloseOrder = () => {
+    this.setState({ open: false });
+  };
 
   loadData = () => {
     API.getMeal()
@@ -31,7 +58,11 @@ class Main extends Component {
           mealDesc: "",
           qtyOutstanding: 0,
           price: 0,
-          order: []
+          orders: [],
+          open: false,
+          status: false,
+          userName: "",
+          password: ""
         })
       )
       .catch(err => console.log(err));
@@ -57,22 +88,30 @@ class Main extends Component {
     API.deleteMeal(id)
       .then(res => {
         // make sound when post is made
-        this.loadMeals();
+        this.loadData();
       })
       .catch(err => console.log(err));
   };
 
   createMeal = e => {
-    e.preventDefault();
-    API.saveMeal(this.state)
+    this.handleCloseMeal();
+    API.saveMeal({
+      mealName: this.state.mealName,
+      cookName: this.state.cookName,
+      dietRestrictions: this.state.dietRestrictions,
+      mealDesc: this.state.mealDesc,
+      qtyOutstanding: this.state.qtyOutstanding,
+      price: this.state.price
+    })
       .then(res => {
         // make sound when post is made
-        this.loadMeals();
+        this.loadData();
       })
       .catch(err => console.log(err));
   };
 
   createOrder = (id, name) => {
+    this.handleCloseOrder();
     API.saveOrder({
       reqQty: this.state.reqQty,
       pickupAddress: this.state.pickupAddress,
@@ -83,7 +122,29 @@ class Main extends Component {
     })
       .then(res => {
         // make sound when post is made
-        this.loadMeals();
+        this.loadData();
+      })
+      .catch(err => console.log(err));
+  };
+
+  deleteOrder = id => {
+    API.deleteOrder(id)
+      .then(res => {
+        // make sound when post is made
+        this.loadData();
+      })
+      .catch(err => console.log(err));
+  };
+
+  createUser = e => {
+    API.saveUser({
+      userName: this.state.userName,
+      password: this.state.password
+    })
+      .then(res => {
+        localStorage.setItem("userid", res.data._id);
+        // make sound when post is made
+        this.loadData();
       })
       .catch(err => console.log(err));
   };
@@ -92,6 +153,102 @@ class Main extends Component {
     return (
       <div>
         <p>Main</p>
+        {/* Post Meal */}
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={this.handleClickOpenMeal}
+        >
+          Post a Meal
+        </Button>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleCloseMeal}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">
+            {this.state.mealName}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>{this.state.cookName}</DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="mealName"
+              label="Meal Name"
+              type="text"
+              defaultValue={this.state.mealName}
+              onChange={this.handleInputChange}
+              name="mealName"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="cookName"
+              label="Cook Name"
+              type="text"
+              defaultValue={this.state.cookName}
+              onChange={this.handleInputChange}
+              name="cookName"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="dietRestrictions"
+              label="Dietary Restrictions"
+              type="text"
+              defaultValue={this.state.dietRestrictions}
+              onChange={this.handleInputChange}
+              name="dietRestrictions"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="mealDesc"
+              label="Description"
+              type="text"
+              defaultValue={this.state.mealDesc}
+              onChange={this.handleInputChange}
+              name="mealDesc"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="qtyOutstanding"
+              label="Serving Quantity"
+              type="number"
+              defaultValue={this.state.qtyOutstanding}
+              onChange={this.handleInputChange}
+              name="qtyOutstanding"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="price"
+              label="Price ($)"
+              type="number"
+              defaultValue={this.state.price}
+              onChange={this.handleInputChange}
+              name="price"
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseMeal} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.createMeal} color="primary">
+              Post Meal
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Search */}
         <Input
           defaultValue={this.state.Search}
           placeholder="Search a meal"
@@ -100,79 +257,23 @@ class Main extends Component {
           type="text"
         />
         <FormBtn onClick={this.handleFormSearch}>Submit</FormBtn>
+        {/* User */}
         <Input
-          defaultValue={this.state.mealName}
-          placeholder="Meal Name"
+          defaultValue={this.state.userName}
+          placeholder="Username"
           onChange={this.handleInputChange}
-          name="mealName"
+          name="userName"
           type="text"
         />
         <Input
-          defaultValue={this.state.cookName}
-          placeholder="Cook Name"
+          defaultValue={this.state.password}
+          placeholder="Password"
           onChange={this.handleInputChange}
-          name="cookName"
-          type="text"
+          name="password"
+          type="password"
         />
-        <Input
-          defaultValue={this.state.dietRestrictions}
-          placeholder="Dietary Restrictions"
-          onChange={this.handleInputChange}
-          name="dietRestrictions"
-          type="text"
-        />
-        <Input
-          defaultValue={this.state.mealDesc}
-          placeholder="Description"
-          onChange={this.handleInputChange}
-          name="mealDesc"
-          type="text"
-        />
-        <Input
-          defaultValue={this.state.qtyOutstanding}
-          placeholder="Quantity Outstanding"
-          onChange={this.handleInputChange}
-          name="qtyOutstanding"
-          type="text"
-        />
-        <Input
-          defaultValue={this.state.price}
-          placeholder="Price"
-          onChange={this.handleInputChange}
-          name="price"
-          type="text"
-        />
-        //
-        {/* Inputs */}
-        <Input
-          defaultValue={this.state.reqQty}
-          placeholder="Requested Quantity"
-          onChange={this.handleInputChange}
-          name="reqQty"
-          type="text"
-        />
-        <Input
-          defaultValue={this.state.pickupAddress}
-          placeholder="Pickup Address"
-          onChange={this.handleInputChange}
-          name="pickupAddress"
-          type="text"
-        />
-        <Input
-          defaultValue={this.state.pickupDate}
-          placeholder="Pickup Date"
-          onChange={this.handleInputChange}
-          name="pickupDate"
-          type="text"
-        />
-        <Input
-          defaultValue={this.state.specInstructions}
-          placeholder="Special Instructions"
-          onChange={this.handleInputChange}
-          name="specInstructions"
-          type="text"
-        />
-        <FormBtn onClick={this.createMeal}>Create Meal</FormBtn>
+        <FormBtn onClick={this.createUser}>Create User</FormBtn>
+
         {this.state.meals.length ? (
           <List>
             {this.state.meals.map(meal => (
@@ -183,30 +284,88 @@ class Main extends Component {
                 <p>{meal.price}</p>
                 <p>{meal.mealDesc}</p>
                 <p>{meal.dietRestrictions}</p>
-                <button onClick={() => this.deleteMeal(meal._id)}>
-                  Delete Me
-                </button>
-                <button
-                  onClick={() => this.createOrder(meal._id, meal.mealName)}
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => this.deleteMeal(meal._id)}
                 >
-                  Order Me
-                </button>
-              </ListItem>
-            ))}
-          </List>
-        ) : (
-          <h3>None</h3>
-        )}
-        <p>Orders</p>
-        {this.state.orders.length ? (
-          <List>
-            {this.state.orders.map(order => (
-              <ListItem key={order._id}>
-                <p>{order.mealName}</p>
-                <p>{order.reqQty}</p>
-                <p>{order.pickupAddress}</p>
-                <p>{order.pickupDate}</p>
-                <p>{order.specInstructions}</p>
+                  Delete Me
+                </Button>
+                {/* Post Order */}
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={this.handleClickOpenOrder}
+                >
+                  Place Order
+                </Button>
+                <Dialog
+                  open={this.state.open}
+                  onClose={this.handleCloseOrder}
+                  aria-labelledby="form-dialog-title"
+                >
+                  <DialogTitle id="form-dialog-title">
+                    {this.state.mealName}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>{this.state.cookName}</DialogContentText>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="reqQty"
+                      label="Requested Quantity"
+                      type="text"
+                      defaultValue={this.state.reqQty}
+                      onChange={this.handleInputChange}
+                      name="reqQty"
+                      fullWidth
+                    />
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="pickupAddress"
+                      label="Pickup Address"
+                      type="text"
+                      defaultValue={this.state.pickupAddress}
+                      onChange={this.handleInputChange}
+                      name="pickupAddress"
+                      fullWidth
+                    />
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="pickupDate"
+                      label="Pickup Date"
+                      type="text"
+                      defaultValue={this.state.pickupDate}
+                      onChange={this.handleInputChange}
+                      name="pickupDate"
+                      fullWidth
+                    />
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="specInstructions"
+                      label="Special Instructions"
+                      type="text"
+                      defaultValue={this.state.specInstructions}
+                      onChange={this.handleInputChange}
+                      name="specInstructions"
+                      fullWidth
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleCloseOrder} color="primary">
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => this.createOrder(meal._id, meal.mealName)}
+                      color="primary"
+                    >
+                      Place Order
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </ListItem>
             ))}
           </List>

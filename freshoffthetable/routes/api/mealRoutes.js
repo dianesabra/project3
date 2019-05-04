@@ -8,5 +8,6 @@ router
   .post(mealContoller.postMeal);
 
 router.route("/:id").delete(mealContoller.deleteMeal);
+// .get(mealContoller.getMealByUser);
 
 module.exports = router;

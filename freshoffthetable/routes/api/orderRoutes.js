@@ -5,7 +5,8 @@ const orderController = require("../../controller/index");
 router
   .route("/")
   .get(orderController.getOrders)
-  .post(orderController.postOrders)
-  .delete(orderController.deleteOrders);
+  .post(orderController.postOrders);
+
+router.route("/:id").delete(orderController.deleteOrders);
 
 module.exports = router;

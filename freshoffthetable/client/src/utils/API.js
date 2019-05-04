@@ -15,5 +15,12 @@ export default {
   },
   getOrder: function() {
     return axios.get("/api/orders");
+  },
+  deleteOrder: function(id) {
+    return axios.delete("/api/orders/" + id);
+  },
+  saveUser: function(userData) {
+    console.log(userData);
+    return axios.post("/api/users", userData);
   }
 };

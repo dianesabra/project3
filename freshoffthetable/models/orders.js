@@ -6,6 +6,10 @@ const OrderSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Meals"
   },
+  _userID: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
   mealName: { type: String, required: true },
   reqQty: { type: Number, required: true },
   pickupAddress: { type: String, required: true },
