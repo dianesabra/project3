@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Input, FormBtn } from "../component/Form";
 import API from "../utils/API";
-import { List, ListItem } from "../component/List";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -22,7 +21,8 @@ class Main extends Component {
     price: "",
     meals: [],
     orders: [],
-    open: false,
+    openMeal: false,
+    openOrder: false,
     status: false,
     userName: "",
     password: ""
@@ -33,19 +33,19 @@ class Main extends Component {
   }
 
   handleClickOpenMeal = () => {
-    this.setState({ open: true });
+    this.setState({ openMeal: true });
   };
 
   handleCloseMeal = () => {
-    this.setState({ open: false });
+    this.setState({ openMeal: false });
   };
 
   handleClickOpenOrder = () => {
-    this.setState({ open: true });
+    this.setState({ openOrder: true });
   };
 
   handleCloseOrder = () => {
-    this.setState({ open: false });
+    this.setState({ openOrder: false });
   };
 
   loadData = () => {
@@ -60,7 +60,8 @@ class Main extends Component {
           qtyOutstanding: 0,
           price: 0,
           orders: [],
-          open: false,
+          openOrder: false,
+          openMeal: false,
           status: false,
           userName: "",
           password: ""
@@ -163,7 +164,7 @@ class Main extends Component {
           Post a Meal
         </Button>
         <Dialog
-          open={this.state.open}
+          open={this.state.openMeal}
           onClose={this.handleCloseMeal}
           aria-labelledby="form-dialog-title"
         >
@@ -278,7 +279,7 @@ class Main extends Component {
         {this.state.meals.length ? (
           <Fragment>
             {this.state.meals.map(meal => (
-              <Fragment>
+              <Fragment key={meal._id}>
                 <RecipeReviewCard
                   key={meal._id}
                   mealName={meal.mealName}
@@ -287,24 +288,11 @@ class Main extends Component {
                   price={meal.price}
                   mealDesc={meal.mealDesc}
                   dietRestrictions={meal.dietRestrictions}
+                  onClickDelete={() => this.deleteMeal(meal._id)}
+                  onClickPlaceOrder={this.handleClickOpenOrder}
                 />
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => this.deleteMeal(meal._id)}
-                >
-                  Delete Me
-                </Button>
-                {/* Post Order */}
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={this.handleClickOpenOrder}
-                >
-                  Place Order
-                </Button>
                 <Dialog
-                  open={this.state.open}
+                  open={this.state.openOrder}
                   onClose={this.handleCloseOrder}
                   aria-labelledby="form-dialog-title"
                 >

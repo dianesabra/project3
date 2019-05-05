@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
+// import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
@@ -12,9 +12,11 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+// import FavoriteIcon from "@material-ui/icons/Favorite";
+import DeleteIcon from "@material-ui/icons/Delete";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import classNames from "classnames";
 
 const styles = theme => ({
   card: {
@@ -68,22 +70,27 @@ class RecipeReviewCard extends React.Component {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={this.props.mealName}
+          subheader={this.props.cookName}
         />
-        <CardMedia
+        {/* <CardMedia
           className={classes.media}
           image="/static/images/cards/paella.jpg"
           title="Paella dish"
-        />
+        /> */}
         <CardContent>
           <Typography component="p">{this.props.mealDesc}</Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
+          <IconButton
+            aria-label="Add to favorites"
+            onClick={this.props.onClickDelete}
+          >
+            <DeleteIcon />
           </IconButton>
-          <IconButton aria-label="Share">Place Order</IconButton>
+          <IconButton aria-label="Share" onClick={this.props.onClickPlaceOrder}>
+            Add
+          </IconButton>
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded
