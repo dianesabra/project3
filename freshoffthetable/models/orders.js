@@ -8,7 +8,7 @@ const OrderSchema = new Schema({
   },
   _userID: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "Users"
   },
   mealName: { type: String, required: true },
   reqQty: { type: Number, required: true },

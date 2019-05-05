@@ -52,16 +52,17 @@ class Main extends Component {
     API.getMeal()
       .then(res =>
         this.setState({
-          meals: res.data,
+          search: "",
           mealName: "",
           cookName: "",
           dietRestrictions: "",
           mealDesc: "",
-          qtyOutstanding: 0,
-          price: 0,
+          qtyOutstanding: "",
+          price: "",
+          meals: res.data,
           orders: [],
-          openOrder: false,
           openMeal: false,
+          openOrder: false,
           status: false,
           userName: "",
           password: ""
@@ -96,37 +97,49 @@ class Main extends Component {
   };
 
   createMeal = e => {
-    this.handleCloseMeal();
-    API.saveMeal({
-      mealName: this.state.mealName,
-      cookName: this.state.cookName,
-      dietRestrictions: this.state.dietRestrictions,
-      mealDesc: this.state.mealDesc,
-      qtyOutstanding: this.state.qtyOutstanding,
-      price: this.state.price
-    })
-      .then(res => {
-        // make sound when post is made
-        this.loadData();
-      })
-      .catch(err => console.log(err));
+    this.state.mealName &&
+    this.state.cookName &&
+    this.state.dietRestrictions &&
+    this.state.mealDesc &&
+    this.state.qtyOutstanding &&
+    this.state.price
+      ? API.saveMeal({
+          mealName: this.state.mealName,
+          cookName: this.state.cookName,
+          dietRestrictions: this.state.dietRestrictions,
+          mealDesc: this.state.mealDesc,
+          qtyOutstanding: this.state.qtyOutstanding,
+          price: this.state.price
+        })
+          .then(res => {
+            this.handleCloseMeal();
+            // make sound when post is made
+            this.loadData();
+          })
+          .catch(err => console.log(err))
+      : alert("please fill out form");
   };
 
   createOrder = (id, name) => {
-    this.handleCloseOrder();
-    API.saveOrder({
-      reqQty: this.state.reqQty,
-      pickupAddress: this.state.pickupAddress,
-      pickupDate: this.state.pickupDate,
-      specInstructions: this.state.specInstructions,
-      mealName: name,
-      _mealID: id
-    })
-      .then(res => {
-        // make sound when post is made
-        this.loadData();
-      })
-      .catch(err => console.log(err));
+    this.state.reqQty &&
+    this.state.pickupAddress &&
+    this.state.pickupDate &&
+    this.state.specInstructions
+      ? API.saveOrder({
+          reqQty: this.state.reqQty,
+          pickupAddress: this.state.pickupAddress,
+          pickupDate: this.state.pickupDate,
+          specInstructions: this.state.specInstructions,
+          mealName: name,
+          _mealID: id
+        })
+          .then(res => {
+            this.handleCloseOrder();
+            // make sound when post is made
+            this.loadData();
+          })
+          .catch(err => console.log(err))
+      : alert("please fill out form");
   };
 
   deleteOrder = id => {
@@ -155,6 +168,7 @@ class Main extends Component {
     return (
       <div>
         <p>Main</p>
+
         {/* Post Meal */}
         <Button
           variant="outlined"
@@ -296,11 +310,9 @@ class Main extends Component {
                   onClose={this.handleCloseOrder}
                   aria-labelledby="form-dialog-title"
                 >
-                  <DialogTitle id="form-dialog-title">
-                    {this.state.mealName}
-                  </DialogTitle>
+                  <DialogTitle id="form-dialog-title" />
                   <DialogContent>
-                    <DialogContentText>{this.state.cookName}</DialogContentText>
+                    <DialogContentText />
                     <TextField
                       autoFocus
                       margin="dense"
@@ -368,5 +380,4 @@ class Main extends Component {
     );
   }
 }
-
 export default Main;

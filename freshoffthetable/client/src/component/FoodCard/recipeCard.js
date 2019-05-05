@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-// import CardMedia from "@material-ui/core/CardMedia";
+import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
@@ -14,9 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
 // import FavoriteIcon from "@material-ui/icons/Favorite";
 import DeleteIcon from "@material-ui/icons/Delete";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import classNames from "classnames";
 
 const styles = theme => ({
   card: {
@@ -65,31 +64,33 @@ class RecipeReviewCard extends React.Component {
               R
             </Avatar>
           }
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          }
+          // action={
+          //   // <IconButton>
+          //   //   <MoreVertIcon />
+          //   // </IconButton>
+          // }
           title={this.props.mealName}
           subheader={this.props.cookName}
         />
-        {/* <CardMedia
+        <CardMedia
           className={classes.media}
-          image="/static/images/cards/paella.jpg"
+          image="http://prod.static9.net.au/_/media/2017/10/26/14/27/the-shahrouk-sisters-tabouli-recipe.jpg"
           title="Paella dish"
-        /> */}
+        />
         <CardContent>
           <Typography component="p">{this.props.mealDesc}</Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton
-            aria-label="Add to favorites"
-            onClick={this.props.onClickDelete}
-          >
+          <IconButton aria-label="Delete" onClick={this.props.onClickDelete}>
             <DeleteIcon />
           </IconButton>
-          <IconButton aria-label="Share" onClick={this.props.onClickPlaceOrder}>
-            Add
+          <IconButton
+            color="primary"
+            className={classes.button}
+            aria-label="Add to shopping cart"
+            onClick={this.props.onClickPlaceOrder}
+          >
+            <AddShoppingCartIcon />
           </IconButton>
           <IconButton
             className={classnames(classes.expand, {
