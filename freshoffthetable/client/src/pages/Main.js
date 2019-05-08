@@ -25,12 +25,29 @@ class Main extends Component {
     openOrder: false,
     status: false,
     userName: "",
-    password: ""
+    password: "",
+    userid: "",
+    selectedFile: null
   };
 
   componentDidMount() {
     this.loadData();
   }
+
+  getBase64 = file => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.setState({ selectedFile: reader.result });
+    };
+    reader.onerror = function(error) {
+      console.log("Error: ", error);
+    };
+  };
+
+  handleImage = e => {
+    this.getBase64(e.target.files[0]);
+  };
 
   handleClickOpenMeal = () => {
     this.setState({ openMeal: true });
@@ -49,6 +66,7 @@ class Main extends Component {
   };
 
   loadData = () => {
+    this.setState({ userid: localStorage.getItem("userid") });
     API.getMeal()
       .then(res =>
         this.setState({
@@ -65,7 +83,8 @@ class Main extends Component {
           openOrder: false,
           status: false,
           userName: "",
-          password: ""
+          password: "",
+          formDataInfo: ""
         })
       )
       .catch(err => console.log(err));
@@ -88,6 +107,7 @@ class Main extends Component {
   };
 
   deleteMeal = id => {
+    console.log("here");
     API.deleteMeal(id)
       .then(res => {
         // make sound when post is made
@@ -102,14 +122,18 @@ class Main extends Component {
     this.state.dietRestrictions &&
     this.state.mealDesc &&
     this.state.qtyOutstanding &&
-    this.state.price
+    this.state.price &&
+    this.state.selectedFile
       ? API.saveMeal({
           mealName: this.state.mealName,
           cookName: this.state.cookName,
           dietRestrictions: this.state.dietRestrictions,
           mealDesc: this.state.mealDesc,
           qtyOutstanding: this.state.qtyOutstanding,
-          price: this.state.price
+          price: this.state.price,
+          _userID: this.state.userid,
+          qtyFulfilled: false,
+          image: this.state.selectedFile
         })
           .then(res => {
             this.handleCloseMeal();
@@ -131,7 +155,9 @@ class Main extends Component {
           pickupDate: this.state.pickupDate,
           specInstructions: this.state.specInstructions,
           mealName: name,
-          _mealID: id
+          _mealID: id,
+          _userID: this.state.userid,
+          orderPaid: false
         })
           .then(res => {
             this.handleCloseOrder();
@@ -164,11 +190,29 @@ class Main extends Component {
       .catch(err => console.log(err));
   };
 
+  // fileChangedHandler = event => {
+  //   this.setState({ selectedFile: event.target.files[0] }, () => {
+  //     const formData = new FormData();
+  //     try {
+  //       formData.append(
+  //         "myFile",
+  //         this.state.selectedFile,
+  //         this.state.selectedFile.name
+  //       );
+  //       this.setState({ formDataInfo: formData });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   });
+  // };
+
   render() {
     return (
       <div>
         <p>Main</p>
 
+        {/* <input type="file" onChange={this.fileChangedHandler} />
+        <button onClick={this.uploadHandler}>Upload!</button> */}
         {/* Post Meal */}
         <Button
           variant="outlined"
@@ -253,6 +297,13 @@ class Main extends Component {
               name="price"
               fullWidth
             />
+            {"Image: "}
+            <input
+              type="file"
+              // src="img_submit.gif"
+              alt="Submit"
+              onChange={this.handleImage}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleCloseMeal} color="primary">
@@ -263,7 +314,6 @@ class Main extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-
         {/* Search */}
         <Input
           defaultValue={this.state.Search}
@@ -289,7 +339,6 @@ class Main extends Component {
           type="password"
         />
         <FormBtn onClick={this.createUser}>Create User</FormBtn>
-
         {this.state.meals.length ? (
           <Fragment>
             {this.state.meals.map(meal => (
@@ -301,6 +350,7 @@ class Main extends Component {
                   qtyOutstanding={meal.qtyOutstanding}
                   price={meal.price}
                   mealDesc={meal.mealDesc}
+                  image={meal.image}
                   dietRestrictions={meal.dietRestrictions}
                   onClickDelete={() => this.deleteMeal(meal._id)}
                   onClickPlaceOrder={this.handleClickOpenOrder}
@@ -310,7 +360,9 @@ class Main extends Component {
                   onClose={this.handleCloseOrder}
                   aria-labelledby="form-dialog-title"
                 >
-                  <DialogTitle id="form-dialog-title" />
+                  <DialogTitle id="form-dialog-title">
+                    Order Information
+                  </DialogTitle>
                   <DialogContent>
                     <DialogContentText />
                     <TextField

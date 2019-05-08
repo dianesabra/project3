@@ -11,7 +11,9 @@ const mealSchema = new Schema({
   _userID: {
     type: Schema.Types.ObjectId,
     ref: "User"
-  }
+  },
+  orderPaid: { type: Boolean },
+  image: { type: String }
 });
 
 module.exports = mongoose.model("Meal", mealSchema);

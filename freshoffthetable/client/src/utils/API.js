@@ -2,12 +2,15 @@ import axios from "axios";
 
 export default {
   saveMeal: function(mealData) {
+    console.log(mealData);
     return axios.post("/api/meals", mealData);
   },
   getMeal: function() {
     return axios.get("/api/meals");
   },
   deleteMeal: function(id) {
+    console.log("Delete Meal");
+    console.log(id);
     return axios.delete("/api/meals/" + id);
   },
   saveOrder: function(orderData) {
@@ -22,5 +25,8 @@ export default {
   saveUser: function(userData) {
     console.log(userData);
     return axios.post("/api/users", userData);
+  },
+  getMealByCook: function(id) {
+    return axios.get("/api/meals/" + id);
   }
 };

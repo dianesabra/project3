@@ -74,7 +74,7 @@ class RecipeReviewCard extends React.Component {
         />
         <CardMedia
           className={classes.media}
-          image="http://prod.static9.net.au/_/media/2017/10/26/14/27/the-shahrouk-sisters-tabouli-recipe.jpg"
+          image={this.props.image}
           title="Paella dish"
         />
         <CardContent>

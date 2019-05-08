@@ -16,6 +16,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import { Link } from "react-router-dom";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import Settings from "@material-ui/icons/Settings";
 import Fab from "@material-ui/core/Fab";
@@ -167,15 +168,23 @@ class MiniDrawer extends React.Component {
             </IconButton>
           </div>
           <Divider />
+
           <List>
-            {["Requests", "Orders"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <Settings />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+            <ListItem button>
+              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+              <ListItem>
+                <Link to={"/requests"}>Requests</Link>
               </ListItem>
-            ))}
+            </ListItem>
+          </List>
+
+          <List>
+            <ListItem button>
+              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+              <ListItem>
+                <Link to={"/orders"}>Orders</Link>
+              </ListItem>
+            </ListItem>
           </List>
           <Divider />
           <List>

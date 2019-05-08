@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import { List, ListItem } from "../component/List";
 
-class Main extends Component {
+class Cart extends Component {
   state = {
-    search: "",
     orders: [],
-    open: false
+    userid: ""
   };
 
   componentDidMount() {
@@ -25,24 +24,6 @@ class Main extends Component {
       .catch(err => console.log(err));
   };
 
-  handleInputChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
-
-  handleFormSearch = e => {
-    e.preventDefault();
-  };
-
-  deleteOrder = id => {
-    API.deleteOrder(id)
-      .then(res => {
-        // make sound when post is made
-        this.loadData();
-      })
-      .catch(err => console.log(err));
-  };
-
   render() {
     return (
       <div>
@@ -50,7 +31,10 @@ class Main extends Component {
         {this.state.orders.length ? (
           <List>
             {this.state.orders
-              .filter(meal => meal._userID === this.state.userid)
+              .filter(
+                order =>
+                  order._userID === this.state.userid && !order.qtyFulfilled
+              )
               .map(order => (
                 <ListItem key={order._id}>
                   <p>{order.mealName}</p>
@@ -72,4 +56,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default Cart;
