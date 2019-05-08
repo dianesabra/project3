@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './pages/Main';
 import Login from './pages/Login';
@@ -7,7 +7,10 @@ import Cook from './pages/Cook';
 import NoMatch from './pages/NoMatch';
 import Cart from './pages/Cart';
 import Signup from './pages/Signup';
-// import MiniDrawer from "./component/HomePage";
+import MiniDrawer from './component/HomePage';
+
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
 import './App.css';
 const styles = (theme) => ({
@@ -30,7 +33,6 @@ class App extends Component {
 		return (
 			<Router>
 				<Fragment>
-					<LeftPanel />
 					<MiniDrawer />
 					<main className={classes.content}>
 						{/* <div className={classes.toolbar} /> */}
