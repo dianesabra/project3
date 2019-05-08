@@ -8,10 +8,13 @@ class Main extends Component {
     search: "",
     meals: [],
     orders: [],
-    status: false
+    status: false,
+    userid: ""
   };
 
   componentDidMount() {
+    const username = localStorage.getItem("userid");
+    this.setState({ userid: username });
     this.loadData();
   }
 
@@ -24,6 +27,20 @@ class Main extends Component {
   };
 
   loadData = () => {
+    API.getOrder()
+      .then(res => {
+        API.getOrder()
+          .then(res =>
+            this.setState({
+              orders: res.data
+            })
+          )
+          .catch(err => console.log(err));
+        this.setState({
+          orders: res.data
+        });
+      })
+      .catch(err => console.log(err));
     API.getMeal()
       .then(res =>
         this.setState({
@@ -31,13 +48,6 @@ class Main extends Component {
           search: "",
           orders: [],
           status: false
-        })
-      )
-      .catch(err => console.log(err));
-    API.getOrder()
-      .then(res =>
-        this.setState({
-          orders: res.data
         })
       )
       .catch(err => console.log(err));
@@ -97,19 +107,37 @@ class Main extends Component {
 
         {this.state.meals.length ? (
           <List>
-            {this.state.meals.map(meal => (
-              <ListItem key={meal._id}>
-                <p>{meal.mealName}</p>
-                <p>{meal.cookName}</p>
-                <p>{meal.qtyOutstanding}</p>
-                <p>{meal.price}</p>
-                <p>{meal.mealDesc}</p>
-                <p>{meal.dietRestrictions}</p>
-                <button onClick={() => this.deleteMeal(meal._id)}>
-                  Delete Me
-                </button>
-              </ListItem>
-            ))}
+            {this.state.meals
+              .filter(meal => meal._userID === this.state.userid)
+              .map(meal => (
+                <ListItem key={meal._id}>
+                  <p>{meal.mealName}</p>
+                  <p>{meal.cookName}</p>
+                  <p>{meal.qtyOutstanding}</p>
+                  <p>{meal.price}</p>
+                  <p>{meal.mealDesc}</p>
+                  <p>{meal.dietRestrictions}</p>
+                  <button onClick={() => this.deleteMeal(meal._id)}>
+                    Delete Me
+                  </button>
+                  {this.state.orders.length ? (
+                    <List>
+                      {this.state.orders
+                        .filter(order => order._mealID === meal._id)
+                        .map(order => (
+                          <ListItem key={order._id}>
+                            <p>{order.reqQty}</p>
+                            <p>{order.specInstructions}</p>
+                            <p>{order.pickupAddress}</p>
+                            <p>{order.pickupDate}</p>
+                          </ListItem>
+                        ))}
+                    </List>
+                  ) : (
+                    <h2>None</h2>
+                  )}
+                </ListItem>
+              ))}
           </List>
         ) : (
           <h3>None</h3>
