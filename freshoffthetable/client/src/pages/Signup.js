@@ -9,9 +9,14 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import { blue } from '@material-ui/core/colors'
-
 
 
 
@@ -39,24 +44,34 @@ const styles = {
     }
 }
 
+class Signup extends React.Component {
+    state = {
+        open: false,
+    };
 
-const Login = (props) =>{
-    const{ classes } = props;
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+    render(){
 
     
-
-
     return(
         <div>
            <MuiThemeProvider theme = {theme}>
             <Paper 
                 
-                className = {classes.paper} 
+                
                 style={{
                     position: 'absolute',
                     left: '50%',
                     top: '50%',
                     transform: 'translate(-50%, -50%)',
+                    
                 
                     }}>
 
@@ -66,12 +81,11 @@ const Login = (props) =>{
                 style = {{
                     textAlign: 'center'
                 }}>
-                Login
+                Signup
             </Typography>
 
             <form
-                onSubmit={(e) => { e.preventDefault()}}
-            >
+                onSubmit={(e) => { e.preventDefault()}}>
                 <TextField
                     variant = 'outlined'
                     margin = 'normal'
@@ -81,7 +95,7 @@ const Login = (props) =>{
                     label = 'Email Address'
                     name = 'email'
                     autoFocus
-                    
+                    color = 'primary'
                 />
 
                 <TextField
@@ -93,38 +107,62 @@ const Login = (props) =>{
                     label = 'Password'
                     name = 'password'
                     type = 'password'
+                    color = 'primary'
                 />
-                <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+                <TextField
+                    variant = 'outlined'
+                    margin = 'normal'
+                    required
+                    fullWidth
+                    id = 'password'
+                    label = 'Confirm Password'
+                    name = 'password'
+                    type = 'password'
+                    color = 'primary'
+                />
                 
-                <Button
+                {/* <Button
                     type = 'submit'
                     fullWidth
                     variant = 'contained'
                     color = "primary"
-                    
                 >
-                    Login
+                   Create Account
+                </Button> */}
+
+                <Button 
+                    variant = 'outlined' 
+                    color = 'primary' 
+                    onClick = {this.handleClickOpen} 
+                    type = 'submit'
+                    fullWidth
+                    >
+                    Create Account
                 </Button>
+                <Dialog
+                    open = {this.state.open}
+                    onClose = {this.handleClose}
+                    aria-labelledby = 'alert-dialog-title'
+                    aria-describedby = 'alert-dialog-description'
+                >
+                    <DialogTitle id = 'alert-dialog-title'>
+                        {'Congratulations!'}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText
+                        id = 'alert-dialog-description'>
+                            Your account has been created.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick = {this.handleClose} color = 'primary'>
+                            Return to Login
+                        </Button>
+                    </DialogActions>
+
+                </Dialog>
 
             </form>
-            <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-
-
-
                
             </Paper>
             </MuiThemeProvider>
@@ -134,6 +172,7 @@ const Login = (props) =>{
     )
 
 }
+}
 
-export default withStyles(styles)(Login);
 
+export default withStyles(styles)(Signup);
