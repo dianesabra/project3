@@ -15,7 +15,7 @@ const OrderSchema = new Schema({
   pickupAddress: { type: String, required: true },
   pickupDate: { type: Date, required: true },
   specInstructions: { type: String, required: true },
-  qtyFulfilled: { type: Boolean, default: true }
+  qtyFulfilled: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

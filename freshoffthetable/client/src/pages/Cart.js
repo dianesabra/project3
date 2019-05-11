@@ -5,24 +5,28 @@ import { List, ListItem } from "../component/List";
 class Cart extends Component {
   state = {
     orders: [],
-    userid: ""
+    userid: "",
+    ordersFiltered: []
   };
 
   componentDidMount() {
     const username = localStorage.getItem("userid");
     this.setState({ userid: username });
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
     this.loadData();
-    console.log(reducer);
+    this.cartCheckout();
   }
 
   cartCheckout() {
     //Loop through the orders
-    // this.state.orders
-    //   .filter(
-    //     order => order._userID === this.state.userid && !order.qtyFulfilled
-    //   )
-    //   .map({
+
+    this.state.orders
+      .filter(
+        order => order._userID === this.state.userid && !order.qtyFulfilled
+      )
+      .map(order => {
+        this.setState({ ordersFiltered: order });
+      });
+
     //Find associated meal through Meal ID
     //Check if Meal Qty Out. <= OrderedQuantity
     //If not, error or whatever
@@ -33,14 +37,8 @@ class Cart extends Component {
   }
 
   loadData = () => {
-    API.getOrder()
+    API.getOrderForCart({ id: this.state.userid, paidOrder: false })
       .then(res => {
-        // res.data
-        //   .filter(
-        //     order => res._userID === this.state.userid && !res.qtyFulfilled
-        //   )
-        //   .map(order)
-        //   .then(res => {
         this.setState({
           orders: res.data
         });

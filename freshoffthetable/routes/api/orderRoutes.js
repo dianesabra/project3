@@ -7,6 +7,9 @@ router
   .get(orderController.getOrders)
   .post(orderController.postOrders);
 
-router.route("/:id").delete(orderController.deleteOrders);
+router
+  .route("/:id/:paidOrder")
+  .delete(orderController.deleteOrders)
+  .get(orderController.getOrderForCart);
 
 module.exports = router;

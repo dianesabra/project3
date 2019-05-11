@@ -12,6 +12,15 @@ module.exports = {
       res.json(dbMeals);
     });
   },
+  // Cook sees posted meals
+  getOrderForCart(req, res) {
+    db.Order.find({
+      _userID: req.params.id,
+      paidOrder: req.params.paidOrder
+    }).then(function(dbMeals) {
+      res.json(dbMeals);
+    });
+  },
   // anyone can post
   postMeal(req, res) {
     db.Meals.create(req.body).then(function(dbMeals) {
@@ -22,6 +31,9 @@ module.exports = {
   deleteMeal(req, res) {
     db.Meals.findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
+      .then(res => {
+        db.Orders.deleteMany({ _mealID: req.params.id });
+      })
       .then(function(dbMeals) {
         res.json(dbMeals);
       });
