@@ -110,20 +110,21 @@ const styles = (theme) => ({
 });
 
 class MiniDrawer extends Component {
-	state = {
-		open: false
-	};
+  state = {
+    open: false
+  };
 
-	handleDrawerOpen = () => {
-		this.setState({ open: true });
-	};
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
 
-	handleDrawerClose = () => {
-		this.setState({ open: false });
-	};
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
 
-	render() {
-		const { classes, theme } = this.props;
+  render() {
+    const { classes, theme } = this.props;
+
 
 		return (
 			<Fragment>
@@ -228,8 +229,8 @@ class MiniDrawer extends Component {
 }
 
 MiniDrawer.propTypes = {
-	classes: PropTypes.object.isRequired,
-	theme: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(MiniDrawer);

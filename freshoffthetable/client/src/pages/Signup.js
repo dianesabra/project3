@@ -31,25 +31,16 @@ const styles = {
 };
 
 class Signup extends React.Component {
-	state = {
-		open: false,
-		formData: {
-			password: '',
-			repeatPassword: '',
-			email: ''
-		},
-		submitted: false
-	};
 
-	componentDidMount() {
-		ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-			const { formData } = this.state;
-			if (value !== formData.password) {
-				return false;
-			}
-			return true;
-		});
-	}
+  state = {
+    open: false,
+    formData: {
+      password: "",
+      repeatPassword: "",
+      email: ""
+    },
+    submitted: false
+  };
 
 	handleChange = (event) => {
 		const { formData } = this.state;
@@ -98,48 +89,112 @@ class Signup extends React.Component {
 							Signup
 						</Typography>
 
-						<ValidatorForm onSubmit={this.handleSubmit}>
-							<TextValidator
-								label="Email Address"
-								onChange={this.handleChange}
-								name="email"
-								validators={[ 'required' ]}
-								errorMessages={[ 'this field is required' ]}
-								value={formData.email}
-								variant="outlined"
-								fullWidth
-								margin="normal"
-								autoFocus
-								color="primary"
-							/>
+  handleClickOpen = () => {
+    API.saveUser(this.state.formData).then(() => {
+      this.setState({ open: true });
+    })
+    .catch(err => {
+      console.log (err);
+    })  
 
-							<TextValidator
-								label="Password"
-								onChange={this.handleChange}
-								name="password"
-								type="password"
-								validators={[ 'required' ]}
-								errorMessages={[ 'this field is required' ]}
-								value={formData.password}
-								variant="outlined"
-								fullWidth
-								margin="normal"
-								color="primary"
-							/>
+    
+  };
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+  render() {
+    const { formData, submitted } = this.state;
+    return (
+      <div>
+        <MuiThemeProvider theme={theme}>
+          <Paper
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)"
+            }}
+          >
+            <Typography
+              component = "h1"
+              variant = "h5"
+              style = {{
+                textAlign: "center"
+              }}
+            >
+              Signup
+            </Typography>
+            
+            <ValidatorForm
+              onSubmit = {this.handleSubmit}
+            >
 
-							<TextValidator
-								label="Repeat password"
-								onChange={this.handleChange}
-								name="repeatPassword"
-								type="password"
-								validators={[ 'isPasswordMatch', 'required' ]}
-								errorMessages={[ 'passwords do not match', 'this field is required' ]}
-								value={formData.repeatPassword}
-								variant="outlined"
-								margin="normal"
-								fullWidth
-								color="primary"
-							/>
+              <TextValidator
+                  label = "Email Address"
+                  onChange = {this.handleChange}
+                  name = "email"
+                  validators = {["required"]}
+                  errorMessages = {["this field is required"]}
+                  value = {formData.email}
+                  variant = "outlined"
+                  fullWidth
+                  margin = "normal"
+                  autoFocus
+                  color = "primary"
+                />
+            
+              <TextValidator
+                label = "Password"
+                onChange = {this.handleChange}
+                name = "password"
+                type = "password"
+                validators = {["required"]}
+                errorMessages = {["this field is required"]}
+                value = {formData.password}
+                variant = "outlined"
+                fullWidth
+                margin = "normal"
+                color = "primary"
+            />
+            
+              
+              <TextValidator
+                label = "Repeat password"
+                onChange = {this.handleChange}
+                name = "repeatPassword"
+                type = "password"
+                validators = {["isPasswordMatch", "required"]}
+                errorMessages = 
+                {[
+                  "passwords do not match",
+                  "this field is required"
+                ]}
+                value = {formData.repeatPassword}
+                variant = "outlined"
+                margin = "normal"
+                fullWidth
+                color = "primary"
+                
+                
+              />
+            
+              <Button
+                label = "submit"
+                name = "submit"
+                type="submit"
+                variant = "contained"
+                margin = "normal"
+                fullWidth
+                color = "primary"
+                disabled = {submitted}
+                
+                onClick =
+                {
+                 (formData.email !== "" && formData.password !== "" && formData.repeatPassword !== "") ? this.handleClickOpen : null
+                }
+              >
+                Create Account
+              </Button>
 
 							<Button
 								label="submit"
