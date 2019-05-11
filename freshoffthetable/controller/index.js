@@ -12,7 +12,6 @@ module.exports = {
       res.json(dbMeals);
     });
   },
-<<<<<<< HEAD
   // Cook sees posted meals
   getOrderForCart(req, res) {
     db.Order.find({
@@ -22,10 +21,6 @@ module.exports = {
       res.json(dbMeals);
     });
   },
-=======
-
-  
->>>>>>> 04b19732cc7b05c362e9a54964e9dc85a7e09f9e
   // anyone can post
   postMeal(req, res) {
     db.Meals.create(req.body).then(function(dbMeals) {
@@ -65,29 +60,34 @@ module.exports = {
       });
   },
 
-  getUser(req, res){
+  getUser(req, res) {
     // console.log(req.body);
-    db.User.find({email: req.body.email}).then(function(user){
-      console.log(user);
-      if (user.length < 1) return res.json({ error: "User does not exist."});
-      if (user[0].password !== req.body.password) return res.json({ error: "Incorrect password."});
-      // anything in the res.json is sent to the .then function in the front-end to resolve the promise
-      res.json(user[0]);
-      // Would crash if there is no user and there is no method to catch the error
-    }).catch(err => {
-      console.log(err);
-    })
+    db.User.find({ email: req.body.email })
+      .then(function(user) {
+        console.log(user);
+        if (user.length < 1) return res.json({ error: "User does not exist." });
+        if (user[0].password !== req.body.password)
+          return res.json({ error: "Incorrect password." });
+        // anything in the res.json is sent to the .then function in the front-end to resolve the promise
+        res.json(user[0]);
+        // Would crash if there is no user and there is no method to catch the error
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   // anyone can
   postUser(req, res) {
-    console.log(req.body)
-    db.User.find({email: req.body.email}).then(function(user){
-      if (user) return res.json({ error: "User already exists."});
-      db.User.create(req.body).then(function(dbUser) {
+    console.log(req.body);
+    db.User.find({ email: req.body.email }).then(function(user) {
+      if (user) return res.json({ error: "User already exists." });
+      db.User.create(req.body)
+        .then(function(dbUser) {
           res.json(dbUser);
-        }).catch(err => {
+        })
+        .catch(err => {
           console.log(err);
         });
-      })
+    });
   }
 };
