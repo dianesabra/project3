@@ -21,7 +21,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Settings from '@material-ui/icons/Settings';
 import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
-
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
 const drawerWidth = 240;
 
 const styles = (theme) => ({
@@ -51,6 +52,24 @@ const styles = (theme) => ({
 	},
 	hide: {
 		display: 'none'
+	},
+	inputRoot: {
+		color: 'inherit',
+		width: '100%'
+	},
+	inputInput: {
+		paddingTop: theme.spacing.unit,
+		paddingRight: theme.spacing.unit,
+		paddingBottom: theme.spacing.unit,
+		paddingLeft: theme.spacing.unit * 10,
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+			width: 120,
+			'&:focus': {
+				width: 200
+			}
+		}
 	},
 	drawer: {
 		width: drawerWidth,
@@ -133,18 +152,35 @@ class MiniDrawer extends Component {
 						<Typography variant="h6" color="inherit" noWrap>
 							Fresh Off the Table!
 						</Typography>
-						<Fab
-							variant="extended"
-							size="medium"
-							color="primary"
-							aria-label="Add"
-							//className={classes.margin}
+						<div
+							style={{
+								minWidth: 'fit-content',
+								display: 'flex'
+							}}
 						>
-							<NavigationIcon
-							//className={classes.extendedIcon}
-							/>
-							Log In
-						</Fab>
+							<div className={classes.grow} />
+							<div className={classes.search}>
+								<div className={classes.searchIcon}>
+									<SearchIcon />
+								</div>
+								<InputBase
+									placeholder="Search for meal…"
+									classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput
+									}}
+								/>
+							</div>
+							<Fab
+								variant="extended"
+								size="medium"
+								color="primary"
+								aria-label="Add"
+								//className={classes.margin}
+							>
+								Post Meal!
+							</Fab>
+						</div>
 					</Toolbar>
 				</AppBar>
 				<Drawer
@@ -169,21 +205,21 @@ class MiniDrawer extends Component {
 					</div>
 					<Divider />
 					<List>
-						{[ 'Requests', 'Orders' ].map((text, index) => (
-							<ListItem button key={text}>
-								<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <Settings />}</ListItemIcon>
-								<ListItemText primary={text} />
+						<ListItem button>
+							<ListItemIcon>{<InboxIcon />}</ListItemIcon>
+							<ListItem>
+								<Link to={'/requests'}>Requests</Link>
 							</ListItem>
-						))}
+						</ListItem>
 					</List>
-					<Divider />
+
 					<List>
-						{[ 'Settings' ].map((text, index) => (
-							<ListItem button key={text}>
-								<ListItemIcon>{<Settings />}</ListItemIcon>
-								<ListItemText primary={text} />
+						<ListItem button>
+							<ListItemIcon>{<InboxIcon />}</ListItemIcon>
+							<ListItem>
+								<Link to={'/orders'}>Orders</Link>
 							</ListItem>
-						))}
+						</ListItem>
 					</List>
 				</Drawer>
 			</Fragment>

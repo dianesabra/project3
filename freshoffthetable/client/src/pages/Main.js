@@ -213,7 +213,12 @@ class Main extends Component {
 				<p>Main</p>
 
 				{/* Post Meal */}
-				<Button variant="outlined" color="primary" onClick={this.handleClickOpenMeal}>
+				<Button
+					style={{ display: 'flex' }}
+					variant="outlined"
+					color="primary"
+					onClick={this.handleClickOpenMeal}
+				>
 					Post a Meal
 				</Button>
 				<Dialog open={this.state.openMeal} onClose={this.handleCloseMeal} aria-labelledby="form-dialog-title">
@@ -312,7 +317,7 @@ class Main extends Component {
 					type="text"
 				/>
 				<FormBtn onClick={this.handleFormSearch}>Submit</FormBtn>
-				{/* User */}
+				{/* User
 				<Input
 					defaultValue={this.state.userName}
 					placeholder="Username"
@@ -327,12 +332,14 @@ class Main extends Component {
 					name="password"
 					type="password"
 				/>
-				<FormBtn onClick={this.createUser}>Create User</FormBtn>
+				<FormBtn onClick={this.createUser}>Create User</FormBtn> */}
 				{this.state.meals.length ? (
 					<Fragment>
 						<div
 							style={{
 								display: 'flex',
+								flexWrap: 'wrap',
+
 								padding: 15,
 								justifyContent: 'space-between'
 							}}
