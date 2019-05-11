@@ -38,7 +38,6 @@ class App extends Component {
 						{/* <div className={classes.toolbar} /> */}
 						<Switch>
 							<Route exact path="/" component={Login} />
-							/>
 							<Route exact path="/login" component={Login} />
 							<Route exact path="/main" component={Main} />
 							<Route exact path="/requests" component={Customer} />
