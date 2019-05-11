@@ -8,4 +8,10 @@ router
   .post(userController.postUser)
   .delete(userController.deleteOrders);
 
+router
+  .route("/login")
+  .post(userController.getUser);
+
+  
+
 module.exports = router;

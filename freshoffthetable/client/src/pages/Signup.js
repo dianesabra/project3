@@ -12,6 +12,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import API from '../utils/API';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -32,7 +34,6 @@ const styles = {
 class Signup extends React.Component {
   state = {
     open: false,
-
     formData: {
       password: "",
       repeatPassword: "",
@@ -64,7 +65,14 @@ class Signup extends React.Component {
   }
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    API.saveUser(this.state.formData).then(() => {
+      this.setState({ open: true });
+    })
+    .catch(err => {
+      console.log (err);
+    })  
+
+    
   };
   handleClose = () => {
     this.setState({ open: false });
@@ -154,10 +162,6 @@ class Signup extends React.Component {
                 fullWidth
                 color = "primary"
                 disabled = {submitted}
-
-                // NEED TO IMPLEMENT:
-                // 1) capture email and password
-                // 2) push email and password to dB
                 
                 onClick =
                 {

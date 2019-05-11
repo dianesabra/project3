@@ -12,6 +12,8 @@ module.exports = {
       res.json(dbMeals);
     });
   },
+
+  
   // anyone can post
   postMeal(req, res) {
     db.Meals.create(req.body).then(function(dbMeals) {
@@ -47,10 +49,30 @@ module.exports = {
         res.json(dbOrders);
       });
   },
+
+  getUser(req, res){
+    // console.log(req.body);
+    db.User.find({email: req.body.email}).then(function(user){
+      console.log(user);
+      if (user.length < 1) return res.json({ error: "User does not exist."});
+      if (user[0].password !== req.body.password) return res.json({ error: "Incorrect password."});
+      // anything in the res.json is sent to the .then function in the front-end to resolve the promise
+      res.json(user[0]);
+      // Would crash if there is no user and there is no method to catch the error
+    }).catch(err => {
+      console.log(err);
+    })
+  },
   // anyone can
   postUser(req, res) {
-    db.User.create(req.body).then(function(dbUser) {
-      res.json(dbUser);
-    });
+    console.log(req.body)
+    db.User.find({email: req.body.email}).then(function(user){
+      if (user) return res.json({ error: "User already exists."});
+      db.User.create(req.body).then(function(dbUser) {
+          res.json(dbUser);
+        }).catch(err => {
+          console.log(err);
+        });
+      })
   }
 };
