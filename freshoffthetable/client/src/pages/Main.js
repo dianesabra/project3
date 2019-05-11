@@ -11,24 +11,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import RecipeReviewCard from '../component/FoodCard/recipeCard';
 
 class Main extends Component {
-<<<<<<< HEAD
-	state = {
-		search: '',
-		mealName: '',
-		cookName: '',
-		dietRestrictions: '',
-		mealDesc: '',
-		qtyOutstanding: '',
-		price: '',
-		meals: [],
-		orders: [],
-		openMeal: false,
-		openOrder: false,
-		status: false,
-		userName: '',
-		password: ''
-	};
-=======
   state = {
     search: "",
     mealName: "",
@@ -47,17 +29,11 @@ class Main extends Component {
     userid: "",
     selectedFile: null
   };
->>>>>>> 9af5f876dd066851081925b568a287f8300544c3
 
 	componentDidMount() {
 		this.loadData();
 	}
 
-<<<<<<< HEAD
-	handleClickOpenMeal = () => {
-		this.setState({ openMeal: true });
-	};
-=======
   getBase64 = file => {
     var reader = new FileReader();
     reader.readAsDataURL(file);
@@ -76,7 +52,6 @@ class Main extends Component {
   handleClickOpenMeal = () => {
     this.setState({ openMeal: true });
   };
->>>>>>> 9af5f876dd066851081925b568a287f8300544c3
 
 	handleCloseMeal = () => {
 		this.setState({ openMeal: false });
@@ -90,37 +65,6 @@ class Main extends Component {
 		this.setState({ openOrder: false });
 	};
 
-<<<<<<< HEAD
-	loadData = () => {
-		API.getMeal()
-			.then((res) =>
-				this.setState({
-					search: '',
-					mealName: '',
-					cookName: '',
-					dietRestrictions: '',
-					mealDesc: '',
-					qtyOutstanding: '',
-					price: '',
-					meals: res.data,
-					orders: [],
-					openMeal: false,
-					openOrder: false,
-					status: false,
-					userName: '',
-					password: ''
-				})
-			)
-			.catch((err) => console.log(err));
-		API.getOrder()
-			.then((res) =>
-				this.setState({
-					orders: res.data
-				})
-			)
-			.catch((err) => console.log(err));
-	};
-=======
   loadData = () => {
     this.setState({ userid: localStorage.getItem("userid") });
     API.getMeal()
@@ -152,7 +96,6 @@ class Main extends Component {
       )
       .catch(err => console.log(err));
   };
->>>>>>> 9af5f876dd066851081925b568a287f8300544c3
 
 	handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -163,59 +106,6 @@ class Main extends Component {
 		e.preventDefault();
 	};
 
-<<<<<<< HEAD
-	deleteMeal = (id) => {
-		API.deleteMeal(id)
-			.then((res) => {
-				// make sound when post is made
-				this.loadData();
-			})
-			.catch((err) => console.log(err));
-	};
-
-	createMeal = (e) => {
-		this.state.mealName &&
-		this.state.cookName &&
-		this.state.dietRestrictions &&
-		this.state.mealDesc &&
-		this.state.qtyOutstanding &&
-		this.state.price
-			? API.saveMeal({
-					mealName: this.state.mealName,
-					cookName: this.state.cookName,
-					dietRestrictions: this.state.dietRestrictions,
-					mealDesc: this.state.mealDesc,
-					qtyOutstanding: this.state.qtyOutstanding,
-					price: this.state.price
-				})
-					.then((res) => {
-						this.handleCloseMeal();
-						// make sound when post is made
-						this.loadData();
-					})
-					.catch((err) => console.log(err))
-			: alert('please fill out form');
-	};
-
-	createOrder = (id, name) => {
-		this.state.reqQty && this.state.pickupAddress && this.state.pickupDate && this.state.specInstructions
-			? API.saveOrder({
-					reqQty: this.state.reqQty,
-					pickupAddress: this.state.pickupAddress,
-					pickupDate: this.state.pickupDate,
-					specInstructions: this.state.specInstructions,
-					mealName: name,
-					_mealID: id
-				})
-					.then((res) => {
-						this.handleCloseOrder();
-						// make sound when post is made
-						this.loadData();
-					})
-					.catch((err) => console.log(err))
-			: alert('please fill out form');
-	};
-=======
   deleteMeal = id => {
     console.log("here");
     API.deleteMeal(id)
@@ -277,7 +167,6 @@ class Main extends Component {
           .catch(err => console.log(err))
       : alert("please fill out form");
   };
->>>>>>> 9af5f876dd066851081925b568a287f8300544c3
 
 	deleteOrder = (id) => {
 		API.deleteOrder(id)

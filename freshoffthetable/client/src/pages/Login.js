@@ -10,6 +10,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { blue} from "@material-ui/core/colors";
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import API from '../utils/API';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,8 +31,8 @@ const styles = {
 class Login extends React.Component {
   state = {
     formData: {
-      password: " ",
-      email: " "
+      password: "",
+      email: ""
     },
     submitted: false
   };
@@ -48,7 +49,33 @@ class Login extends React.Component {
     });
   }
 
+  handleLogin = () => {
+    // Send email and password to backend to check conditionals. Back-end will give a response
+    // for each conditional and send that response to the Front-end. Now check to see which 
+    // conditional in the Back-end was met in order to determine the correct response for the front-end
+    API.getUser(this.state.formData).then((res) => {
+      let error = res.data.error;
+      let redirect = true;
+      if (error === "User does not exist.") 
+      {
+        console.log("User does not exist");
+        redirect = false;
+      }
+      if (error === "Incorrect password.") 
+      {
+        console.log("Incorrect password");
+        redirect = false;
+      }
 
+      if (redirect) {document.location.pathname = "/main";}
+      
+      // need a conditional to check if user is not in error
+      console.log(res.data);
+      // console.log("Hello");
+
+      
+    }) 
+  }
 
 
   render() {
@@ -57,6 +84,7 @@ class Login extends React.Component {
     <div>
       <MuiThemeProvider theme = {theme}>
         <Paper
+          let className = "paper"
           style = {{
             position: "absolute",
             left: "50%",
@@ -74,12 +102,10 @@ class Login extends React.Component {
             Login
           </Typography>
 
-         
           <ValidatorForm
             onSubmit = {this.handleSubmit}
           >
 
-          
             <TextValidator
               label = "Email Address"
               onChange = {this.handleChange}
@@ -130,7 +156,7 @@ class Login extends React.Component {
 
             onClick = 
             {
-              (formData.email !== "" && formData.password !== "") ? <Link href = "/signup" variant = "body2"></Link> : null
+              () => (formData.email !== "" && formData.password !== "") ? this.handleLogin() : null
             }
             >
               Login
