@@ -1,34 +1,35 @@
-import React from "react";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/styles";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
-import { blue} from "@material-ui/core/colors";
+import React from 'react';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/styles';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import { blue } from '@material-ui/core/colors';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import API from '../utils/API';
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: blue[500]
-    }
-  }
+	palette: {
+		primary: {
+			main: blue[500]
+		}
+	}
 });
 
 const styles = {
-  paper: {
-    width: 400,
-    height: 500,
-    alignItems: "center"
-  }
+	paper: {
+		width: 400,
+		height: 500,
+		alignItems: 'center'
+	}
 };
 
 class Login extends React.Component {
+
   state = {
     formData: {
       password: "",
