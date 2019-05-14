@@ -33,7 +33,7 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          <MiniDrawer />
+          {/* <MiniDrawer /> */}
           <main className={classes.content}>
             {/* <div className={classes.toolbar} /> */}
             <Switch>

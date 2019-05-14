@@ -214,7 +214,6 @@ class Main extends Component {
         }}
       >
         <p>Main</p>
-
         {/* Post Meal */}
         <Button
           variant="outlined"
@@ -311,21 +310,21 @@ class Main extends Component {
             <Button onClick={this.handleCloseMeal} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.createMeal} color="primary">
+            {/* <Button onClick={this.handleClickOpenMeal} color="primary">
               Post Meal
-            </Button>
+            </Button> */}
           </DialogActions>
         </Dialog>
         {/* Search */}
-        <Input
+        {/* <Input
           defaultValue={this.state.Search}
           placeholder="Search a meal"
           onChange={this.handleInputChange}
           name="search"
           type="text"
         />
-        <FormBtn onClick={this.handleFormSearch}>Submit</FormBtn>
-        {/* User */}
+        <FormBtn onClick={this.handleFormSearch}>Submit</FormBtn> */}
+        {/* User
         <Input
           defaultValue={this.state.userName}
           placeholder="Username"
@@ -340,7 +339,7 @@ class Main extends Component {
           name="password"
           type="password"
         />
-        <FormBtn onClick={this.createUser}>Create User</FormBtn>
+        <FormBtn onClick={this.createUser}>Create User</FormBtn> */}
         {this.state.meals.length ? (
           <Fragment>
             <div
