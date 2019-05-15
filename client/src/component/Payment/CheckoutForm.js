@@ -21,11 +21,9 @@ class CheckoutForm extends Component {
     });
 
     if (response.ok) {
-      alert("Purchase Complete!");
+      this.props.onClickPurchCart();
       this.setState({ toFoodFeed: true });
     }
-
-    // console.log("Purchase Complete!");
   }
 
   render() {
@@ -34,7 +32,10 @@ class CheckoutForm extends Component {
     }
     return (
       <div className="checkout">
-        <p>Would you like to complete the purchase?</p>
+        <p>
+          Would you like to complete the purchase for a total of $
+          {this.props.totalPrice}?
+        </p>
         <CardElement />
         <button onClick={this.submit}>Send</button>
       </div>

@@ -95,5 +95,22 @@ module.exports = {
     db.Charge.create(req.body).then(function(dbCharge) {
       res.json(dbCharge);
     });
+  },
+
+  updateQty(req, res) {
+    console.log(typeof req.params.qtyFulfilled);
+    db.Meals.findById({ _id: req.params.id }).then(dbModel => {
+      console.log(dbModel);
+      db.Meals.update(
+        {
+          _id: req.params.id
+        },
+        {
+          qtyOutstanding: dbModel.qtyOutstanding - req.params.qtyFulfilled
+        }
+      ).then(function(dbMeals) {
+        res.json(dbMeals);
+      });
+    });
   }
 };

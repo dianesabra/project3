@@ -35,5 +35,11 @@ export default {
     return axios.get(
       "/api/orders/" + cartData.userid + "/" + cartData.qtyFulfilled
     );
+  },
+  updateMeal: function(cartData) {
+    console.log(cartData);
+    return axios.put(
+      "/api/orders/" + cartData.mealID + "/" + cartData.qtyOutstanding
+    );
   }
 };

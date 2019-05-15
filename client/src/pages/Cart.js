@@ -15,6 +15,16 @@ class Cart extends Component {
     this.setState({ userid: localStorage.getItem("userid") });
     this.loadData();
   }
+
+  checkout = () => {
+    this.state.orders.forEach(function(item) {
+      API.updateMeal({
+        mealID: item._mealID,
+        qtyOutstanding: item.reqQty
+      }).then(res => console.log("here"));
+    });
+  };
+
   loadData = () => {
     API.getOrderForCart({
       userid: localStorage.getItem("userid"),
@@ -30,7 +40,6 @@ class Cart extends Component {
             this.state.orders.forEach(function(item) {
               totalPrice += item.price * item.reqQty;
             });
-
             this.setState({ totalPrice });
           }
         );
@@ -59,10 +68,12 @@ class Cart extends Component {
           ) : (
             <h3>None</h3>
           )}
-          <h2>${this.state.totalPrice}</h2>
-          <h1>React Stripe Elements Example</h1>
+
           <Elements>
-            <CheckoutForm />
+            <CheckoutForm
+              onClickPurchCart={this.checkout}
+              totalPrice={this.state.totalPrice}
+            />
           </Elements>
         </div>
       </StripeProvider>

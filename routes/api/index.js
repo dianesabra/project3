@@ -7,6 +7,6 @@ const chargeRoutes = require("./chargeRoutes");
 router.use("/meals", mealRoutes);
 router.use("/orders", orderRoutes);
 router.use("/users", userRoutes);
-// router.use("/charge", chargeRoutes);
+router.use("/charge", chargeRoutes);
 
 module.exports = router;
