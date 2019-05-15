@@ -23,15 +23,17 @@ export default {
   saveUser: function(userData) {
     return axios.post("/api/users", userData);
   },
-  
+
   // data has the values from formData in Login.js
   getUser: function(data) {
-    return axios.post('/api/users/login', data)
+    return axios.post("/api/users/login", data);
   },
   getMealByCook: function(id) {
     return axios.get("/api/meals/" + id);
   },
   getOrderForCart: function(cartData) {
-    return axios.get("/api/meals/", cartData);
+    return axios.get(
+      "/api/orders/" + cartData.userid + "/" + cartData.qtyFulfilled
+    );
   }
 };

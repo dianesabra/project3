@@ -8,7 +8,7 @@ router
   .post(orderController.postOrders);
 
 router
-  .route("/:id/:paidOrder")
+  .route("/:id/:qtyFulfilled")
   .delete(orderController.deleteOrders)
   .get(orderController.getOrderForCart);
 

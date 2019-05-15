@@ -14,9 +14,10 @@ module.exports = {
   },
   // Cook sees posted meals
   getOrderForCart(req, res) {
-    db.Order.find({
+    // console.log("HEre");
+    db.Orders.find({
       _userID: req.params.id,
-      paidOrder: req.params.paidOrder
+      qtyFulfilled: req.params.qtyFulfilled
     }).then(function(dbMeals) {
       res.json(dbMeals);
     });
@@ -88,6 +89,11 @@ module.exports = {
         .catch(err => {
           console.log(err);
         });
+    });
+  },
+  postCharge(req, res) {
+    db.Charge.create(req.body).then(function(dbCharge) {
+      res.json(dbCharge);
     });
   }
 };

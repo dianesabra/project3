@@ -107,7 +107,6 @@ class Main extends Component {
   };
 
   deleteMeal = id => {
-    console.log("here");
     API.deleteMeal(id)
       .then(res => {
         // make sound when post is made
@@ -143,7 +142,7 @@ class Main extends Component {
       : alert("please fill out form");
   };
 
-  createOrder = (id, name) => {
+  createOrder = (id, name, price) => {
     this.state.reqQty &&
     this.state.pickupAddress &&
     this.state.pickupDate &&
@@ -156,7 +155,8 @@ class Main extends Component {
           mealName: name,
           _mealID: id,
           _userID: this.state.userid,
-          orderPaid: false
+          orderPaid: false,
+          price: price
         })
           .then(res => {
             this.handleCloseOrder();
@@ -310,9 +310,9 @@ class Main extends Component {
             <Button onClick={this.handleCloseMeal} color="primary">
               Cancel
             </Button>
-            {/* <Button onClick={this.handleClickOpenMeal} color="primary">
+            <Button onClick={this.createMeal} color="primary">
               Post Meal
-            </Button> */}
+            </Button>
           </DialogActions>
         </Dialog>
         {/* Search */}
@@ -424,7 +424,7 @@ class Main extends Component {
                       </Button>
                       <Button
                         onClick={() =>
-                          this.createOrder(meal._id, meal.mealName)
+                          this.createOrder(meal._id, meal.mealName, meal.price)
                         }
                         color="primary"
                       >

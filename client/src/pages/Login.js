@@ -99,9 +99,7 @@ class Login extends React.Component {
             >
               Login
             </Typography>
-            <Link href="/cart" variant="body2">
-              {"Cart"}
-            </Link>
+            <Link href="/cart">"Cart"</Link>
             <ValidatorForm onSubmit={this.handleSubmit}>
               <TextValidator
                 label="Email Address"

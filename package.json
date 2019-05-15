@@ -24,13 +24,15 @@
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "^3.0.0-alpha.10",
     "axios": "^0.16.2",
-    "express": "^4.16.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
     "if-env": "^1.0.4",
     "mongoose": "^5.0.17",
     "react-dom": "^16.8.6",
     "react-images-upload": "^1.2.6",
     "react-material-ui-form-validator": "^2.0.8",
     "react-payment-request-api": "^3.1.0",
-    "react-stripe-elements": "^3.0.0"
+    "react-stripe-elements": "^3.0.0",
+    "stripe": "^6.34.0"
   }
 }
