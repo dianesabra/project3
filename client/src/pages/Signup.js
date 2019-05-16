@@ -156,26 +156,6 @@ class Signup extends React.Component {
                 Create Account
               </Button>
 
-              <Button
-                label="submit"
-                name="submit"
-                type="submit"
-                variant="contained"
-                margin="normal"
-                fullWidth
-                color="primary"
-                disabled={submitted}
-                onClick={
-                  formData.email !== "" &&
-                  formData.password !== "" &&
-                  formData.repeatPassword !== ""
-                    ? this.handleClickOpen
-                    : null
-                }
-              >
-                Create Account
-              </Button>
-
               <Dialog
                 open={this.state.open}
                 onClose={this.handleClose}

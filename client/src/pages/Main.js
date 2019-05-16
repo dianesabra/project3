@@ -17,8 +17,8 @@ class Main extends Component {
     cookName: "",
     dietRestrictions: "",
     mealDesc: "",
-    qtyOutstanding: "",
-    price: "",
+    qtyOutstanding: 0,
+    price: 0,
     meals: [],
     orders: [],
     openMeal: false,
@@ -27,7 +27,12 @@ class Main extends Component {
     userName: "",
     password: "",
     userid: "",
-    selectedFile: null
+    selectedFile: null,
+    reqQty: 0,
+    pickupAddress: null,
+    pickupDate: null,
+    specInstructions: null,
+    totalPrice: 0
   };
 
   componentDidMount() {
@@ -54,6 +59,7 @@ class Main extends Component {
   };
 
   handleCloseMeal = () => {
+    this.initState();
     this.setState({ openMeal: false });
   };
 
@@ -62,31 +68,39 @@ class Main extends Component {
   };
 
   handleCloseOrder = () => {
+    this.initState();
     this.setState({ openOrder: false });
   };
-
+  initState() {
+    this.setState({
+      search: "",
+      mealName: "",
+      cookName: "",
+      dietRestrictions: "",
+      mealDesc: "",
+      qtyOutstanding: "",
+      price: "",
+      orders: [],
+      openMeal: false,
+      openOrder: false,
+      status: false,
+      userName: "",
+      password: "",
+      selectedFile: null,
+      reqQty: 0,
+      pickupAddress: null,
+      pickupDate: null,
+      specInstructions: null,
+      totalPrice: 0
+    });
+  }
   loadData = () => {
     this.setState({ userid: localStorage.getItem("userid") });
     API.getMeal()
-      .then(res =>
-        this.setState({
-          search: "",
-          mealName: "",
-          cookName: "",
-          dietRestrictions: "",
-          mealDesc: "",
-          qtyOutstanding: "",
-          price: "",
-          meals: res.data,
-          orders: [],
-          openMeal: false,
-          openOrder: false,
-          status: false,
-          userName: "",
-          password: "",
-          selectedFile: null
-        })
-      )
+      .then(res => {
+        this.initState();
+        this.setState({ meals: res.data });
+      })
       .catch(err => console.log(err));
     API.getOrder()
       .then(res =>
@@ -99,7 +113,10 @@ class Main extends Component {
 
   handleInputChange = e => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => {
+      let totalPrice = this.state.qtyOutstanding * this.state.price;
+      this.setState({ totalPrice });
+    });
   };
 
   handleFormSearch = e => {
@@ -143,6 +160,7 @@ class Main extends Component {
   };
 
   createOrder = (id, name, price) => {
+    this.initState();
     this.state.reqQty &&
     this.state.pickupAddress &&
     this.state.pickupDate &&
@@ -213,7 +231,6 @@ class Main extends Component {
           flexDirection: "column"
         }}
       >
-        <p>Main</p>
         {/* Post Meal */}
         <Button
           variant="outlined"
@@ -305,41 +322,20 @@ class Main extends Component {
               alt="Submit"
               onChange={this.handleImage}
             />
+            <DialogContent
+              style={{ marginLeft: "350px", justifyContent: "space-between" }}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleCloseMeal} color="primary">
               Cancel
             </Button>
             <Button onClick={this.createMeal} color="primary">
-              Post Meal
+              Post Meal | Total Price: ${this.state.totalPrice}
             </Button>
           </DialogActions>
         </Dialog>
-        {/* Search */}
-        {/* <Input
-          defaultValue={this.state.Search}
-          placeholder="Search a meal"
-          onChange={this.handleInputChange}
-          name="search"
-          type="text"
-        />
-        <FormBtn onClick={this.handleFormSearch}>Submit</FormBtn> */}
-        {/* User
-        <Input
-          defaultValue={this.state.userName}
-          placeholder="Username"
-          onChange={this.handleInputChange}
-          name="userName"
-          type="text"
-        />
-        <Input
-          defaultValue={this.state.password}
-          placeholder="Password"
-          onChange={this.handleInputChange}
-          name="password"
-          type="password"
-        />
-        <FormBtn onClick={this.createUser}>Create User</FormBtn> */}
+
         {this.state.meals.length ? (
           <Fragment>
             <div
@@ -428,7 +424,7 @@ class Main extends Component {
                         }
                         color="primary"
                       >
-                        Place Order
+                        Place Order | Total Price: ${this.state.totalPrice}
                       </Button>
                     </DialogActions>
                   </Dialog>
@@ -437,7 +433,7 @@ class Main extends Component {
             </div>
           </Fragment>
         ) : (
-          <h3>None</h3>
+          <h3 />
         )}
       </div>
     );

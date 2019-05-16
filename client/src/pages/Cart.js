@@ -47,6 +47,15 @@ class Cart extends Component {
       .catch(err => console.log(err));
   };
 
+  deleteOrder = id => {
+    API.deleteOrder(id)
+      .then(res => {
+        // make sound when post is made
+        this.loadData();
+      })
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <StripeProvider apiKey="pk_test_WypliwwmxpFOzZAxUSZc2kwD005UoPutqR">
@@ -61,6 +70,7 @@ class Cart extends Component {
                     cookName={order.reqQty}
                     qtyOutstanding={order.specInstructions}
                     price={order.price}
+                    onClickDelete={() => this.deleteOrder(order._id)}
                   />
                 </Fragment>
               ))}

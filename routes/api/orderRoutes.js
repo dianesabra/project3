@@ -9,8 +9,8 @@ router
 
 router
   .route("/:id/:qtyFulfilled")
-  .delete(orderController.deleteOrders)
   .get(orderController.getOrderForCart)
   .put(orderController.updateQty);
 
+router.route("/:id").delete(orderController.deleteOrders);
 module.exports = router;

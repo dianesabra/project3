@@ -8,7 +8,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+import { blue, red } from "@material-ui/core/colors";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import API from "../utils/API";
 
@@ -36,7 +36,9 @@ class Login extends React.Component {
     },
     submitted: false
   };
-
+  componentDidMount() {
+    // document.body.style.background = "linear-gradient(red, yellow)";
+  }
   handleChange = event => {
     const { formData } = this.state;
     formData[event.target.name] = event.target.value;
@@ -56,14 +58,14 @@ class Login extends React.Component {
     API.getUser(this.state.formData).then(res => {
       let error = res.data.error;
       let redirect = true;
-      if (error === "User does not exist.") {
-        console.log("User does not exist");
-        redirect = false;
-      }
-      if (error === "Incorrect password.") {
-        console.log("Incorrect password");
-        redirect = false;
-      }
+      // if (error === "User does not exist.") {
+      //   console.log("User does not exist");
+      //   redirect = false;
+      // }
+      // if (error === "Incorrect password.") {
+      //   console.log("Incorrect password");
+      //   redirect = false;
+      // }
 
       if (redirect) {
         document.location.pathname = "/main";
@@ -99,7 +101,6 @@ class Login extends React.Component {
             >
               Login
             </Typography>
-            <Link href="/cart">"Cart"</Link>
             <ValidatorForm onSubmit={this.handleSubmit}>
               <TextValidator
                 label="Email Address"

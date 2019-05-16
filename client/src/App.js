@@ -33,15 +33,15 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          {/* <MiniDrawer /> */}
+          <MiniDrawer />
           <main className={classes.content}>
-            {/* <div className={classes.toolbar} /> */}
+            <div className={classes.toolbar} />
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/main" component={Main} />
               <Route exact path="/requests" component={Customer} />
-              <Route exact path="/cook" component={Cook} />
+              <Route exact path="/orders" component={Cook} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/signup" component={Signup} />
               <Route component={NoMatch} />
