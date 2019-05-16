@@ -3,6 +3,7 @@ import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "../component/Payment/CheckoutForm";
 import API from "../utils/API";
 import RecipeReviewCard from "../component/FoodCard/recipeCard";
+import SpanningTable from "../component/Table";
 
 class Cart extends Component {
   state = {
@@ -58,6 +59,15 @@ class Cart extends Component {
 
   render() {
     return (
+      <div style=
+        {{ 
+          maxHeight: 2000, 
+          width: "90%", 
+          position: "relative",
+          left: "9%"
+          }}>
+                <SpanningTable orders={this.state.orders} />
+            
       <StripeProvider apiKey="pk_test_WypliwwmxpFOzZAxUSZc2kwD005UoPutqR">
         <div className="example">
           {this.state.orders.length ? (
@@ -87,6 +97,7 @@ class Cart extends Component {
           </Elements>
         </div>
       </StripeProvider>
+      </div>
     );
   }
 }
