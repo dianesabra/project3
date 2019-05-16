@@ -11,6 +11,11 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { blue, red } from "@material-ui/core/colors";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import API from "../utils/API";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const theme = createMuiTheme({
   palette: {
@@ -30,6 +35,10 @@ const styles = {
 
 class Login extends React.Component {
   state = {
+    incorrectUser: {
+      open: false
+    },
+    
     formData: {
       password: "",
       email: ""
@@ -51,6 +60,19 @@ class Login extends React.Component {
     });
   };
 
+  handleClickOpen = () => {
+    API.saveUser(this.state.formData)
+      .then(() => {
+        this.setState({ open: true });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   handleLogin = () => {
     // Send email and password to backend to check conditionals. Back-end will give a response
     // for each conditional and send that response to the Front-end. Now check to see which
@@ -58,14 +80,16 @@ class Login extends React.Component {
     API.getUser(this.state.formData).then(res => {
       let error = res.data.error;
       let redirect = true;
-      // if (error === "User does not exist.") {
-      //   console.log("User does not exist");
-      //   redirect = false;
-      // }
-      // if (error === "Incorrect password.") {
-      //   console.log("Incorrect password");
-      //   redirect = false;
-      // }
+      if (error === "User does not exist.") {
+        this.setState({open: true});
+        console.log("User does not exist");
+        redirect = false;
+      }
+      if (error === "Incorrect password.") {
+        this.setState({open: true});
+        console.log("Incorrect password");
+        redirect = false;
+      }
 
       if (redirect) {
         document.location.pathname = "/main";
@@ -166,6 +190,28 @@ class Login extends React.Component {
                 </Link>
               </Grid>
             </Grid>
+
+            <Dialog
+                open={this.state.open}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Incorrect email or password"}
+                </DialogTitle>
+
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    The email you entered does not exist or the password you entered for the user is incorrect.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary">
+                    Close
+                  </Button>
+                </DialogActions>
+                </Dialog>
           </Paper>
         </MuiThemeProvider>
       </div>
