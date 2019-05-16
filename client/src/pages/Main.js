@@ -137,8 +137,7 @@ class Main extends Component {
     this.state.dietRestrictions &&
     this.state.mealDesc &&
     this.state.qtyOutstanding &&
-    this.state.price &&
-    this.state.selectedFile
+    this.state.price
       ? API.saveMeal({
           mealName: this.state.mealName,
           cookName: this.state.cookName,

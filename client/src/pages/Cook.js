@@ -98,14 +98,14 @@ class Cook extends Component {
     return (
       <Fragment>
         <p>Main</p>
-        <Input
+        {/* <Input
           defaultValue={this.state.Search}
           placeholder="Search a meal"
           onChange={this.handleInputChange}
           name="search"
           type="text"
         />
-        <FormBtn onClick={this.handleFormSearch}>Submit</FormBtn>
+        <FormBtn onClick={this.handleFormSearch}>Submit</FormBtn> */}
 
         <Card style={{ minWidth: 275 }}>
           <CardContent>
@@ -138,13 +138,13 @@ class Cook extends Component {
                             ))}
                         </List>
                       ) : (
-                        <h2>None</h2>
+                        <h2 />
                       )}
                     </ListItem>
                   ))}
               </List>
             ) : (
-              <h3>None</h3>
+              <h3 />
             )}
           </CardContent>
         </Card>

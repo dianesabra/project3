@@ -178,9 +178,6 @@ class MiniDrawer extends Component {
                   }}
                 />
               </div>
-              <Link to={"/cart"}>
-                <i class="material-icons md-48">shopping_cart</i>
-              </Link>
             </div>
           </Toolbar>
         </AppBar>
@@ -233,6 +230,21 @@ class MiniDrawer extends Component {
                 <ListItem>
                   <Link to={"/orders"} style={{ textDecoration: "none" }}>
                     Customer Orders
+                  </Link>
+                </ListItem>
+              </ListItem>
+            </Link>
+          </List>
+
+          <List>
+            <Link to={"/cart"} style={{ textDecoration: "none" }}>
+              <ListItem button>
+                <ListItemIcon>
+                  <i class="material-icons md-48">shopping_cart</i>
+                </ListItemIcon>
+                <ListItem>
+                  <Link to={"/cart"} style={{ textDecoration: "none" }}>
+                    Cart
                   </Link>
                 </ListItem>
               </ListItem>

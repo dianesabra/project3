@@ -93,9 +93,13 @@ class RecipeReviewCard extends React.Component {
           </IconButton>
           <Typography
             component="p"
-            style={{ marginLeft: "100px", justifyContent: "space-between" }}
+            style={{
+              marginLeft: "100px",
+              justifyContent: "space-between",
+              color: "green"
+            }}
           >
-            Quantity Remaining:{this.props.qtyOutstanding}
+            Quantity Remaining: {this.props.qtyOutstanding}
           </Typography>
           {/* <IconButton
             className={classnames(classes.expand, {

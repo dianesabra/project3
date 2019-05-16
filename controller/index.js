@@ -2,9 +2,12 @@ const db = require("../models");
 module.exports = {
   // food feed
   getMeals(req, res) {
-    db.Meals.find(req.body).then(function(dbMeals) {
-      res.json(dbMeals);
-    });
+    db.Meals.find(req.body)
+      .where("qtyOutstanding")
+      .gt(0)
+      .then(function(dbMeals) {
+        res.json(dbMeals);
+      });
   },
   // Cook sees posted meals
   getMealByCook(req, res) {
@@ -42,6 +45,7 @@ module.exports = {
   // only for the cook
   getOrders(req, res) {
     db.Orders.find(req.body).then(function(dbOrders) {
+      console.log(res);
       res.json(dbOrders);
       // filter by user ID and meal ID
     });
