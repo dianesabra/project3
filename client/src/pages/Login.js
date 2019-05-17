@@ -45,7 +45,7 @@ class Login extends React.Component {
     incorrectUser: {
       open: false
     },
-    
+
     formData: {
       password: "",
       email: ""
@@ -96,12 +96,12 @@ class Login extends React.Component {
       let error = res.data.error;
       let redirect = true;
       if (error === "User does not exist.") {
-        this.setState({open: true});
+        this.setState({ open: true });
         console.log("User does not exist");
         redirect = false;
       }
       if (error === "Incorrect password.") {
-        this.setState({open: true});
+        this.setState({ open: true });
         console.log("Incorrect password");
         redirect = false;
       }
@@ -112,7 +112,6 @@ class Login extends React.Component {
 
       // need a conditional to check if user is not in error
       console.log(res.data);
-      // console.log("Hello");
     });
   };
 
@@ -218,26 +217,27 @@ class Login extends React.Component {
             </Grid>
 
             <Dialog
-                open={this.state.open}
-                onClose={this.handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  {"Incorrect email or password"}
-                </DialogTitle>
+              open={this.state.open}
+              onClose={this.handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"Incorrect email or password"}
+              </DialogTitle>
 
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    The email you entered does not exist or the password you entered for the user is incorrect.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    Close
-                  </Button>
-                </DialogActions>
-                </Dialog>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  The email you entered does not exist or the password you
+                  entered for the user is incorrect.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleClose} color="primary">
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Paper>
         </MuiThemeProvider>
       </div>

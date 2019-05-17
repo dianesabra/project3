@@ -37,9 +37,13 @@ export default {
     );
   },
   updateMeal: function(cartData) {
-    console.log(cartData);
     return axios.put(
-      "/api/orders/" + cartData.mealID + "/" + cartData.qtyOutstanding
+      "/api/orders/" +
+        cartData.mealID +
+        "/" +
+        cartData.qtyOutstanding +
+        "/" +
+        cartData.orderID
     );
   }
 };

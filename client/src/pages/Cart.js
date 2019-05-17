@@ -21,7 +21,8 @@ class Cart extends Component {
     this.state.orders.forEach(function(item) {
       API.updateMeal({
         mealID: item._mealID,
-        qtyOutstanding: item.reqQty
+        qtyOutstanding: item.reqQty,
+        orderID: item._id
       }).then(res => console.log("here"));
     });
   };
@@ -59,44 +60,30 @@ class Cart extends Component {
 
   render() {
     return (
-      <div style=
-        {{ 
-          maxHeight: 2000, 
-          width: "90%", 
+      <div
+        style={{
+          maxHeight: 2000,
+          width: "90%",
           position: "relative",
           left: "9%"
-          }}>
-                <SpanningTable orders={this.state.orders} />
-            
-      <StripeProvider apiKey="pk_test_WypliwwmxpFOzZAxUSZc2kwD005UoPutqR">
-        <div className="example">
-          {this.state.orders.length ? (
-            <Fragment>
-              {this.state.orders.map(order => (
-                <Fragment key={order._id}>
-                  <RecipeReviewCard
-                    key={order._id}
-                    mealName={order.mealName}
-                    cookName={order.reqQty}
-                    qtyOutstanding={order.specInstructions}
-                    price={order.price}
-                    onClickDelete={() => this.deleteOrder(order._id)}
-                  />
-                </Fragment>
-              ))}
-            </Fragment>
-          ) : (
-            <h3>None</h3>
-          )}
+        }}
+      >
+        <SpanningTable
+          orders={this.state.orders}
+          orderTotal={this.state.totalPrice}
+          onClickDelete={req => this.deleteOrder(req)}
+        />
 
-          <Elements>
-            <CheckoutForm
-              onClickPurchCart={this.checkout}
-              totalPrice={this.state.totalPrice}
-            />
-          </Elements>
-        </div>
-      </StripeProvider>
+        <StripeProvider apiKey="pk_test_WypliwwmxpFOzZAxUSZc2kwD005UoPutqR">
+          <div className="example">
+            <Elements>
+              <CheckoutForm
+                onClickPurchCart={this.checkout}
+                totalPrice={this.state.totalPrice}
+              />
+            </Elements>
+          </div>
+        </StripeProvider>
       </div>
     );
   }

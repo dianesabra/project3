@@ -28,13 +28,13 @@ const styles = theme => ({
 
 function SpanningTable(props) {
   const { classes } = props;
-
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell className={classes.tablecell}>Meal Name</TableCell>
+
             <TableCell className={classes.tablecell} align="left">
               Pick-up Address
             </TableCell>
@@ -45,7 +45,7 @@ function SpanningTable(props) {
               Requested Qty.
             </TableCell>
             <TableCell className={classes.tablecell} align="right">
-              Price ($)
+              Price
             </TableCell>
             <TableCell className={classes.tablecell} align="right">
               Line Total ($)
@@ -72,27 +72,14 @@ function SpanningTable(props) {
                 {row.price}
               </TableCell>
               <TableCell className={classes.responsecell} align="right">
-                {row.price * row.reqQty}
-              </TableCell>
-              <TableCell className={classes.responsecell} align="right">
-                <DeleteIcon onClick={() => props.onClickDelete(row._id)}>
-                  Delete
-                </DeleteIcon>
+                <DeleteIcon>Delete</DeleteIcon>
               </TableCell>
             </TableRow>
           ))}
 
           <TableRow>
-            <TableCell className={classes.responsecell} align="right" />
-            <TableCell className={classes.responsecell} align="right" />
-            <TableCell className={classes.responsecell} align="right" />
-            <TableCell className={classes.responsecell} align="right" />
-            <TableCell
-              className={classes.responsecell}
-              align="right"
-              colSpan={2}
-            >
-              Total: ${props.orderTotal}
+            <TableCell className={classes.responsecell} colSpan={2}>
+              Total
             </TableCell>
             <TableCell align="right" />
           </TableRow>

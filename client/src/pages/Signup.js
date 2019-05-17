@@ -52,11 +52,11 @@ class Signup extends React.Component {
 
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-        if (value !== this.state.formData.password) {
-            return false;
-        }
-        return true;
+    ValidatorForm.addValidationRule("isPasswordMatch", value => {
+      if (value !== this.state.formData.password) {
+        return false;
+      }
+      return true;
     });
 }
 togglePasswordMask = () => {
@@ -83,6 +83,7 @@ toggleRepeatPasswordMask = () => {
   };
 
   handleClickOpen = () => {
+    debugger;
     API.saveUser(this.state.formData)
       .then(() => {
         this.setState({ open: true });
