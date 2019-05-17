@@ -66,10 +66,8 @@ module.exports = {
   },
 
   getUser(req, res) {
-    // console.log(req.body);
     db.User.find({ email: req.body.email })
       .then(function(user) {
-        console.log(user);
         if (user.length < 1) return res.json({ error: "User does not exist." });
         if (user[0].password !== req.body.password)
           return res.json({ error: "Incorrect password." });
@@ -83,9 +81,8 @@ module.exports = {
   },
   // anyone can
   postUser(req, res) {
-    console.log(req.body);
     db.User.find({ email: req.body.email }).then(function(user) {
-      if (user) return res.json({ error: "User already exists." });
+      if (user.length > 0) return res.json({ error: "User already exists." });
       db.User.create(req.body)
         .then(function(dbUser) {
           res.json(dbUser);
@@ -102,9 +99,7 @@ module.exports = {
   },
 
   updateQty(req, res) {
-    console.log(typeof req.params.qtyFulfilled);
     db.Meals.findById({ _id: req.params.id }).then(dbModel => {
-      console.log(dbModel);
       db.Meals.update(
         {
           _id: req.params.id
@@ -113,6 +108,15 @@ module.exports = {
           qtyOutstanding: dbModel.qtyOutstanding - req.params.qtyFulfilled
         }
       ).then(function(dbMeals) {
+        db.Orders.update(
+          {
+            _id: req.params.orderID
+          },
+          {
+            qtyFulfilled: true
+          }
+        ).then(console.log("Diane"));
+
         res.json(dbMeals);
       });
     });

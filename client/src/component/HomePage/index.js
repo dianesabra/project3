@@ -207,14 +207,14 @@ class MiniDrawer extends Component {
           </div>
           <Divider />
           <List>
-            <Link to={"/requests"} style={{ textDecoration: "none" }}>
+            <Link to={"/Orders"} style={{ textDecoration: "none" }}>
               <ListItem button>
                 <ListItemIcon>
                   <i class="material-icons">queue</i>
                 </ListItemIcon>
                 <ListItem>
-                  <Link to={"/requests"} style={{ textDecoration: "none" }}>
-                    Requests to Chef
+                  <Link to={"/Orders"} style={{ textDecoration: "none" }}>
+                    Chef Queue
                   </Link>
                 </ListItem>
               </ListItem>
@@ -222,14 +222,14 @@ class MiniDrawer extends Component {
           </List>
 
           <List>
-            <Link to={"/orders"} style={{ textDecoration: "none" }}>
+            <Link to={"/requests"} style={{ textDecoration: "none" }}>
               <ListItem button>
                 <ListItemIcon>
                   <i class="material-icons">receipt</i>
                 </ListItemIcon>
                 <ListItem>
-                  <Link to={"/orders"} style={{ textDecoration: "none" }}>
-                    Customer Orders
+                  <Link to={"/requests"} style={{ textDecoration: "none" }}>
+                    Customer Requests
                   </Link>
                 </ListItem>
               </ListItem>

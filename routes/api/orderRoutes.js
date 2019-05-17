@@ -7,10 +7,9 @@ router
   .get(orderController.getOrders)
   .post(orderController.postOrders);
 
-router
-  .route("/:id/:qtyFulfilled")
-  .get(orderController.getOrderForCart)
-  .put(orderController.updateQty);
+router.route("/:id/:qtyFulfilled").get(orderController.getOrderForCart);
+
+router.route("/:id/:qtyFulfilled/:orderID").put(orderController.updateQty);
 
 router.route("/:id").delete(orderController.deleteOrders);
 module.exports = router;

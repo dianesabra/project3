@@ -43,13 +43,13 @@ class Signup extends React.Component {
 
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-        if (value !== this.state.formData.password) {
-            return false;
-        }
-        return true;
+    ValidatorForm.addValidationRule("isPasswordMatch", value => {
+      if (value !== this.state.formData.password) {
+        return false;
+      }
+      return true;
     });
-}
+  }
 
   handleChange = event => {
     const { formData } = this.state;
@@ -64,6 +64,7 @@ class Signup extends React.Component {
   };
 
   handleClickOpen = () => {
+    debugger;
     API.saveUser(this.state.formData)
       .then(() => {
         this.setState({ open: true });
@@ -134,7 +135,7 @@ class Signup extends React.Component {
                 onChange={this.handleChange}
                 name="repeatPassword"
                 type="password"
-                validators={["required", "isPasswordMatch" ]}
+                validators={["required", "isPasswordMatch"]}
                 errorMessages={[
                   "this field is required",
                   "passwords do not match"

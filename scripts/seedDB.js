@@ -19,7 +19,7 @@ const mealSeed = [
     _userID: "5cd0f06b572da53ac8386868",
     orderPaid: false,
     image:
-      "http://prod.static9.net.au/_/media/2017/10/26/14/27/the-shahrouk-sisters-tabouli-recipe.jpg"
+      "https://www.weightwatchers.com.au/images/3081/dynamic/foodandrecipes/2015/11/Tabouli_XXL.jpg"
   },
   {
     mealName: "Jollof Rice",

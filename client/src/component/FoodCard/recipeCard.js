@@ -57,14 +57,14 @@ class RecipeReviewCard extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, mealIndex } = this.props;
 
     return (
       <Card className={classes.card}>
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              ${this.props.qtyOutstanding}
+              ${this.props.price}
             </Avatar>
           }
           title={this.props.mealName}
@@ -87,7 +87,7 @@ class RecipeReviewCard extends React.Component {
             color="primary"
             className={classes.button}
             aria-label="Add to shopping cart"
-            onClick={this.props.onClickPlaceOrder}
+            onClick={() => this.props.onClickOpenOrder()}
           >
             <AddShoppingCartIcon />
           </IconButton>
@@ -101,14 +101,6 @@ class RecipeReviewCard extends React.Component {
           >
             Quantity Remaining: {this.props.qtyOutstanding}
           </Typography>
-          {/* <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="Show more"
-          /> */}
         </CardActions>
       </Card>
     );

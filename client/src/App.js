@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
-import Customer from "./pages/Customer";
-import Cook from "./pages/Cook";
+import Requests from "./pages/Requests";
+import Orders from "./pages/Order";
 import NoMatch from "./pages/NoMatch";
 import Cart from "./pages/Cart";
 import Signup from "./pages/Signup";
@@ -33,15 +33,19 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          <MiniDrawer />
+          {document.location.pathname !== "/" &&
+          document.location.pathname !== "/login" &&
+          document.location.pathname !== "/signup" ? (
+            <MiniDrawer />
+          ) : null}
           <main className={classes.content}>
             <div className={classes.toolbar} />
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/main" component={Main} />
-              <Route exact path="/requests" component={Customer} />
-              <Route exact path="/orders" component={Cook} />
+              <Route exact path="/requests" component={Requests} />
+              <Route exact path="/orders" component={Orders} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/signup" component={Signup} />
               <Route component={NoMatch} />
