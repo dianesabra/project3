@@ -16,6 +16,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { RemoveRedEye } from '@material-ui/icons';
+import { InputAdornment } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const theme = createMuiTheme({
   palette: {
@@ -33,6 +36,10 @@ const styles = {
   }
 };
 
+const hoveredStyle = {
+  cursor: "pointer"
+}
+
 class Login extends React.Component {
   state = {
     incorrectUser: {
@@ -43,11 +50,19 @@ class Login extends React.Component {
       password: "",
       email: ""
     },
-    submitted: false
+    submitted: false,
+    passwordIsMasked: true
   };
   componentDidMount() {
     // document.body.style.background = "linear-gradient(red, yellow)";
   }
+
+  togglePasswordMask = () => {
+    this.setState(prevState => ({
+      passwordIsMasked : !prevState.passwordIsMasked,
+    }));
+  }
+
   handleChange = event => {
     const { formData } = this.state;
     formData[event.target.name] = event.target.value;
@@ -102,18 +117,18 @@ class Login extends React.Component {
   };
 
   render() {
-    const { formData, submitted } = this.state;
+    const { formData, submitted, passwordIsMasked } = this.state;
     return (
       <div>
         <MuiThemeProvider theme={theme}>
           <Paper
-            let
-            className="paper"
+            let className="paper"
             style={{
               position: "absolute",
               left: "50%",
               top: "50%",
-              transform: "translate(-50%, -50%)"
+              transform: "translate(-50%, -50%)",
+              padding: "5%"
             }}
           >
             <Typography
@@ -144,7 +159,7 @@ class Login extends React.Component {
                 label="Password"
                 onChange={this.handleChange}
                 name="password"
-                type="password"
+                type={passwordIsMasked ? "password" : "text"}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
                 value={formData.password}
@@ -152,6 +167,17 @@ class Login extends React.Component {
                 fullWidth
                 margin="normal"
                 color="primary"
+
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <RemoveRedEye 
+                        style={hoveredStyle}
+                        onClick={this.togglePasswordMask}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <FormControlLabel
@@ -217,6 +243,12 @@ class Login extends React.Component {
       </div>
     );
   }
+}
+
+Login.propTypes= {
+  classes: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(Login);

@@ -13,6 +13,9 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import API from "../utils/API";
+import { RemoveRedEye } from '@material-ui/icons';
+import { InputAdornment } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,6 +33,10 @@ const styles = {
   }
 };
 
+const hoveredStyle = {
+  cursor: "pointer"
+}
+
 class Signup extends React.Component {
   state = {
     open: false,
@@ -38,7 +45,9 @@ class Signup extends React.Component {
       repeatPassword: "",
       email: ""
     },
-    submitted: false
+    submitted: false,
+    passwordIsMasked: true,
+    repeatPasswordIsMasked: true
   };
 
   componentDidMount() {
@@ -49,6 +58,16 @@ class Signup extends React.Component {
         }
         return true;
     });
+}
+togglePasswordMask = () => {
+  this.setState(prevState => ({
+    passwordIsMasked : !prevState.passwordIsMasked,
+  }));
+}
+toggleRepeatPasswordMask = () => {
+  this.setState(prevState => ({
+    repeatPasswordIsMasked : !prevState.repeatPasswordIsMasked,
+  }));
 }
 
   handleChange = event => {
@@ -77,7 +96,7 @@ class Signup extends React.Component {
   };
 
   render() {
-    const { formData, submitted } = this.state;
+    const { formData, submitted, passwordIsMasked, repeatPasswordIsMasked } = this.state;
 
     return (
       <div>
@@ -87,7 +106,8 @@ class Signup extends React.Component {
               position: "absolute",
               left: "50%",
               top: "50%",
-              transform: "translate(-50%, -50%)"
+              transform: "translate(-50%, -50%)",
+              padding: "5%"
             }}
           >
             <Typography
@@ -97,7 +117,7 @@ class Signup extends React.Component {
                 textAlign: "center"
               }}
             >
-              Signup
+              SignUp
             </Typography>
 
             <ValidatorForm onSubmit={this.handleSubmit}>
@@ -119,7 +139,7 @@ class Signup extends React.Component {
                 label="Password"
                 onChange={this.handleChange}
                 name="password"
-                type="password"
+                type={passwordIsMasked ? "password" : "text"}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
                 value={formData.password}
@@ -127,13 +147,24 @@ class Signup extends React.Component {
                 fullWidth
                 margin="normal"
                 color="primary"
+
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <RemoveRedEye 
+                        style={hoveredStyle}
+                        onClick={this.togglePasswordMask}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <TextValidator
                 label="Repeat password"
                 onChange={this.handleChange}
                 name="repeatPassword"
-                type="password"
+                type={repeatPasswordIsMasked ? "password" : "text"}
                 validators={["required", "isPasswordMatch" ]}
                 errorMessages={[
                   "this field is required",
@@ -144,6 +175,17 @@ class Signup extends React.Component {
                 margin="normal"
                 fullWidth
                 color="primary"
+
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <RemoveRedEye 
+                        style={hoveredStyle}
+                        onClick={this.toggleRepeatPasswordMask}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <Button
@@ -195,4 +237,12 @@ class Signup extends React.Component {
     );
   }
 }
+
+Signup.propTypes= {
+  classes: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.func.isRequired
+}
+
+
 export default withStyles(styles)(Signup);
