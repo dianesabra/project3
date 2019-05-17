@@ -166,18 +166,7 @@ class MiniDrawer extends Component {
               }}
             >
               <div className={classes.grow} />
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-                <InputBase
-                  placeholder="Search for meal…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                  }}
-                />
-              </div>
+              <div className={classes.search} />
             </div>
           </Toolbar>
         </AppBar>
@@ -207,7 +196,11 @@ class MiniDrawer extends Component {
           </div>
           <Divider />
           <List>
-            <Link to={"/Orders"} style={{ textDecoration: "none" }}>
+            <Link
+              to={"/Orders"}
+              style={{ textDecoration: "none" }}
+              title={"Order"}
+            >
               <ListItem button>
                 <ListItemIcon>
                   <i class="material-icons">queue</i>
@@ -222,7 +215,11 @@ class MiniDrawer extends Component {
           </List>
 
           <List>
-            <Link to={"/requests"} style={{ textDecoration: "none" }}>
+            <Link
+              to={"/requests"}
+              style={{ textDecoration: "none" }}
+              title={"Requests"}
+            >
               <ListItem button>
                 <ListItemIcon>
                   <i class="material-icons">receipt</i>
@@ -237,7 +234,11 @@ class MiniDrawer extends Component {
           </List>
 
           <List>
-            <Link to={"/cart"} style={{ textDecoration: "none" }}>
+            <Link
+              to={"/cart"}
+              style={{ textDecoration: "none" }}
+              title={"Cart"}
+            >
               <ListItem button>
                 <ListItemIcon>
                   <i class="material-icons md-48">shopping_cart</i>

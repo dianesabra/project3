@@ -4,18 +4,29 @@ import CheckoutForm from "../component/Payment/CheckoutForm";
 import API from "../utils/API";
 import RecipeReviewCard from "../component/FoodCard/recipeCard";
 import SpanningTable from "../component/Table";
-
+import Snackbar from "@material-ui/core/Snackbar";
 class Cart extends Component {
   state = {
     userid: "",
     orders: [],
-    totalPrice: 0
+    totalPrice: 0,
+    openCartConfirmation: false
   };
 
   componentDidMount() {
     this.setState({ userid: localStorage.getItem("userid") });
     this.loadData();
   }
+  handleClickCartConfirmation = () => {
+    this.setState({ openCartConfirmation: true });
+  };
+
+  handleCloseCartConfirmation = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ openCartConfirmation: false });
+  };
 
   checkout = () => {
     this.state.orders.forEach(function(item) {
@@ -23,7 +34,9 @@ class Cart extends Component {
         mealID: item._mealID,
         qtyOutstanding: item.reqQty,
         orderID: item._id
-      }).then(res => console.log("here"));
+      }).then(res => {
+        this.handleClickCartConfirmation();
+      });
     });
   };
 
@@ -73,7 +86,20 @@ class Cart extends Component {
           orderTotal={this.state.totalPrice}
           onClickDelete={req => this.deleteOrder(req)}
         />
-
+        {/* Post Meal */}
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          open={this.state.handleClickCartConfirmation}
+          autoHideDuration={2000}
+          onClose={this.handleCloseCartConfirmation}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">Purchase Successful!</span>}
+        />
         <StripeProvider apiKey="pk_test_WypliwwmxpFOzZAxUSZc2kwD005UoPutqR">
           <div className="example">
             <Elements>

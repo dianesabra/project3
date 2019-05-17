@@ -11,6 +11,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import RecipeReviewCard from "../component/FoodCard/recipeCard";
+import Snackbar from "@material-ui/core/Snackbar";
 
 class Main extends Component {
   state = {
@@ -25,6 +26,7 @@ class Main extends Component {
     orders: [],
     openMeal: false,
     openOrder: false,
+    openMealConfirmation: false,
     status: false,
     userName: "",
     password: "",
@@ -37,7 +39,10 @@ class Main extends Component {
     totalPrice: 0,
     mealIndex: 0,
     totalCost: 0,
-    submitted: false
+    submitted: false,
+    complete: true,
+    openMealConfirmation: false,
+    openOrderConfirmation: false
   };
 
   componentDidMount() {
@@ -77,11 +82,30 @@ class Main extends Component {
     this.setState({ openOrder: false });
   };
 
-  openOrderConfirmation = () => {
-    this.setState({ openMeal: true });
+  handleClickMealConfirmation = () => {
+    this.setState({ openMealConfirmation: true });
   };
-  handleCloseOrderConfirmation = () => {
-    this.setState({ openMeal: false });
+
+  handleCloseMealConfirmation = (event, reason) => {
+    this.handleCloseMeal();
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ openMealConfirmation: false });
+  };
+
+  handleClickOrderConfirmation = () => {
+    this.setState({ openOrderConfirmation: true });
+  };
+
+  handleCloseOrderConfirmation = (event, reason) => {
+    this.handleCloseOrder();
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ openOrderConfirmation: false });
   };
 
   initState() {
@@ -107,7 +131,8 @@ class Main extends Component {
       totalPrice: 0,
       mealIndex: 0,
       totalCost: 0,
-      submitted: false
+      submitted: false,
+      complete: true
     });
   }
   loadData = () => {
@@ -137,9 +162,8 @@ class Main extends Component {
 
   handleInputChangeReqQty = e => {
     const { name, value } = e.target;
+
     this.setState({ [name]: value }, () => {
-      debugger;
-      let priceprice = this.state.meals[this.state.mealIndex.i].price;
       let totalCost =
         this.state.reqQty * this.state.meals[this.state.mealIndex.i].price;
       this.setState({ totalCost });
@@ -159,57 +183,55 @@ class Main extends Component {
       .catch(err => console.log(err));
   };
   createMeal = e => {
-    this.state.mealName &&
-    this.state.cookName &&
-    this.state.dietRestrictions &&
-    this.state.mealDesc &&
-    this.state.qtyOutstanding &&
-    this.state.price
-      ? API.saveMeal({
-          mealName: this.state.mealName,
-          cookName: this.state.cookName,
-          dietRestrictions: this.state.dietRestrictions,
-          mealDesc: this.state.mealDesc,
-          qtyOutstanding: this.state.qtyOutstanding,
-          price: this.state.price,
-          _userID: this.state.userid,
-          qtyFulfilled: false,
-          image: this.state.selectedFile
-        })
-          .then(res => {
-            this.handleCloseMeal();
-            this.openOrderConfirmation();
-            // make sound when post is made
-            this.loadData();
-          })
-          .catch(err => console.log(err))
-      : console.log("here");
+    // this.state.mealName &&
+    // this.state.cookName &&
+    // this.state.dietRestrictions &&
+    // this.state.mealDesc &&
+    // this.state.qtyOutstanding &&
+    // this.state.price      ?
+    API.saveMeal({
+      mealName: this.state.mealName,
+      cookName: this.state.cookName,
+      dietRestrictions: this.state.dietRestrictions,
+      mealDesc: this.state.mealDesc,
+      qtyOutstanding: this.state.qtyOutstanding,
+      price: this.state.price,
+      _userID: this.state.userid,
+      qtyFulfilled: false,
+      image: this.state.selectedFile
+    })
+      .then(res => {
+        this.handleClickMealConfirmation().then(this.loadData());
+      })
+      .catch(err => console.log(err));
+    // : console.log("here");
   };
 
   createOrder = () => {
     this.initState();
-    this.state.reqQty &&
-    this.state.pickupAddress &&
-    this.state.pickupDate &&
-    this.state.specInstructions
-      ? API.saveOrder({
-          reqQty: this.state.reqQty,
-          pickupAddress: this.state.pickupAddress,
-          pickupDate: this.state.pickupDate,
-          specInstructions: this.state.specInstructions,
-          mealName: this.state.meals[this.state.mealIndex.i].mealName,
-          _mealID: this.state.meals[this.state.mealIndex.i]._id,
-          _userID: this.state.userid,
-          orderPaid: false,
-          price: this.state.meals[this.state.mealIndex.i].price
-        })
-          .then(res => {
-            this.handleCloseOrder();
-            // make sound when post is made
-            this.loadData();
-          })
-          .catch(err => console.log(err))
-      : alert("please fill out form");
+    // this.state.reqQty &&
+    // this.state.pickupAddress &&
+    // this.state.pickupDate &&
+    // this.state.specInstructions ?
+    API.saveOrder({
+      reqQty: this.state.reqQty,
+      pickupAddress: this.state.pickupAddress,
+      pickupDate: this.state.pickupDate,
+      specInstructions: this.state.specInstructions,
+      mealName: this.state.meals[this.state.mealIndex.i].mealName,
+      _mealID: this.state.meals[this.state.mealIndex.i]._id,
+      _userID: this.state.userid,
+      orderPaid: false,
+      price: this.state.meals[this.state.mealIndex.i].price
+    })
+      .then(res => {
+        this.handleClickOrderConfirmation().then(this.handleCloseOrder());
+
+        // make sound when post is made
+        this.loadData();
+      })
+      .catch(err => console.log(err));
+    // : alert("please fill out form");
   };
 
   deleteOrder = id => {
@@ -277,10 +299,10 @@ class Main extends Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-            {this.state.mealName}
+            Make a Meal: {this.state.mealName}
+            <DialogContentText>{this.state.cookName}</DialogContentText>
           </DialogTitle>
           <DialogContent>
-            <DialogContentText>{this.state.cookName}</DialogContentText>
             <ValidatorForm onSubmit={this.handleSubmit}>
               <TextValidator
                 autoFocus
@@ -296,32 +318,20 @@ class Main extends Component {
                 errorMessages={["Meal Name is required."]}
                 fullWidth
               />
-              <Button
-                label="submit"
-                name="submit"
-                type="submit"
-                variant="contained"
-                margin="normal"
-                fullWidth
-                color="primary"
-                disabled={this.state.submitted}
-                onClick={this.createMeal}
-              >
-                Create Account
-              </Button>
-
-              <TextField
+              <TextValidator
                 margin="dense"
                 id="cookName"
                 label="Cook Name"
                 type="text"
+                validators={["required"]}
+                errorMessages={["Cook Name is required."]}
+                value={this.state.cookName}
                 defaultValue={this.state.cookName}
                 onChange={this.handleInputChange}
                 name="cookName"
-                required
                 fullWidth
               />
-              <TextField
+              <TextValidator
                 margin="dense"
                 id="dietRestrictions"
                 label="Dietary Restrictions"
@@ -329,10 +339,12 @@ class Main extends Component {
                 defaultValue={this.state.dietRestrictions}
                 onChange={this.handleInputChange}
                 name="dietRestrictions"
-                required
+                validators={["required"]}
+                errorMessages={["Diet Restrictions is required."]}
+                value={this.state.dietRestrictions}
                 fullWidth
               />
-              <TextField
+              <TextValidator
                 margin="dense"
                 id="mealDesc"
                 label="Description"
@@ -340,10 +352,12 @@ class Main extends Component {
                 defaultValue={this.state.mealDesc}
                 onChange={this.handleInputChange}
                 name="mealDesc"
-                required
+                validators={["required"]}
+                errorMessages={["Description is required."]}
+                value={this.state.mealDesc}
                 fullWidth
               />
-              <TextField
+              <TextValidator
                 margin="dense"
                 id="qtyOutstanding"
                 label="Serving Quantity"
@@ -351,10 +365,12 @@ class Main extends Component {
                 defaultValue={this.state.qtyOutstanding}
                 onChange={this.handleInputChange}
                 name="qtyOutstanding"
-                required
+                validators={["required", "minNumber:1"]}
+                errorMessages={["Qty. Outstanding is required."]}
+                value={this.state.qtyOutstanding}
                 fullWidth
               />
-              <TextField
+              <TextValidator
                 margin="dense"
                 id="price"
                 label="Price ($)"
@@ -362,9 +378,12 @@ class Main extends Component {
                 defaultValue={this.state.price}
                 onChange={this.handleInputChange}
                 name="price"
-                required
+                validators={["required", "minNumber:1"]}
+                errorMessages={["Price is required."]}
+                value={this.state.price}
                 fullWidth
               />
+              <p />
               {"Image: "}
               <input
                 type="file"
@@ -372,20 +391,53 @@ class Main extends Component {
                 alt="Submit"
                 onChange={this.handleImage}
               />
+              <br />
+              <Button
+                label="cancel"
+                name="cancel"
+                type="cancel"
+                variant="contained"
+                margin="normal"
+                color="primary"
+                style={{ margin: "15px" }}
+                onClick={this.handleCloseMeal}
+              >
+                Cancel
+              </Button>
+              <Button
+                label="submit"
+                name="submit"
+                type="submit"
+                variant="contained"
+                margin="normal"
+                color="primary"
+                disabled={this.state.submitted}
+                onClick={this.createMeal}
+              >
+                Post Meal | Total Price: ${this.state.totalPrice}
+              </Button>
             </ValidatorForm>
+
             <DialogContent
               style={{ marginLeft: "350px", justifyContent: "space-between" }}
             />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleCloseMeal} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.createMeal} color="primary">
-              Post Meal | Total Price: ${this.state.totalPrice}
-            </Button>
-          </DialogActions>
+          <DialogActions />
         </Dialog>
+        {/* Post Meal */}
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          open={this.state.openMealConfirmation}
+          autoHideDuration={2000}
+          onClose={this.handleCloseMealConfirmation}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">Meal Created!</span>}
+        />
         {/* Place Order */}
         <Dialog
           open={this.state.openOrder}
@@ -394,80 +446,105 @@ class Main extends Component {
         >
           <DialogTitle id="form-dialog-title">Order Information</DialogTitle>
           <DialogContent>
-            <DialogContentText />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="reqQty"
-              label="Requested Quantity"
-              type="text"
-              defaultValue={this.state.reqQty}
-              onChange={this.handleInputChangeReqQty}
-              name="reqQty"
-              required
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="pickupAddress"
-              label="Pickup Address"
-              type="text"
-              defaultValue={this.state.pickupAddress}
-              onChange={this.handleInputChange}
-              name="pickupAddress"
-              required
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="pickupDate"
-              label="Pickup Date"
-              type="text"
-              defaultValue={this.state.pickupDate}
-              onChange={this.handleInputChange}
-              name="pickupDate"
-              required
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="specInstructions"
-              label="Special Instructions"
-              type="text"
-              defaultValue={this.state.specInstructions}
-              onChange={this.handleInputChange}
-              name="specInstructions"
-              required
-              fullWidth
-            />
+            <ValidatorForm onSubmit={this.handleSubmit}>
+              <TextValidator
+                autoFocus
+                margin="dense"
+                id="reqQty"
+                label="Requested Quantity"
+                type="text"
+                defaultValue={this.state.reqQty}
+                onChange={this.handleInputChangeReqQty}
+                name="reqQty"
+                validators={["required", "minNumber:1"]}
+                errorMessages={["Requested Quantity is required."]}
+                value={this.state.reqQty}
+                required
+                fullWidth
+              />
+              {/* <TextValidator
+                autoFocus
+                margin="dense"
+                id="pickupAddress"
+                label="Pickup Address"
+                type="text"
+                defaultValue={this.state.pickupAddress}
+                onChange={this.handleInputChange}
+                name="pickupAddress"
+                validators={["required"]}
+                errorMessages={["Pickup Address is required."]}
+                value={this.state.pickupAddress}
+                fullWidth
+              /> */}
+              <TextValidator
+                autoFocus
+                margin="dense"
+                id="pickupDate"
+                label="Pickup Date"
+                type="text"
+                defaultValue={this.state.pickupDate}
+                onChange={this.handleInputChange}
+                name="pickupDate"
+                validators={["required"]}
+                errorMessages={["Pickup Date is required."]}
+                value={this.state.pickupDate}
+                fullWidth
+              />
+              <TextValidator
+                autoFocus
+                margin="dense"
+                id="specInstructions"
+                label="Special Instructions"
+                type="text"
+                defaultValue={this.state.specInstructions}
+                onChange={this.handleInputChange}
+                name="specInstructions"
+                validators={["required"]}
+                errorMessages={["Special Instructions is required."]}
+                value={this.state.specInstructions}
+                fullWidth
+              />
+              <Button
+                label="cancel"
+                name="cancel"
+                type="cancel"
+                variant="contained"
+                style={{ margin: "15px" }}
+                color="primary"
+                onClick={this.handleCloseOrder}
+              >
+                Cancel
+              </Button>
+              <Button
+                label="submit"
+                name="submit"
+                type="submit"
+                variant="contained"
+                margin="normal"
+                color="primary"
+                disabled={this.state.submitted}
+                onClick={() => this.createOrder()}
+              >
+                Place Order | Total Cost: ${this.state.totalCost}
+              </Button>
+            </ValidatorForm>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleCloseOrder} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={() => this.createOrder()} color="primary">
-              Place Order | Total Price: ${this.state.totalCost}
-            </Button>
-          </DialogActions>
+          <DialogActions />
         </Dialog>
-        {/* Place Order Confirmation */}
-        <Dialog
+        {/* Post Meal */}
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
           open={this.state.openOrderConfirmation}
+          autoHideDuration={2000}
           onClose={this.handleCloseOrderConfirmation}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Order Placed!"}</DialogTitle>
-
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              <Link to={"/orders"}>See Your Orders</Link>
-            </Button>
-          </DialogActions>
-        </Dialog>
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">Order Placed!</span>}
+        />
 
         {this.state.meals.length ? (
           <Fragment>
