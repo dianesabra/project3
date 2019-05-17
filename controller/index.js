@@ -85,7 +85,7 @@ module.exports = {
   postUser(req, res) {
     console.log(req.body);
     db.User.find({ email: req.body.email }).then(function(user) {
-      if (user) return res.json({ error: "User already exists." });
+      if (user.length > 0) return res.json({ error: "User already exists." });
       db.User.create(req.body)
         .then(function(dbUser) {
           res.json(dbUser);
