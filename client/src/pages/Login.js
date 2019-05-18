@@ -16,9 +16,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { RemoveRedEye } from '@material-ui/icons';
-import { InputAdornment } from '@material-ui/core';
-import PropTypes from 'prop-types';
+import { RemoveRedEye } from "@material-ui/icons";
+import { InputAdornment } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 const theme = createMuiTheme({
   palette: {
@@ -38,7 +38,7 @@ const styles = {
 
 const hoveredStyle = {
   cursor: "pointer"
-}
+};
 
 class Login extends React.Component {
   state = {
@@ -59,9 +59,9 @@ class Login extends React.Component {
 
   togglePasswordMask = () => {
     this.setState(prevState => ({
-      passwordIsMasked : !prevState.passwordIsMasked,
+      passwordIsMasked: !prevState.passwordIsMasked
     }));
-  }
+  };
 
   handleChange = event => {
     const { formData } = this.state;
@@ -121,7 +121,8 @@ class Login extends React.Component {
       <div>
         <MuiThemeProvider theme={theme}>
           <Paper
-            let className="paper"
+            let
+            className="paper"
             style={{
               position: "absolute",
               left: "50%",
@@ -166,16 +167,15 @@ class Login extends React.Component {
                 fullWidth
                 margin="normal"
                 color="primary"
-
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <RemoveRedEye 
+                      <RemoveRedEye
                         style={hoveredStyle}
                         onClick={this.togglePasswordMask}
                       />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
 
@@ -245,10 +245,10 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes= {
+Login.propTypes = {
   classes: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.func.isRequired
-}
+};
 
 export default withStyles(styles)(Login);

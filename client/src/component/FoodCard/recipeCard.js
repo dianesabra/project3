@@ -80,9 +80,9 @@ class RecipeReviewCard extends React.Component {
           <Typography component="p">{this.props.mealDesc}</Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Delete" onClick={this.props.onClickDelete}>
+          {/* <IconButton aria-label="Delete" onClick={this.props.onClickDelete}>
             <DeleteIcon />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             color="primary"
             className={classes.button}
