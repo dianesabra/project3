@@ -90,7 +90,7 @@ class Cart extends Component {
         <Snackbar
           anchorOrigin={{
             vertical: "top",
-            horizontal: "right"
+            horizontal: "left"
           }}
           open={this.state.handleClickCartConfirmation}
           autoHideDuration={2000}

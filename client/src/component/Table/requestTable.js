@@ -8,6 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
+import NumberFormat from "react-number-format";
 
 const styles = theme => ({
   root: {
@@ -55,7 +56,7 @@ function SpanningTable(props) {
         </TableHead>
         <TableBody>
           {props.orders.map(row => (
-            <TableRow key={row.id}>
+            <TableRow key={row._id}>
               <TableCell className={classes.responsecell}>
                 {row.mealName}
               </TableCell>
@@ -72,7 +73,17 @@ function SpanningTable(props) {
                 {row.price}
               </TableCell>
               <TableCell className={classes.responsecell} align="right">
-                <DeleteIcon>Delete</DeleteIcon>
+                <NumberFormat
+                  value={row.price * row.reqQty}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                  prefix={"$"}
+                />
+              </TableCell>
+              <TableCell className={classes.responsecell} align="right">
+                <DeleteIcon onClick={() => props.onClickDelete(row._id)}>
+                  Delete
+                </DeleteIcon>
               </TableCell>
             </TableRow>
           ))}

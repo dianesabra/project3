@@ -1,58 +1,64 @@
-import React, { Component, Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { Link } from "react-router-dom";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import Settings from "@material-ui/icons/Settings";
-import Fab from "@material-ui/core/Fab";
-import NavigationIcon from "@material-ui/icons/Navigation";
-import SearchIcon from "@material-ui/icons/Search";
+import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
+import Badge from "@material-ui/core/Badge";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Link } from "react-router-dom";
+import Menu from "@material-ui/core/Menu";
+import { fade } from "@material-ui/core/styles/colorManipulator";
+import { withStyles } from "@material-ui/core/styles";
+import MenuIcon from "@material-ui/icons/Menu";
+import SearchIcon from "@material-ui/icons/Search";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import MailIcon from "@material-ui/icons/Mail";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import MoreIcon from "@material-ui/icons/MoreVert";
 import logo from "../../assets/img/logo.png";
-const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    width: "100%"
   },
-  appBar: {
-    backgroundColor: "#CCCCFF",
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    backgroundColor: "#CCCCFF",
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+  grow: {
+    flexGrow: 1
   },
   menuButton: {
-    marginLeft: 12,
-    marginRight: 36
+    marginLeft: -12,
+    marginRight: 20
   },
-  hide: {
-    display: "none"
+  title: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block"
+    }
+  },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+    },
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: "auto"
+    }
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
   inputRoot: {
     color: "inherit",
@@ -65,92 +71,114 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 10,
     transition: theme.transitions.create("width"),
     width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: 120,
-      "&:focus": {
-        width: 200
-      }
+    [theme.breakpoints.up("md")]: {
+      width: 200
     }
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap"
-  },
-  drawerOpen: {
-    backgroundColor: "#CCCCFF",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerClose: {
-    backgroundColor: "#CCCCFF",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: "hidden",
-    width: theme.spacing.unit * 7 + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing.unit * 9 + 1
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex"
     }
   },
-  toolbar: {
+  sectionMobile: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3
+    [theme.breakpoints.up("md")]: {
+      display: "none"
+    }
   }
 });
 
-class MiniDrawer extends Component {
+class PrimarySearchAppBar extends React.Component {
   state = {
-    open: false
+    anchorEl: null,
+    mobileMoreAnchorEl: null
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
+  handleProfileMenuOpen = event => {
+    this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+    this.handleMobileMenuClose();
+  };
+
+  handleMobileMenuOpen = event => {
+    this.setState({ mobileMoreAnchorEl: event.currentTarget });
+  };
+
+  handleMobileMenuClose = () => {
+    this.setState({ mobileMoreAnchorEl: null });
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { classes } = this.props;
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const renderMenu = (
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+      </Menu>
+    );
+
+    const renderMobileMenu = (
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMobileMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <p>Messages</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={11} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleProfileMenuOpen}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      </Menu>
+    );
 
     return (
-      <Fragment>
-        <CssBaseline />
-        <AppBar
-          color="secondary"
-          position="fixed"
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: this.state.open
-          })}
-        >
-          <Toolbar
-            style={{ display: "flexbox", justifyContent: "space-between" }}
-            disableGutters={!this.state.open}
-          >
+      <div className={classes.root}>
+        <AppBar position="static" style={{ backgroundColor: "#CCCCFF" }}>
+          <Toolbar>
             <IconButton
+              className={classes.menuButton}
               color="inherit"
               aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, {
-                [classes.hide]: this.state.open
-              })}
+            />
+            <Typography
+              className={classes.title}
+              variant="h6"
+              color="inherit"
+              noWrap
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
               <Link to={"/main"}>
                 <img
                   src={logo}
@@ -159,107 +187,70 @@ class MiniDrawer extends Component {
                 />
               </Link>
             </Typography>
-            <div
-              style={{
-                minWidth: "fit-content",
-                display: "flex"
-              }}
-            >
-              <div className={classes.grow} />
-              <div className={classes.search} />
+            {/* <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+              />
+            </div> */}
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <Link to={"/Orders"} style={{ textDecoration: "none" }}>
+                <IconButton color="inherit" title={"Orders"}>
+                  <Badge badgeContent={4} color="secondary">
+                    <i class="material-icons">queue</i>
+                  </Badge>
+                </IconButton>
+              </Link>
+              <Link to={"/requests"} style={{ textDecoration: "none" }}>
+                <IconButton title={"Requests"} color="inherit">
+                  <Badge badgeContent={17} color="secondary">
+                    <i class="material-icons">receipt</i>
+                  </Badge>
+                </IconButton>
+              </Link>
+              <Link to={"/cart"} style={{ textDecoration: "none" }}>
+                <IconButton title={"Cart"} color="inherit">
+                  <Badge badgeContent={17} color="secondary">
+                    <i class="material-icons md-48">shopping_cart</i>
+                  </Badge>
+                </IconButton>
+              </Link>
+              <IconButton
+                aria-owns={isMenuOpen ? "material-appbar" : undefined}
+                aria-haspopup="true"
+                onClick={this.handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-haspopup="true"
+                onClick={this.handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
             </div>
           </Toolbar>
         </AppBar>
-        <Drawer
-          color="primary"
-          variant="permanent"
-          className={classNames(classes.drawer, {
-            [classes.drawerOpen]: this.state.open,
-            [classes.drawerClose]: !this.state.open
-          })}
-          classes={{
-            paper: classNames({
-              [classes.drawerOpen]: this.state.open,
-              [classes.drawerClose]: !this.state.open
-            })
-          }}
-          open={this.state.open}
-        >
-          <div className={classes.toolbar}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            <Link
-              to={"/Orders"}
-              style={{ textDecoration: "none" }}
-              title={"Order"}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <i class="material-icons">queue</i>
-                </ListItemIcon>
-                <ListItem>
-                  <Link to={"/Orders"} style={{ textDecoration: "none" }}>
-                    Chef Queue
-                  </Link>
-                </ListItem>
-              </ListItem>
-            </Link>
-          </List>
-
-          <List>
-            <Link
-              to={"/requests"}
-              style={{ textDecoration: "none" }}
-              title={"Requests"}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <i class="material-icons">receipt</i>
-                </ListItemIcon>
-                <ListItem>
-                  <Link to={"/requests"} style={{ textDecoration: "none" }}>
-                    Customer Requests
-                  </Link>
-                </ListItem>
-              </ListItem>
-            </Link>
-          </List>
-
-          <List>
-            <Link
-              to={"/cart"}
-              style={{ textDecoration: "none" }}
-              title={"Cart"}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <i class="material-icons md-48">shopping_cart</i>
-                </ListItemIcon>
-                <ListItem>
-                  <Link to={"/cart"} style={{ textDecoration: "none" }}>
-                    Cart
-                  </Link>
-                </ListItem>
-              </ListItem>
-            </Link>
-          </List>
-        </Drawer>
-      </Fragment>
+        {renderMenu}
+        {renderMobileMenu}
+      </div>
     );
   }
 }
 
-MiniDrawer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+PrimarySearchAppBar.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(MiniDrawer);
+export default withStyles(styles)(PrimarySearchAppBar);

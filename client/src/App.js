@@ -7,6 +7,7 @@ import Orders from "./pages/Order";
 import NoMatch from "./pages/NoMatch";
 import Cart from "./pages/Cart";
 import Signup from "./pages/Signup";
+// import MiniDrawer from "./component/HomePage";
 import MiniDrawer from "./component/HomePage";
 
 import PropTypes from "prop-types";

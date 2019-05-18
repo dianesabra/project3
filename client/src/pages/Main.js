@@ -40,6 +40,7 @@ class Main extends Component {
     mealIndex: 0,
     totalCost: 0,
     submitted: false,
+    submittedOrder: false,
     complete: true,
     openMealConfirmation: false,
     openOrderConfirmation: false
@@ -132,6 +133,7 @@ class Main extends Component {
       mealIndex: 0,
       totalCost: 0,
       submitted: false,
+      submittedOrder: false,
       complete: true
     });
   }
@@ -209,10 +211,7 @@ class Main extends Component {
 
   createOrder = () => {
     this.initState();
-    // this.state.reqQty &&
-    // this.state.pickupAddress &&
-    // this.state.pickupDate &&
-    // this.state.specInstructions ?
+    debugger;
     API.saveOrder({
       reqQty: this.state.reqQty,
       pickupAddress: this.state.pickupAddress,
@@ -222,13 +221,13 @@ class Main extends Component {
       _mealID: this.state.meals[this.state.mealIndex.i]._id,
       _userID: this.state.userid,
       orderPaid: false,
-      price: this.state.meals[this.state.mealIndex.i].price
+      price: this.state.meals[this.state.mealIndex.i].price,
+      _cookuserID: this.state.meals[this.state.mealIndex.i]._userID
     })
       .then(res => {
-        this.handleClickOrderConfirmation().then(this.handleCloseOrder());
-
-        // make sound when post is made
+        this.handleClickOrderConfirmation();
         this.loadData();
+        // make sound when post is made
       })
       .catch(err => console.log(err));
     // : alert("please fill out form");
@@ -269,6 +268,12 @@ class Main extends Component {
   handleSubmit = () => {
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
+    });
+  };
+
+  handleSubmitOrder = () => {
+    this.setState({ submittedOrder: true }, () => {
+      setTimeout(() => this.setState({ submittedOrder: false }), 5000);
     });
   };
 
@@ -428,7 +433,7 @@ class Main extends Component {
         <Snackbar
           anchorOrigin={{
             vertical: "top",
-            horizontal: "right"
+            horizontal: "left"
           }}
           open={this.state.openMealConfirmation}
           autoHideDuration={2000}
@@ -446,7 +451,7 @@ class Main extends Component {
         >
           <DialogTitle id="form-dialog-title">Order Information</DialogTitle>
           <DialogContent>
-            <ValidatorForm onSubmit={this.handleSubmit}>
+            <ValidatorForm onSubmit={this.handleSubmitOrder}>
               <TextValidator
                 autoFocus
                 margin="dense"
@@ -459,23 +464,8 @@ class Main extends Component {
                 validators={["required", "minNumber:1"]}
                 errorMessages={["Requested Quantity is required."]}
                 value={this.state.reqQty}
-                required
                 fullWidth
               />
-              {/* <TextValidator
-                autoFocus
-                margin="dense"
-                id="pickupAddress"
-                label="Pickup Address"
-                type="text"
-                defaultValue={this.state.pickupAddress}
-                onChange={this.handleInputChange}
-                name="pickupAddress"
-                validators={["required"]}
-                errorMessages={["Pickup Address is required."]}
-                value={this.state.pickupAddress}
-                fullWidth
-              /> */}
               <TextValidator
                 autoFocus
                 margin="dense"
@@ -504,13 +494,14 @@ class Main extends Component {
                 value={this.state.specInstructions}
                 fullWidth
               />
+
               <Button
                 label="cancel"
                 name="cancel"
                 type="cancel"
                 variant="contained"
-                style={{ margin: "15px" }}
                 color="primary"
+                style={{ margin: "15px" }}
                 onClick={this.handleCloseOrder}
               >
                 Cancel
@@ -522,8 +513,8 @@ class Main extends Component {
                 variant="contained"
                 margin="normal"
                 color="primary"
-                disabled={this.state.submitted}
-                onClick={() => this.createOrder()}
+                disabled={this.state.submittedOrder}
+                onClick={this.createOrder}
               >
                 Place Order | Total Cost: ${this.state.totalCost}
               </Button>
@@ -535,7 +526,7 @@ class Main extends Component {
         <Snackbar
           anchorOrigin={{
             vertical: "top",
-            horizontal: "right"
+            horizontal: "left"
           }}
           open={this.state.openOrderConfirmation}
           autoHideDuration={2000}

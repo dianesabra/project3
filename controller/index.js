@@ -17,7 +17,6 @@ module.exports = {
   },
   // Cook sees posted meals
   getOrderForCart(req, res) {
-    // console.log("HEre");
     db.Orders.find({
       _userID: req.params.id,
       qtyFulfilled: req.params.qtyFulfilled
@@ -40,12 +39,12 @@ module.exports = {
       })
       .then(function(dbMeals) {
         res.json(dbMeals);
-      });
+      })
+      .catch(err => console.log(err));
   },
   // only for the cook
   getOrders(req, res) {
     db.Orders.find(req.body).then(function(dbOrders) {
-      console.log(res);
       res.json(dbOrders);
       // filter by user ID and meal ID
     });

@@ -3,7 +3,7 @@ import API from "../utils/API";
 import { List, ListItem } from "../component/List";
 import { Card } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
-import SpanningTable from "../component/Table";
+import SpanningTable from "../component/Table/requestTable";
 
 class Customer extends Component {
   state = {
@@ -49,7 +49,10 @@ class Customer extends Component {
   render() {
     return (
       <div>
-        <SpanningTable orders={this.state.orders} />
+        <SpanningTable
+          orders={this.state.orders}
+          onClickDelete={req => this.deleteOrder(req)}
+        />
       </div>
     );
   }

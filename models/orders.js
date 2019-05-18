@@ -16,7 +16,11 @@ const OrderSchema = new Schema({
   pickupDate: { type: Date, required: true },
   specInstructions: { type: String, required: true },
   qtyFulfilled: { type: Boolean, default: false },
-  price: { type: Number }
+  price: { type: Number },
+  _cookuserID: {
+    type: Schema.Types.ObjectId,
+    ref: "Users"
+  }
 });
 
 module.exports = mongoose.model("Order", OrderSchema);
