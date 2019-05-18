@@ -58,6 +58,11 @@ class Signup extends React.Component {
       }
       return true;
     });
+
+    ValidatorForm.addValidationRule("isEmail", value => {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(value);
+    });
 }
 togglePasswordMask = () => {
   this.setState(prevState => ({
@@ -121,13 +126,16 @@ toggleRepeatPasswordMask = () => {
               SignUp
             </Typography>
 
-            <ValidatorForm onSubmit={this.handleSubmit}>
+            <ValidatorForm onSubmit={this.handleClickOpen}>
               <TextValidator
                 label="Email Address"
                 onChange={this.handleChange}
                 name="email"
-                validators={["required"]}
-                errorMessages={["this field is required"]}
+                validators={["required", "isEmail"]}
+                errorMessages={[
+                  "Email Required",
+                  "Invalid email"
+                ]}
                 value={formData.email}
                 variant="outlined"
                 fullWidth
@@ -142,12 +150,12 @@ toggleRepeatPasswordMask = () => {
                 name="password"
                 type={passwordIsMasked ? "password" : "text"}
                 validators={["required"]}
-                errorMessages={["this field is required"]}
+                errorMessages={["Password required"]}
                 value={formData.password}
                 variant="outlined"
-                fullWidth
                 margin="normal"
                 color="primary"
+                style={{width: 700}}
 
                 InputProps={{
                   endAdornment: (
@@ -168,14 +176,14 @@ toggleRepeatPasswordMask = () => {
                 type={repeatPasswordIsMasked ? "password" : "text"}
                 validators={["required", "isPasswordMatch" ]}
                 errorMessages={[
-                  "this field is required",
-                  "passwords do not match"
+                  "Retype password",
+                  "Passwords do not match"
                 ]}
                 value={formData.repeatPassword}
                 variant="outlined"
                 margin="normal"
-                fullWidth
                 color="primary"
+                style={{width: 700}}
 
                 InputProps={{
                   endAdornment: (
@@ -198,13 +206,6 @@ toggleRepeatPasswordMask = () => {
                 fullWidth
                 color="primary"
                 disabled={submitted}
-                onClick={
-                  formData.email !== "" &&
-                  formData.password !== "" &&
-                  formData.repeatPassword !== ""
-                    ? this.handleClickOpen
-                    : null
-                }
               >
                 Create Account
               </Button>
