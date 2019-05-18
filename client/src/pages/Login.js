@@ -8,7 +8,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
-import { blue, red } from "@material-ui/core/colors";
+import { blue } from "@material-ui/core/colors";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import API from "../utils/API";
 import Dialog from "@material-ui/core/Dialog";
@@ -53,9 +53,7 @@ class Login extends React.Component {
     submitted: false,
     passwordIsMasked: true
   };
-  componentDidMount() {
-    // document.body.style.background = "linear-gradient(red, yellow)";
-  }
+
 
   togglePasswordMask = () => {
     this.setState(prevState => ({
@@ -107,6 +105,7 @@ class Login extends React.Component {
       }
 
       if (redirect) {
+        localStorage.setItem("userid", res.data._id);
         document.location.pathname = "/main";
       }
 
@@ -120,6 +119,13 @@ class Login extends React.Component {
     return (
       <div>
         <MuiThemeProvider theme={theme}>
+          <Paper>
+            <Typography>
+              Welcome to Fresh Off The Table!
+
+              Fresh Off The Table is an application that allows you and others to post and purchase
+            </Typography>
+          </Paper>
           <Paper
             let className="paper"
             style={{
@@ -139,13 +145,13 @@ class Login extends React.Component {
             >
               Login
             </Typography>
-            <ValidatorForm onSubmit={this.handleSubmit}>
+            <ValidatorForm onSubmit={this.handleLogin}>
               <TextValidator
                 label="Email Address"
                 onChange={this.handleChange}
                 name="email"
                 validators={["required"]}
-                errorMessages={["this field is required"]}
+                errorMessages={["Email required"]}
                 value={formData.email}
                 variant="outlined"
                 fullWidth
@@ -160,12 +166,12 @@ class Login extends React.Component {
                 name="password"
                 type={passwordIsMasked ? "password" : "text"}
                 validators={["required"]}
-                errorMessages={["this field is required"]}
+                errorMessages={["Password required"]}
                 value={formData.password}
                 variant="outlined"
-                fullWidth
                 margin="normal"
                 color="primary"
+                style={{width: 700}}
 
                 InputProps={{
                   endAdornment: (
@@ -193,16 +199,6 @@ class Login extends React.Component {
                 fullWidth
                 color="primary"
                 disabled={submitted}
-                // NEED TO IMPLEMENT:
-                // 1) capture email and password
-                // 2) compare email and password to those in dB
-                // 3) if match route to Main Page
-
-                onClick={() =>
-                  formData.email !== "" && formData.password !== ""
-                    ? this.handleLogin()
-                    : null
-                }
               >
                 Login
               </Button>
