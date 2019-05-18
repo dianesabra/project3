@@ -6,6 +6,7 @@ import { Card } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 //import SimpleCard from './simpleCard.js';
 import SpanningTable from "../component/Table/ordersTable";
+import MealsSpanningTable from "../component/Table/mealsTable";
 
 class Cook extends Component {
   state = {
@@ -32,28 +33,23 @@ class Cook extends Component {
   loadData = () => {
     API.getOrder(localStorage.getItem("userid"))
       .then(res => {
-        API.getOrder()
-          .then(res =>
-            this.setState({
-              orders: res.data
-            })
-          )
-          .catch(err => console.log(err));
-        this.setState({
-          orders: res.data
-        });
+        {
+          this.setState({
+            orders: res.data
+          });
+        }
       })
       .catch(err => console.log(err));
-    // API.getMeal()
-    //   .then(res =>
-    //     this.setState({
-    //       meals: res.data,
-    //       search: "",
-    //       // orders: [],
-    //       status: false
-    //     })
-    //   )
-    //   .catch(err => console.log(err));
+    API.getMeal()
+      .then(res =>
+        this.setState({
+          meals: res.data,
+          search: "",
+          // orders: [],
+          status: false
+        })
+      )
+      .catch(err => console.log(err));
   };
 
   handleInputChange = e => {
@@ -97,8 +93,15 @@ class Cook extends Component {
   render() {
     return (
       <div>
+        {<h1>Your orders</h1>}
         <SpanningTable
           orders={this.state.orders}
+          onClickDelete={req => this.deleteOrder(req)}
+        />
+        {<br />}
+        {<h1>Your Meals</h1>}
+        <MealsSpanningTable
+          meals={this.state.meals}
           onClickDelete={req => this.deleteOrder(req)}
         />
       </div>

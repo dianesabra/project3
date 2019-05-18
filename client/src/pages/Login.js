@@ -33,6 +33,10 @@ const styles = {
     width: 400,
     height: 500,
     alignItems: "center"
+  },
+  paperContainer: {
+    backgroundImage: "red",
+    height: "100%"
   }
 };
 
