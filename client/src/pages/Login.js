@@ -14,10 +14,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { RemoveRedEye } from '@material-ui/icons';
-import { InputAdornment } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import Background from '../images/food.jpg';
+import { RemoveRedEye } from "@material-ui/icons";
+import { InputAdornment } from "@material-ui/core";
+import PropTypes from "prop-types";
+import Background from "../images/food.jpg";
 
 const theme = createMuiTheme({
   palette: {
@@ -51,6 +51,10 @@ class Login extends React.Component {
     submitted: false,
     passwordIsMasked: true
   };
+
+  componentDidMount() {
+    localStorage.setItem("userid", "");
+  }
 
   togglePasswordMask = () => {
     this.setState(prevState => ({
@@ -114,37 +118,33 @@ class Login extends React.Component {
   render() {
     const { formData, submitted, passwordIsMasked } = this.state;
     return (
-      <div style={{
-        backgroundImage: `url(${Background})`,
-        height: "100vh",
-        backgroundSize: "cover"
-      }}>
+      <div
+        style={{
+          backgroundImage: `url(${Background})`,
+          height: "100vh",
+          backgroundSize: "cover"
+        }}
+      >
         <MuiThemeProvider theme={theme}>
-          <Grid
-                container
-                justify="center"
-                
-              >
+          <Grid container justify="center">
             <Paper
-            style={{
-              width: "75%",
-              marginTop: "5%"
-            }}>
+              style={{
+                width: "75%",
+                marginTop: "5%"
+              }}
+            >
               <Typography
                 style={{
                   textAlign: "center"
                 }}
               >
-                Welcome to Fresh Off The Table! 
-                
-                <br></br>
-
-                Have leftovers from dinner? Don't have time to cook? Don't feel like going out to eat? Try Fresh Off The Table!
-
-                <br></br>
-
-                Fresh Off The Table allows you to purchase and share food with people around you.
-
+                Welcome to Fresh Off The Table!
+                <br />
+                Have leftovers from dinner? Don't have time to cook? Don't feel
+                like going out to eat? Try Fresh Off The Table!
+                <br />
+                Fresh Off The Table allows you to purchase and share food with
+                people around you.
               </Typography>
             </Paper>
           </Grid>
@@ -154,7 +154,7 @@ class Login extends React.Component {
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ minHeight: "100vh"}}
+            style={{ minHeight: "100vh" }}
           >
             <Paper
               style={{
@@ -196,17 +196,16 @@ class Login extends React.Component {
                   variant="outlined"
                   margin="normal"
                   color="primary"
-                  style={{width: "100%"}}
-
+                  style={{ width: "100%" }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <RemoveRedEye 
+                        <RemoveRedEye
                           style={hoveredStyle}
                           onClick={this.togglePasswordMask}
                         />
                       </InputAdornment>
-                    ),
+                    )
                   }}
                 />
 

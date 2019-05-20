@@ -8,6 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Moment from "react-moment";
 
 const styles = theme => ({
   root: {
@@ -63,7 +64,7 @@ function SpanningTable(props) {
                 {row.pickupAddress}
               </TableCell>
               <TableCell className={classes.responsecell} align="left">
-                {row.pickupDate}
+                <Moment format="MM/DD/YYYY">{row.pickupDate}</Moment>
               </TableCell>
               <TableCell className={classes.responsecell} align="right">
                 {row.reqQty}
@@ -75,14 +76,12 @@ function SpanningTable(props) {
                 {row.price * row.reqQty}
               </TableCell>
               <TableCell className={classes.responsecell} align="right">
-                <DeleteIcon onClick={() => props.onClickDelete(row._id)}>
-                  Delete
-                </DeleteIcon>
+                <DeleteIcon onClick={() => props.onClickDelete(row._id)} />
               </TableCell>
             </TableRow>
           ))}
 
-          <TableRow>
+          {/* <TableRow>
             <TableCell className={classes.responsecell} align="right" />
             <TableCell className={classes.responsecell} align="right" />
             <TableCell className={classes.responsecell} align="right" />
@@ -95,7 +94,7 @@ function SpanningTable(props) {
               Total: ${props.orderTotal}
             </TableCell>
             <TableCell align="right" />
-          </TableRow>
+          </TableRow> */}
         </TableBody>
       </Table>
     </Paper>

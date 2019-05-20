@@ -8,6 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Moment from "react-moment";
 
 const styles = theme => ({
   root: {
@@ -35,9 +36,9 @@ function SpanningTable(props) {
           <TableRow>
             <TableCell className={classes.tablecell}>Meal Name</TableCell>
 
-            <TableCell className={classes.tablecell} align="left">
+            {/* <TableCell className={classes.tablecell} align="left">
               Pick-up Address
-            </TableCell>
+            </TableCell> */}
             <TableCell className={classes.tablecell} align="left">
               Pickup Date
             </TableCell>
@@ -50,7 +51,7 @@ function SpanningTable(props) {
             <TableCell className={classes.tablecell} align="right">
               Line Total ($)
             </TableCell>
-            <TableCell className={classes.tablecell} align="right" />
+            {/* <TableCell className={classes.tablecell} align="right" /> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -59,11 +60,11 @@ function SpanningTable(props) {
               <TableCell className={classes.responsecell}>
                 {row.mealName}
               </TableCell>
-              <TableCell className={classes.responsecell} align="left">
+              {/* <TableCell className={classes.responsecell} align="left">
                 {row.pickupAddress}
-              </TableCell>
+              </TableCell> */}
               <TableCell className={classes.responsecell} align="left">
-                {row.pickupDate}
+                <Moment format="MM/DD/YYYY">{row.pickupDate}</Moment>
               </TableCell>
               <TableCell className={classes.responsecell} align="right">
                 {row.reqQty}
@@ -72,17 +73,27 @@ function SpanningTable(props) {
                 {row.price}
               </TableCell>
               <TableCell className={classes.responsecell} align="right">
-                <DeleteIcon>Delete</DeleteIcon>
+                {row.price * row.reqQty}
               </TableCell>
+              {/* <TableCell className={classes.responsecell} align="right">
+                <DeleteIcon>Delete</DeleteIcon>
+              </TableCell> */}
             </TableRow>
           ))}
 
-          <TableRow>
-            <TableCell className={classes.responsecell} colSpan={2}>
-              Total
+          {/* <TableRow>
+            <TableCell className={classes.responsecell} align="right" />
+            <TableCell className={classes.responsecell} align="right" />
+
+            <TableCell
+              className={classes.responsecell}
+              align="right"
+              colSpan={2}
+            >
+              Total: ${props.orderTotal}
             </TableCell>
             <TableCell align="right" />
-          </TableRow>
+          </TableRow> */}
         </TableBody>
       </Table>
     </Paper>

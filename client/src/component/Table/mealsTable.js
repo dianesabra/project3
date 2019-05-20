@@ -37,9 +37,9 @@ function SpanningTable(props) {
             <TableCell className={classes.tablecell} align="left">
               Price
             </TableCell>
-            <TableCell className={classes.tablecell} align="left">
+            {/* <TableCell className={classes.tablecell} align="left">
               Outstanding Qty.
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -51,21 +51,21 @@ function SpanningTable(props) {
               <TableCell className={classes.responsecell} align="left">
                 {row.price}
               </TableCell>
-              <TableCell className={classes.responsecell} align="left">
+              {/* <TableCell className={classes.responsecell} align="left">
                 {row.outstandingQty}
-              </TableCell>
+              </TableCell> */}
               {/* <TableCell className={classes.responsecell} align="right">
                 <DeleteIcon>Delete</DeleteIcon>
               </TableCell> */}
             </TableRow>
           ))}
 
-          <TableRow>
+          {/* <TableRow>
             <TableCell className={classes.responsecell} colSpan={2}>
               Total
             </TableCell>
             <TableCell align="right" />
-          </TableRow>
+          </TableRow> */}
         </TableBody>
       </Table>
     </Paper>

@@ -288,8 +288,8 @@ class Main extends Component {
     return (
       <div
         style={{
-          paddingLeft: 74,
-          display: "flex",
+          paddingLeft: 0,
+          // display: "flex",
           flexWrap: "column"
         }}
       >
@@ -299,6 +299,12 @@ class Main extends Component {
             variant="outlined"
             color="primary"
             onClick={this.handleClickOpenMeal}
+            style={{
+              marginLeft: "14px",
+              marginTop: "10px",
+              justifyContent: "space-between"
+              // color: "green"
+            }}
           >
             Post a Meal
           </Button>

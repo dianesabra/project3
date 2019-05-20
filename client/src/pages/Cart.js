@@ -35,7 +35,7 @@ class Cart extends Component {
         qtyOutstanding: item.reqQty,
         orderID: item._id
       }).then(res => {
-        this.handleClickCartConfirmation();
+        // this.handleClickCartConfirmation();
       });
     });
   };
@@ -73,14 +73,8 @@ class Cart extends Component {
 
   render() {
     return (
-      <div
-        style={{
-          maxHeight: 2000,
-          width: "90%",
-          position: "relative",
-          left: "9%"
-        }}
-      >
+      <div>
+        <h1>Your Cart</h1>
         <SpanningTable
           orders={this.state.orders}
           orderTotal={this.state.totalPrice}
@@ -105,7 +99,7 @@ class Cart extends Component {
             <Elements>
               <CheckoutForm
                 onClickPurchCart={this.checkout}
-                totalPrice={this.state.totalPrice}
+                // totalPrice={this.state.totalPrice}
               />
             </Elements>
           </div>

@@ -76,9 +76,6 @@ class RecipeReviewCard extends React.Component {
           image={this.props.image}
           title={this.props.mealName}
         />
-        <CardContent>
-          <Typography component="p">{this.props.mealDesc}</Typography>
-        </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           {/* <IconButton aria-label="Delete" onClick={this.props.onClickDelete}>
             <DeleteIcon />
@@ -94,7 +91,7 @@ class RecipeReviewCard extends React.Component {
           <Typography
             component="p"
             style={{
-              marginLeft: "100px",
+              marginLeft: "60px",
               justifyContent: "space-between",
               color: "green"
             }}
@@ -102,6 +99,9 @@ class RecipeReviewCard extends React.Component {
             Quantity Remaining: {this.props.qtyOutstanding}
           </Typography>
         </CardActions>
+        <CardContent>
+          <Typography component="p">{this.props.mealDesc}</Typography>
+        </CardContent>
       </Card>
     );
   }

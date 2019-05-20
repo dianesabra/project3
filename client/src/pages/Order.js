@@ -40,7 +40,7 @@ class Cook extends Component {
         }
       })
       .catch(err => console.log(err));
-    API.getMeal()
+    API.getMealByCook(localStorage.getItem("userid"))
       .then(res =>
         this.setState({
           meals: res.data,
@@ -93,7 +93,7 @@ class Cook extends Component {
   render() {
     return (
       <div>
-        {<h1>Your orders</h1>}
+        {<h1>Your Orders</h1>}
         <SpanningTable
           orders={this.state.orders}
           onClickDelete={req => this.deleteOrder(req)}

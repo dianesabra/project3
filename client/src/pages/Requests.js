@@ -49,6 +49,7 @@ class Customer extends Component {
   render() {
     return (
       <div>
+        <h1>Your Requests</h1>
         <SpanningTable
           orders={this.state.orders}
           onClickDelete={req => this.deleteOrder(req)}

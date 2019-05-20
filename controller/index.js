@@ -11,7 +11,7 @@ module.exports = {
   },
   // Cook sees posted meals
   getMealByCook(req, res) {
-    db.Meals.find({ _userID: req.body }).then(function(dbMeals) {
+    db.Meals.find({ _userID: req.params.id }).then(function(dbMeals) {
       res.json(dbMeals);
     });
   },

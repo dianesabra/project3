@@ -131,38 +131,38 @@ class PrimarySearchAppBar extends React.Component {
       </Menu>
     );
 
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
+    // const renderMobileMenu = (
+    //   <Menu
+    //     anchorEl={mobileMoreAnchorEl}
+    //     anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    //     transformOrigin={{ vertical: "top", horizontal: "right" }}
+    //     open={isMobileMenuOpen}
+    //     onClose={this.handleMenuClose}
+    //   >
+    //     <MenuItem onClick={this.handleMobileMenuClose}>
+    //       <IconButton color="inherit">
+    //         {/* <Badge badgeContent={4} color="secondary"> */}
+    //         <MailIcon />
+    //         {/* </Badge> */}
+    //       </IconButton>
+    //       <p>Messages</p>
+    //     </MenuItem>
+    //     <MenuItem onClick={this.handleMobileMenuClose}>
+    //       <IconButton color="inherit">
+    //         {/* <Badge badgeContent={11} color="secondary"> */}
+    //         <NotificationsIcon />
+    //         {/* </Badge> */}
+    //       </IconButton>
+    //       <p>Notifications</p>
+    //     </MenuItem>
+    //     <MenuItem onClick={this.handleProfileMenuOpen}>
+    //       <IconButton color="inherit">
+    //         <AccountCircle />
+    //       </IconButton>
+    //       <p>Profile</p>
+    //     </MenuItem>
+    //   </Menu>
+    // );
 
     return (
       <div className={classes.root}>
@@ -203,33 +203,38 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.sectionDesktop}>
               <Link to={"/Orders"} style={{ textDecoration: "none" }}>
                 <IconButton color="inherit" title={"Orders"}>
-                  <Badge badgeContent={4} color="secondary">
-                    <i class="material-icons">queue</i>
-                  </Badge>
+                  {/* <Badge badgeContent={4} color="secondary"> */}
+                  <i class="material-icons">queue</i>
+                  {/* </Badge> */}
                 </IconButton>
               </Link>
               <Link to={"/requests"} style={{ textDecoration: "none" }}>
                 <IconButton title={"Requests"} color="inherit">
-                  <Badge badgeContent={17} color="secondary">
-                    <i class="material-icons">receipt</i>
-                  </Badge>
+                  {/* <Badge badgeContent={17} color="secondary"> */}
+                  <i class="material-icons">receipt</i>
+                  {/* </Badge> */}
                 </IconButton>
               </Link>
               <Link to={"/cart"} style={{ textDecoration: "none" }}>
                 <IconButton title={"Cart"} color="inherit">
-                  <Badge badgeContent={17} color="secondary">
-                    <i class="material-icons md-48">shopping_cart</i>
-                  </Badge>
+                  {/* <Badge badgeContent={17} color="secondary"> */}
+                  <i class="material-icons md-48">shopping_cart</i>
+                  {/* </Badge> */}
                 </IconButton>
               </Link>
-              <IconButton
+              <Link to={"/login"} style={{ textDecoration: "none" }}>
+                <IconButton title={"Signout"} color="inherit">
+                  <i class="material-icons md-48">exit_to_app</i>
+                </IconButton>
+              </Link>
+              {/* <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
-              </IconButton>
+              </IconButton> */}
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
@@ -243,7 +248,7 @@ class PrimarySearchAppBar extends React.Component {
           </Toolbar>
         </AppBar>
         {renderMenu}
-        {renderMobileMenu}
+        {/* {renderMobileMenu} */}
       </div>
     );
   }
