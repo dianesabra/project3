@@ -3,10 +3,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/styles";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
@@ -19,6 +17,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { RemoveRedEye } from '@material-ui/icons';
 import { InputAdornment } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import Background from '../images/food.jpg';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,9 +29,8 @@ const theme = createMuiTheme({
 
 const styles = {
   paper: {
-    width: 400,
-    height: 500,
-    alignItems: "center"
+    padding: "2%",
+    width: "50%"
   }
 };
 
@@ -53,7 +51,6 @@ class Login extends React.Component {
     submitted: false,
     passwordIsMasked: true
   };
-
 
   togglePasswordMask = () => {
     this.setState(prevState => ({
@@ -117,124 +114,148 @@ class Login extends React.Component {
   render() {
     const { formData, submitted, passwordIsMasked } = this.state;
     return (
-      <div>
+      <div style={{
+        backgroundImage: `url(${Background})`,
+        height: "100vh",
+        backgroundSize: "cover"
+      }}>
         <MuiThemeProvider theme={theme}>
-          <Paper>
-            <Typography>
-              Welcome to Fresh Off The Table!
-
-              Fresh Off The Table is an application that allows you and others to post and purchase
-            </Typography>
-          </Paper>
-          <Paper
-            let className="paper"
+          <Grid
+                container
+                justify="center"
+                
+              >
+            <Paper
             style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-              padding: "5%"
-            }}
+              width: "75%",
+              marginTop: "5%"
+            }}>
+              <Typography
+                style={{
+                  textAlign: "center"
+                }}
+              >
+                Welcome to Fresh Off The Table! 
+                
+                <br></br>
+
+                Have leftovers from dinner? Don't have time to cook? Don't feel like going out to eat? Try Fresh Off The Table!
+
+                <br></br>
+
+                Fresh Off The Table allows you to purchase and share food with people around you.
+
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justify="center"
+            style={{ minHeight: "100vh"}}
           >
-            <Typography
-              component="h1"
-              variant="h5"
+            <Paper
               style={{
-                textAlign: "center"
+                ...styles.paper
               }}
             >
-              Login
-            </Typography>
-            <ValidatorForm onSubmit={this.handleLogin}>
-              <TextValidator
-                label="Email Address"
-                onChange={this.handleChange}
-                name="email"
-                validators={["required"]}
-                errorMessages={["Email required"]}
-                value={formData.email}
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                autoFocus
-                color="primary"
-              />
-
-              <TextValidator
-                label="Password"
-                onChange={this.handleChange}
-                name="password"
-                type={passwordIsMasked ? "password" : "text"}
-                validators={["required"]}
-                errorMessages={["Password required"]}
-                value={formData.password}
-                variant="outlined"
-                margin="normal"
-                color="primary"
-                style={{width: 700}}
-
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <RemoveRedEye 
-                        style={hoveredStyle}
-                        onClick={this.togglePasswordMask}
-                      />
-                    </InputAdornment>
-                  ),
+              <Typography
+                component="h1"
+                variant="h5"
+                style={{
+                  textAlign: "center"
                 }}
-              />
-
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-
-              <Button
-                label="submit"
-                name="submit"
-                type="submit"
-                variant="contained"
-                margin="normal"
-                fullWidth
-                color="primary"
-                disabled={submitted}
               >
                 Login
-              </Button>
-            </ValidatorForm>
+              </Typography>
+              <ValidatorForm onSubmit={this.handleLogin}>
+                <TextValidator
+                  label="Email Address"
+                  onChange={this.handleChange}
+                  name="email"
+                  validators={["required"]}
+                  errorMessages={["This field is required."]}
+                  value={formData.email}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  autoFocus
+                  color="primary"
+                />
 
-            <Grid container>
-              <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+                <TextValidator
+                  label="Password"
+                  onChange={this.handleChange}
+                  name="password"
+                  type={passwordIsMasked ? "password" : "text"}
+                  validators={["required"]}
+                  errorMessages={["Thie field is required."]}
+                  value={formData.password}
+                  variant="outlined"
+                  margin="normal"
+                  color="primary"
+                  style={{width: "100%"}}
 
-            <Dialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                {"Incorrect email or password"}
-              </DialogTitle>
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <RemoveRedEye 
+                          style={hoveredStyle}
+                          onClick={this.togglePasswordMask}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
 
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  The email you entered does not exist or the password you
-                  entered for the user is incorrect.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.handleClose} color="primary">
-                  Close
+                <Button
+                  label="submit"
+                  name="submit"
+                  type="submit"
+                  variant="contained"
+                  margin="normal"
+                  fullWidth
+                  color="primary"
+                  disabled={submitted}
+                >
+                  Login
                 </Button>
-              </DialogActions>
-            </Dialog>
-          </Paper>
+              </ValidatorForm>
+
+              <Grid container>
+                <Grid item>
+                  <Link href="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+
+              <Dialog
+                open={this.state.open}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Incorrect email or password"}
+                </DialogTitle>
+
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    The email you entered does not exist or the password you
+                    entered for the user is incorrect.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary">
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Paper>
+          </Grid>
         </MuiThemeProvider>
       </div>
     );
