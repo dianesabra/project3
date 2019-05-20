@@ -294,13 +294,15 @@ class Main extends Component {
         }}
       >
         {/* Post Meal */}
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={this.handleClickOpenMeal}
-        >
-          Post a Meal
-        </Button>
+        <div>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={this.handleClickOpenMeal}
+          >
+            Post a Meal
+          </Button>
+        </div>
         <Dialog
           open={this.state.openMeal}
           onClose={this.handleCloseMeal}

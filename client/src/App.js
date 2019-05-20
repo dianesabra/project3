@@ -40,7 +40,7 @@ class App extends Component {
             <MiniDrawer />
           ) : null}
           <main className={classes.content}>
-            <div className={classes.toolbar} />
+            {/* <div className={classes.toolbar} /> */}
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
