@@ -12,5 +12,5 @@ router.route("/:id/:qtyFulfilled/:orderID").put(orderController.updateQty);
 router
   .route("/:id")
   .delete(orderController.deleteOrders)
-  .get(orderController.getOrders);
+  .get(orderController.getRequest);
 module.exports = router;

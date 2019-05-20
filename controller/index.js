@@ -43,8 +43,16 @@ module.exports = {
       .catch(err => console.log(err));
   },
   // only for the cook
+  getRequest(req, res) {
+    db.Orders.find({ _userID: req.params.id }).then(function(dbOrders) {
+      res.json(dbOrders);
+      // filter by user ID and meal ID
+    });
+  },
+  // only for the cook
   getOrders(req, res) {
-    db.Orders.find(req.body).then(function(dbOrders) {
+    console.log(req.params.id);
+    db.Orders.find({ _cookuserID: req.params.id }).then(function(dbOrders) {
       res.json(dbOrders);
       // filter by user ID and meal ID
     });

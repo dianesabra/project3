@@ -36,7 +36,7 @@ const styles = {
 
 const hoveredStyle = {
   cursor: "pointer"
-}
+};
 
 class Login extends React.Component {
   state = {
@@ -54,9 +54,9 @@ class Login extends React.Component {
 
   togglePasswordMask = () => {
     this.setState(prevState => ({
-      passwordIsMasked : !prevState.passwordIsMasked,
+      passwordIsMasked: !prevState.passwordIsMasked
     }));
-  }
+  };
 
   handleChange = event => {
     const { formData } = this.state;
@@ -262,10 +262,10 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes= {
+Login.propTypes = {
   classes: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.func.isRequired
-}
+};
 
 export default withStyles(styles)(Login);

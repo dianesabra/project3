@@ -19,12 +19,12 @@ class Customer extends Component {
   }
 
   loadData = () => {
-    API.getOrder()
-      .then(res =>
+    API.getRequests(localStorage.getItem("userid"))
+      .then(res => {
         this.setState({
           orders: res.data
-        })
-      )
+        });
+      })
       .catch(err => console.log(err));
   };
 

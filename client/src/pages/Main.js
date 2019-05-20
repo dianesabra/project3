@@ -145,7 +145,7 @@ class Main extends Component {
         this.setState({ meals: res.data });
       })
       .catch(err => console.log(err));
-    API.getOrder()
+    API.getOrder(localStorage.getItem("userid"))
       .then(res =>
         this.setState({
           orders: res.data
@@ -185,6 +185,8 @@ class Main extends Component {
       .catch(err => console.log(err));
   };
   createMeal = e => {
+    console.log("tester");
+    debugger;
     // this.state.mealName &&
     // this.state.cookName &&
     // this.state.dietRestrictions &&
@@ -203,15 +205,13 @@ class Main extends Component {
       image: this.state.selectedFile
     })
       .then(res => {
-        this.handleClickMealConfirmation().then(this.loadData());
+        this.handleClickMealConfirmation();
+        this.loadData();
       })
       .catch(err => console.log(err));
-    // : console.log("here");
   };
 
   createOrder = () => {
-    this.initState();
-    debugger;
     API.saveOrder({
       reqQty: this.state.reqQty,
       pickupAddress: this.state.pickupAddress,
@@ -225,6 +225,7 @@ class Main extends Component {
       _cookuserID: this.state.meals[this.state.mealIndex.i]._userID
     })
       .then(res => {
+        this.initState();
         this.handleClickOrderConfirmation();
         this.loadData();
         // make sound when post is made
@@ -266,6 +267,8 @@ class Main extends Component {
   };
 
   handleSubmit = () => {
+    console.log("submitter");
+    debugger;
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
     });
@@ -461,7 +464,7 @@ class Main extends Component {
                 defaultValue={this.state.reqQty}
                 onChange={this.handleInputChangeReqQty}
                 name="reqQty"
-                validators={["required", "minNumber:1"]}
+                validators={["required"]}
                 errorMessages={["Requested Quantity is required."]}
                 value={this.state.reqQty}
                 fullWidth

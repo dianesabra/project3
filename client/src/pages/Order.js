@@ -5,6 +5,8 @@ import { List, ListItem } from "../component/List";
 import { Card } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 //import SimpleCard from './simpleCard.js';
+import SpanningTable from "../component/Table/ordersTable";
+import MealsSpanningTable from "../component/Table/mealsTable";
 
 class Cook extends Component {
   state = {
@@ -17,8 +19,7 @@ class Cook extends Component {
 
   componentDidMount() {
     const username = localStorage.getItem("userid");
-    this.setState({ userid: username });
-    this.loadData();
+    this.setState({ userid: username }, this.loadData());
   }
 
   handleClickOpen = () => {
@@ -30,18 +31,13 @@ class Cook extends Component {
   };
 
   loadData = () => {
-    API.getOrder()
+    API.getOrder(localStorage.getItem("userid"))
       .then(res => {
-        API.getOrder()
-          .then(res =>
-            this.setState({
-              orders: res.data
-            })
-          )
-          .catch(err => console.log(err));
-        this.setState({
-          orders: res.data
-        });
+        {
+          this.setState({
+            orders: res.data
+          });
+        }
       })
       .catch(err => console.log(err));
     API.getMeal()
@@ -49,7 +45,7 @@ class Cook extends Component {
         this.setState({
           meals: res.data,
           search: "",
-          orders: [],
+          // orders: [],
           status: false
         })
       )
@@ -96,59 +92,19 @@ class Cook extends Component {
 
   render() {
     return (
-      <Fragment>
-        <p>Main</p>
-        {/* <Input
-          defaultValue={this.state.Search}
-          placeholder="Search a meal"
-          onChange={this.handleInputChange}
-          name="search"
-          type="text"
+      <div>
+        {<h1>Your orders</h1>}
+        <SpanningTable
+          orders={this.state.orders}
+          onClickDelete={req => this.deleteOrder(req)}
         />
-        <FormBtn onClick={this.handleFormSearch}>Submit</FormBtn> */}
-
-        <Card style={{ minWidth: 275 }}>
-          <CardContent>
-            {this.state.meals.length ? (
-              <List>
-                {this.state.meals
-                  .filter(meal => meal._userID === this.state.userid)
-                  .map(meal => (
-                    <ListItem key={meal._id}>
-                      <p>{meal.mealName}</p>
-                      <p>{meal.cookName}</p>
-                      <p>{meal.qtyOutstanding}</p>
-                      <p>{meal.price}</p>
-                      <p>{meal.mealDesc}</p>
-                      <p>{meal.dietRestrictions}</p>
-                      <button onClick={() => this.deleteMeal(meal._id)}>
-                        Delete Me
-                      </button>
-                      {this.state.orders.length ? (
-                        <List>
-                          {this.state.orders
-                            .filter(order => order._mealID === meal._id)
-                            .map(order => (
-                              <ListItem key={order._id}>
-                                <p>{order.reqQty}</p>
-                                <p>{order.specInstructions}</p>
-                                <p>{order.pickupAddress}</p>
-                                <p>{order.pickupDate}</p>
-                              </ListItem>
-                            ))}
-                        </List>
-                      ) : (
-                        <h2 />
-                      )}
-                    </ListItem>
-                  ))}
-              </List>
-            ) : (
-              <h3 />
-            )}
-          </CardContent>
-        </Card>
-      </Fragment>
+        {<br />}
+        {<h1>Your Meals</h1>}
+        <MealsSpanningTable
+          meals={this.state.meals}
+          onClickDelete={req => this.deleteOrder(req)}
+        />
+      </div>
     );
   }
 }
