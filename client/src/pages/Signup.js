@@ -16,6 +16,8 @@ import API from "../utils/API";
 import { RemoveRedEye } from '@material-ui/icons';
 import { InputAdornment } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import Background from '../images/food.jpg';
+import Grid from "@material-ui/core/Grid";
 
 const theme = createMuiTheme({
   palette: {
@@ -27,9 +29,8 @@ const theme = createMuiTheme({
 
 const styles = {
   paper: {
-    width: 400,
-    height: 500,
-    alignItems: "center"
+    padding: "2%",
+    width: "50%"
   }
 };
 
@@ -105,135 +106,172 @@ toggleRepeatPasswordMask = () => {
     const { formData, submitted, passwordIsMasked, repeatPasswordIsMasked } = this.state;
 
     return (
-      <div>
+      <div style={{
+        backgroundImage: `url(${Background})`,
+        height: "100vh",
+        backgroundSize: "cover"
+      }}>
         <MuiThemeProvider theme={theme}>
-          <Paper
+          <Grid
+                container
+                justify="center"
+                
+              >
+            <Paper
             style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-              padding: "5%"
-            }}
-          >
-            <Typography
-              component="h1"
-              variant="h5"
-              style={{
-                textAlign: "center"
-              }}
+              width: "75%",
+              marginTop: "5%"
+            }}>
+              <Typography
+                style={{
+                  textAlign: "center"
+                }}
+              >
+                Welcome to Fresh Off The Table! 
+                
+                <br></br>
+
+                Have leftovers from dinner? Don't have time to cook? Don't feel like going out to eat? Try Fresh Off The Table!
+
+                <br></br>
+
+                Fresh Off The Table allows you to purchase and share food with people around you.
+
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid
+              container
+              spacing={0}
+              direction="column"
+              alignItems="center"
+              justify="center"
+              style={{ minHeight: "100vh"}}
             >
-              SignUp
-            </Typography>
-
-            <ValidatorForm onSubmit={this.handleClickOpen}>
-              <TextValidator
-                label="Email Address"
-                onChange={this.handleChange}
-                name="email"
-                validators={["required", "isEmail"]}
-                errorMessages={[
-                  "Email Required",
-                  "Invalid email"
-                ]}
-                value={formData.email}
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                autoFocus
-                color="primary"
-              />
-
-              <TextValidator
-                label="Password"
-                onChange={this.handleChange}
-                name="password"
-                type={passwordIsMasked ? "password" : "text"}
-                validators={["required"]}
-                errorMessages={["Password required"]}
-                value={formData.password}
-                variant="outlined"
-                margin="normal"
-                color="primary"
-                style={{width: 700}}
-
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <RemoveRedEye 
-                        style={hoveredStyle}
-                        onClick={this.togglePasswordMask}
-                      />
-                    </InputAdornment>
-                  ),
+              <Paper
+                style={{
+                  ...styles.paper
                 }}
-              />
-
-              <TextValidator
-                label="Repeat password"
-                onChange={this.handleChange}
-                name="repeatPassword"
-                type={repeatPasswordIsMasked ? "password" : "text"}
-                validators={["required", "isPasswordMatch" ]}
-                errorMessages={[
-                  "Retype password",
-                  "Passwords do not match"
-                ]}
-                value={formData.repeatPassword}
-                variant="outlined"
-                margin="normal"
-                color="primary"
-                style={{width: 700}}
-
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <RemoveRedEye 
-                        style={hoveredStyle}
-                        onClick={this.toggleRepeatPasswordMask}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              <Button
-                label="submit"
-                name="submit"
-                type="submit"
-                variant="contained"
-                margin="normal"
-                fullWidth
-                color="primary"
-                disabled={submitted}
               >
-                Create Account
-              </Button>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  style={{
+                    textAlign: "center"
+                  }}
+                >
+                  SignUp
+                </Typography>
+                
+              <ValidatorForm onSubmit={this.handleClickOpen}>
+                <TextValidator
+                  label="Email Address"
+                  onChange={this.handleChange}
+                  name="email"
+                  validators={["required", "isEmail"]}
+                  errorMessages={[
+                    "This field is required.",
+                    "Invalid email."
+                  ]}
+                  value={formData.email}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  autoFocus
+                  color="primary"
+                />
 
-              <Dialog
-                open={this.state.open}
-                onClose={this.handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  {"Congratulations!"}
-                </DialogTitle>
+                <TextValidator
+                  label="Password"
+                  onChange={this.handleChange}
+                  name="password"
+                  type={passwordIsMasked ? "password" : "text"}
+                  validators={["required"]}
+                  errorMessages={["This field is required."]}
+                  value={formData.password}
+                  variant="outlined"
+                  margin="normal"
+                  color="primary"
+                  style={{width: "100%"}}
 
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    Your account has been created.
-                  </DialogContentText>
-                </DialogContent>
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <RemoveRedEye 
+                          style={hoveredStyle}
+                          onClick={this.togglePasswordMask}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
 
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    <Link to={"/login"}>Return to Login</Link>
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </ValidatorForm>
-          </Paper>
+                <TextValidator
+                  label="Repeat password"
+                  onChange={this.handleChange}
+                  name="repeatPassword"
+                  type={repeatPasswordIsMasked ? "password" : "text"}
+                  validators={["required", "isPasswordMatch" ]}
+                  errorMessages={[
+                    "This field is required.",
+                    "Passwords do not match."
+                  ]}
+                  value={formData.repeatPassword}
+                  variant="outlined"
+                  margin="normal"
+                  color="primary"
+                  style={{width: "100%"}}
+
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <RemoveRedEye 
+                          style={hoveredStyle}
+                          onClick={this.toggleRepeatPasswordMask}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+                <Button
+                  label="submit"
+                  name="submit"
+                  type="submit"
+                  variant="contained"
+                  margin="normal"
+                  fullWidth
+                  color="primary"
+                  disabled={submitted}
+                >
+                  Create Account
+                </Button>
+
+                <Dialog
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"Congratulations!"}
+                  </DialogTitle>
+
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      Your account has been created.
+                    </DialogContentText>
+                  </DialogContent>
+
+                  <DialogActions>
+                    <Button onClick={this.handleClose} color="primary">
+                      <Link to={"/login"}>Return to Login</Link>
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </ValidatorForm>
+            </Paper>
+          </Grid>
         </MuiThemeProvider>
       </div>
     );

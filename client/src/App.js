@@ -9,6 +9,8 @@ import Cart from "./pages/Cart";
 import Signup from "./pages/Signup";
 // import MiniDrawer from "./component/HomePage";
 import MiniDrawer from "./component/HomePage";
+import Background from './images/food.jpg'
+import './App.css';
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
