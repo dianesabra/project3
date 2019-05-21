@@ -7,9 +7,7 @@ import Orders from "./pages/Order";
 import NoMatch from "./pages/NoMatch";
 import Cart from "./pages/Cart";
 import Signup from "./pages/Signup";
-// import MiniDrawer from "./component/HomePage";
 import MiniDrawer from "./component/HomePage";
-import Background from "./images/food.jpg";
 import "./App.css";
 
 import PropTypes from "prop-types";
@@ -32,7 +30,7 @@ const styles = theme => ({
 
 class App extends Component {
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     return (
       <Router>
         <Fragment>
@@ -42,7 +40,6 @@ class App extends Component {
             <MiniDrawer />
           ) : null}
           <main className={classes.content}>
-            {/* <div className={classes.toolbar} /> */}
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />

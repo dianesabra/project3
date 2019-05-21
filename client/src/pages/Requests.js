@@ -1,8 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import API from "../utils/API";
-import { List, ListItem } from "../component/List";
-import { Card } from "@material-ui/core";
-import CardContent from "@material-ui/core/CardContent";
 import SpanningTable from "../component/Table/requestTable";
 
 class Customer extends Component {
@@ -40,7 +37,6 @@ class Customer extends Component {
   deleteOrder = id => {
     API.deleteOrder(id)
       .then(res => {
-        // make sound when post is made
         this.loadData();
       })
       .catch(err => console.log(err));

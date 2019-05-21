@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles, createMuiTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -80,21 +80,6 @@ function SpanningTable(props) {
               </TableCell>
             </TableRow>
           ))}
-
-          {/* <TableRow>
-            <TableCell className={classes.responsecell} align="right" />
-            <TableCell className={classes.responsecell} align="right" />
-            <TableCell className={classes.responsecell} align="right" />
-            <TableCell className={classes.responsecell} align="right" />
-            <TableCell
-              className={classes.responsecell}
-              align="right"
-              colSpan={2}
-            >
-              Total: ${props.orderTotal}
-            </TableCell>
-            <TableCell align="right" />
-          </TableRow> */}
         </TableBody>
       </Table>
     </Paper>

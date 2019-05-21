@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "../component/Payment/CheckoutForm";
 import API from "../utils/API";
-import RecipeReviewCard from "../component/FoodCard/recipeCard";
 import SpanningTable from "../component/Table";
 import Snackbar from "@material-ui/core/Snackbar";
+
 class Cart extends Component {
   state = {
     userid: "",
@@ -34,9 +34,7 @@ class Cart extends Component {
         mealID: item._mealID,
         qtyOutstanding: item.reqQty,
         orderID: item._id
-      }).then(res => {
-        // this.handleClickCartConfirmation();
-      });
+      }).then(res => {});
     });
   };
 
@@ -65,7 +63,6 @@ class Cart extends Component {
   deleteOrder = id => {
     API.deleteOrder(id)
       .then(res => {
-        // make sound when post is made
         this.loadData();
       })
       .catch(err => console.log(err));
@@ -97,10 +94,7 @@ class Cart extends Component {
         <StripeProvider apiKey="pk_test_WypliwwmxpFOzZAxUSZc2kwD005UoPutqR">
           <div className="example">
             <Elements>
-              <CheckoutForm
-                onClickPurchCart={this.checkout}
-                // totalPrice={this.state.totalPrice}
-              />
+              <CheckoutForm onClickPurchCart={this.checkout} />
             </Elements>
           </div>
         </StripeProvider>

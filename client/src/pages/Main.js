@@ -1,9 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Input, FormBtn } from "../component/Form";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -26,7 +23,6 @@ class Main extends Component {
     orders: [],
     openMeal: false,
     openOrder: false,
-    openMealConfirmation: false,
     status: false,
     userName: "",
     password: "",
@@ -179,20 +175,11 @@ class Main extends Component {
   deleteMeal = id => {
     API.deleteMeal(id)
       .then(res => {
-        // make sound when post is made
         this.loadData();
       })
       .catch(err => console.log(err));
   };
   createMeal = e => {
-    console.log("tester");
-    debugger;
-    // this.state.mealName &&
-    // this.state.cookName &&
-    // this.state.dietRestrictions &&
-    // this.state.mealDesc &&
-    // this.state.qtyOutstanding &&
-    // this.state.price      ?
     API.saveMeal({
       mealName: this.state.mealName,
       cookName: this.state.cookName,
@@ -228,16 +215,13 @@ class Main extends Component {
         this.initState();
         this.handleClickOrderConfirmation();
         this.loadData();
-        // make sound when post is made
       })
       .catch(err => console.log(err));
-    // : alert("please fill out form");
   };
 
   deleteOrder = id => {
     API.deleteOrder(id)
       .then(res => {
-        // make sound when post is made
         this.loadData();
       })
       .catch(err => console.log(err));
@@ -250,7 +234,6 @@ class Main extends Component {
     })
       .then(res => {
         localStorage.setItem("userid", res.data._id);
-        // make sound when post is made
         this.loadData();
       })
       .catch(err => console.log(err));
@@ -267,7 +250,6 @@ class Main extends Component {
   };
 
   handleSubmit = () => {
-    console.log("submitter");
     debugger;
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
@@ -289,7 +271,6 @@ class Main extends Component {
       <div
         style={{
           paddingLeft: 0,
-          // display: "flex",
           flexWrap: "column"
         }}
       >
@@ -303,7 +284,6 @@ class Main extends Component {
               marginLeft: "14px",
               marginTop: "10px",
               justifyContent: "space-between"
-              // color: "green"
             }}
           >
             Post a Meal
@@ -401,12 +381,7 @@ class Main extends Component {
               />
               <p />
               {"Image: "}
-              <input
-                type="file"
-                // src="img_submit.gif"
-                alt="Submit"
-                onChange={this.handleImage}
-              />
+              <input type="file" alt="Submit" onChange={this.handleImage} />
               <br />
               <Button
                 label="cancel"

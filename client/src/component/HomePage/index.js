@@ -4,18 +4,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Link } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import logo from "../../assets/img/logo.png";
 
@@ -91,8 +84,7 @@ const styles = theme => ({
 
 class PrimarySearchAppBar extends React.Component {
   state = {
-    anchorEl: null,
-    mobileMoreAnchorEl: null
+    anchorEl: null
   };
 
   handleProfileMenuOpen = event => {
@@ -104,19 +96,10 @@ class PrimarySearchAppBar extends React.Component {
     this.handleMobileMenuClose();
   };
 
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
-
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
-
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { anchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const renderMenu = (
       <Menu
@@ -130,39 +113,6 @@ class PrimarySearchAppBar extends React.Component {
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
       </Menu>
     );
-
-    // const renderMobileMenu = (
-    //   <Menu
-    //     anchorEl={mobileMoreAnchorEl}
-    //     anchorOrigin={{ vertical: "top", horizontal: "right" }}
-    //     transformOrigin={{ vertical: "top", horizontal: "right" }}
-    //     open={isMobileMenuOpen}
-    //     onClose={this.handleMenuClose}
-    //   >
-    //     <MenuItem onClick={this.handleMobileMenuClose}>
-    //       <IconButton color="inherit">
-    //         {/* <Badge badgeContent={4} color="secondary"> */}
-    //         <MailIcon />
-    //         {/* </Badge> */}
-    //       </IconButton>
-    //       <p>Messages</p>
-    //     </MenuItem>
-    //     <MenuItem onClick={this.handleMobileMenuClose}>
-    //       <IconButton color="inherit">
-    //         {/* <Badge badgeContent={11} color="secondary"> */}
-    //         <NotificationsIcon />
-    //         {/* </Badge> */}
-    //       </IconButton>
-    //       <p>Notifications</p>
-    //     </MenuItem>
-    //     <MenuItem onClick={this.handleProfileMenuOpen}>
-    //       <IconButton color="inherit">
-    //         <AccountCircle />
-    //       </IconButton>
-    //       <p>Profile</p>
-    //     </MenuItem>
-    //   </Menu>
-    // );
 
     return (
       <div className={classes.root}>
@@ -187,39 +137,22 @@ class PrimarySearchAppBar extends React.Component {
                 />
               </Link>
             </Typography>
-            {/* <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div> */}
+
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <Link to={"/Orders"} style={{ textDecoration: "none" }}>
                 <IconButton color="inherit" title={"Orders"}>
-                  {/* <Badge badgeContent={4} color="secondary"> */}
                   <i class="material-icons">queue</i>
-                  {/* </Badge> */}
                 </IconButton>
               </Link>
               <Link to={"/requests"} style={{ textDecoration: "none" }}>
                 <IconButton title={"Requests"} color="inherit">
-                  {/* <Badge badgeContent={17} color="secondary"> */}
                   <i class="material-icons">receipt</i>
-                  {/* </Badge> */}
                 </IconButton>
               </Link>
               <Link to={"/cart"} style={{ textDecoration: "none" }}>
                 <IconButton title={"Cart"} color="inherit">
-                  {/* <Badge badgeContent={17} color="secondary"> */}
                   <i class="material-icons md-48">shopping_cart</i>
-                  {/* </Badge> */}
                 </IconButton>
               </Link>
               <Link to={"/login"} style={{ textDecoration: "none" }}>
@@ -227,14 +160,6 @@ class PrimarySearchAppBar extends React.Component {
                   <i class="material-icons md-48">exit_to_app</i>
                 </IconButton>
               </Link>
-              {/* <IconButton
-                aria-owns={isMenuOpen ? "material-appbar" : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton> */}
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
@@ -248,7 +173,6 @@ class PrimarySearchAppBar extends React.Component {
           </Toolbar>
         </AppBar>
         {renderMenu}
-        {/* {renderMobileMenu} */}
       </div>
     );
   }

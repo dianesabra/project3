@@ -19,9 +19,6 @@ import { InputAdornment } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Background from "../images/food.jpg";
 
-
-
-
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -137,7 +134,6 @@ class Login extends React.Component {
                 width: "75%",
                 marginTop: "5%"
               }}
-      
             >
               <Typography
                 style={{
@@ -147,20 +143,22 @@ class Login extends React.Component {
                 }}
                 variant="h2"
               >
-              Welcome to Fresh Off The Table!
+                Welcome to Fresh Off The Table!
               </Typography>
 
               <Typography
-              style={{
-                textAlign: "center",
-                
-              }}>
-              
+                style={{
+                  textAlign: "center"
+                }}
+              >
                 <br />
-                Don't have time to cook? Want to try something new? Have leftovers? Want to share your favorite dishes with those around you? Try Fresh Off The Table!
+                Don't have time to cook? Want to try something new? Have
+                leftovers? Want to share your favorite dishes with those around
+                you? Try Fresh Off The Table!
                 <br />
                 Fresh Off The Table allows you to purchase and share food with
-                people around you. Login or Signup now to explore how food is supposed to be expereinced!
+                people around you. Login or Signup now to explore how food is
+                supposed to be expereinced!
               </Typography>
             </Paper>
           </Grid>
@@ -170,7 +168,7 @@ class Login extends React.Component {
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ minHeight: "100vh" }}
+            style={{ minHeight: "74vh" }}
           >
             <Paper
               style={{

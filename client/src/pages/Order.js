@@ -1,10 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { Input, FormBtn } from "../component/Form";
+import React, { Component } from "react";
 import API from "../utils/API";
-import { List, ListItem } from "../component/List";
-import { Card } from "@material-ui/core";
-import CardContent from "@material-ui/core/CardContent";
-//import SimpleCard from './simpleCard.js';
 import SpanningTable from "../component/Table/ordersTable";
 import MealsSpanningTable from "../component/Table/mealsTable";
 
@@ -33,11 +28,9 @@ class Cook extends Component {
   loadData = () => {
     API.getOrder(localStorage.getItem("userid"))
       .then(res => {
-        {
-          this.setState({
-            orders: res.data
-          });
-        }
+        this.setState({
+          orders: res.data
+        });
       })
       .catch(err => console.log(err));
     API.getMealByCook(localStorage.getItem("userid"))
@@ -45,7 +38,6 @@ class Cook extends Component {
         this.setState({
           meals: res.data,
           search: "",
-          // orders: [],
           status: false
         })
       )
@@ -64,7 +56,6 @@ class Cook extends Component {
   deleteMeal = id => {
     API.deleteMeal(id)
       .then(res => {
-        // make sound when post is made
         this.loadData();
       })
       .catch(err => console.log(err));
@@ -75,7 +66,6 @@ class Cook extends Component {
     this.handleClose();
     API.saveMeal(this.state)
       .then(res => {
-        // make sound when post is made
         this.loadData();
       })
       .catch(err => console.log(err));
@@ -84,7 +74,6 @@ class Cook extends Component {
   deleteOrder = id => {
     API.deleteOrder(id)
       .then(res => {
-        // make sound when post is made
         this.loadData();
       })
       .catch(err => console.log(err));

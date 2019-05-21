@@ -72,6 +72,19 @@ const mealSeed = [
     orderPaid: false,
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTxMvqvlWtDAs3CKsoeM26GRWPC7M2DaSCyejzuwHOmnQTcLqn3w"
+  },
+  {
+    mealName: "Churros",
+    cookName: "Debra Sway",
+    dietRestrictions: "Chocolate Lovers!",
+    mealDesc:
+      "A churro is a fried-dough pastry—predominantly choux—based snack. Churros are traditional in Spain and Portugal, from where they originate, as well as the Philippines and Ibero-America.",
+    qtyOutstanding: 10,
+    price: 5,
+    _userID: "5cd0f06b572da53ac8386868",
+    orderPaid: false,
+    image:
+      "https://lingeralittle.com/wp-content/uploads/2017/05/churros-spanish-hot-chocolate-top.jpg"
   }
 ];
 

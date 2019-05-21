@@ -13,10 +13,10 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import API from "../utils/API";
-import { RemoveRedEye } from '@material-ui/icons';
-import { InputAdornment } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import Background from '../images/food.jpg';
+import { RemoveRedEye } from "@material-ui/icons";
+import { InputAdornment } from "@material-ui/core";
+import PropTypes from "prop-types";
+import Background from "../images/food.jpg";
 import Grid from "@material-ui/core/Grid";
 
 const theme = createMuiTheme({
@@ -36,7 +36,7 @@ const styles = {
 
 const hoveredStyle = {
   cursor: "pointer"
-}
+};
 
 class Signup extends React.Component {
   state = {
@@ -64,17 +64,17 @@ class Signup extends React.Component {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(value);
     });
-}
-togglePasswordMask = () => {
-  this.setState(prevState => ({
-    passwordIsMasked : !prevState.passwordIsMasked,
-  }));
-}
-toggleRepeatPasswordMask = () => {
-  this.setState(prevState => ({
-    repeatPasswordIsMasked : !prevState.repeatPasswordIsMasked,
-  }));
-}
+  }
+  togglePasswordMask = () => {
+    this.setState(prevState => ({
+      passwordIsMasked: !prevState.passwordIsMasked
+    }));
+  };
+  toggleRepeatPasswordMask = () => {
+    this.setState(prevState => ({
+      repeatPasswordIsMasked: !prevState.repeatPasswordIsMasked
+    }));
+  };
 
   handleChange = event => {
     const { formData } = this.state;
@@ -103,28 +103,32 @@ toggleRepeatPasswordMask = () => {
   };
 
   render() {
-    const { formData, submitted, passwordIsMasked, repeatPasswordIsMasked } = this.state;
+    const {
+      formData,
+      submitted,
+      passwordIsMasked,
+      repeatPasswordIsMasked
+    } = this.state;
 
     return (
-      <div style={{
-        backgroundImage: `url(${Background})`,
-        height: "100%",
-        width: "100%",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover"
-      }}>
+      <div
+        style={{
+          backgroundImage: `url(${Background})`,
+          height: "100%",
+          width: "100%",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover"
+        }}
+      >
         <MuiThemeProvider theme={theme}>
-          <Grid
-                container
-                justify="center"
-                
-              >
+          <Grid container justify="center">
             <Paper
-            style={{
-              width: "75%",
-              marginTop: "5%"
-            }}>
+              style={{
+                width: "75%",
+                marginTop: "5%"
+              }}
+            >
               <Typography
                 style={{
                   textAlign: "center",
@@ -133,56 +137,55 @@ toggleRepeatPasswordMask = () => {
                 }}
                 variant="h2"
               >
-              Welcome to Fresh Off The Table!
+                Welcome to Fresh Off The Table!
               </Typography>
 
               <Typography
-              style={{
-                textAlign: "center",
-                
-              }}>
-              
-                <br />
-                Don't have time to cook? Want to try something new? Have leftovers? Want to share your favorite dishes with those around you? Try Fresh Off The Table!
-                <br />
-                Fresh Off The Table allows you to purchase and share food with
-                people around you. Login or Signup now to explore how food is supposed to be expereinced!
-              </Typography>
-              </Paper>
-            </Grid>
-            <Grid
-              container
-              spacing={0}
-              direction="column"
-              alignItems="center"
-              justify="center"
-              style={{ minHeight: "100vh"}}
-            >
-              <Paper
                 style={{
-                  ...styles.paper
+                  textAlign: "center"
                 }}
               >
-                <Typography
-                  component="h1"
-                  variant="h5"
-                  style={{
-                    textAlign: "center"
-                  }}
-                >
-                  SignUp
-                </Typography>
-                
+                <br />
+                Don't have time to cook? Want to try something new? Have
+                leftovers? Want to share your favorite dishes with those around
+                you? Try Fresh Off The Table!
+                <br />
+                Fresh Off The Table allows you to purchase and share food with
+                people around you. Login or Signup now to explore how food is
+                supposed to be expereinced!
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justify="center"
+            style={{ minHeight: "74vh" }}
+          >
+            <Paper
+              style={{
+                ...styles.paper
+              }}
+            >
+              <Typography
+                component="h1"
+                variant="h5"
+                style={{
+                  textAlign: "center"
+                }}
+              >
+                Sign Up
+              </Typography>
+
               <ValidatorForm onSubmit={this.handleClickOpen}>
                 <TextValidator
                   label="Email Address"
                   onChange={this.handleChange}
                   name="email"
                   validators={["required", "isEmail"]}
-                  errorMessages={[
-                    "This field is required.",
-                    "Invalid email."
-                  ]}
+                  errorMessages={["This field is required.", "Invalid email."]}
                   value={formData.email}
                   variant="outlined"
                   fullWidth
@@ -202,17 +205,16 @@ toggleRepeatPasswordMask = () => {
                   variant="outlined"
                   margin="normal"
                   color="primary"
-                  style={{width: "100%"}}
-
+                  style={{ width: "100%" }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <RemoveRedEye 
+                        <RemoveRedEye
                           style={hoveredStyle}
                           onClick={this.togglePasswordMask}
                         />
                       </InputAdornment>
-                    ),
+                    )
                   }}
                 />
 
@@ -221,7 +223,7 @@ toggleRepeatPasswordMask = () => {
                   onChange={this.handleChange}
                   name="repeatPassword"
                   type={repeatPasswordIsMasked ? "password" : "text"}
-                  validators={["required", "isPasswordMatch" ]}
+                  validators={["required", "isPasswordMatch"]}
                   errorMessages={[
                     "This field is required.",
                     "Passwords do not match."
@@ -230,17 +232,16 @@ toggleRepeatPasswordMask = () => {
                   variant="outlined"
                   margin="normal"
                   color="primary"
-                  style={{width: "100%"}}
-
+                  style={{ width: "100%" }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <RemoveRedEye 
+                        <RemoveRedEye
                           style={hoveredStyle}
                           onClick={this.toggleRepeatPasswordMask}
                         />
                       </InputAdornment>
-                    ),
+                    )
                   }}
                 />
 
@@ -288,11 +289,10 @@ toggleRepeatPasswordMask = () => {
   }
 }
 
-Signup.propTypes= {
+Signup.propTypes = {
   classes: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.func.isRequired
-}
-
+};
 
 export default withStyles(styles)(Signup);

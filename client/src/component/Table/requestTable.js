@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles, createMuiTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -37,9 +37,6 @@ function SpanningTable(props) {
           <TableRow>
             <TableCell className={classes.tablecell}>Meal Name</TableCell>
 
-            {/* <TableCell className={classes.tablecell} align="left">
-              Pick-up Address
-            </TableCell> */}
             <TableCell className={classes.tablecell} align="left">
               Pickup Date
             </TableCell>
@@ -47,7 +44,7 @@ function SpanningTable(props) {
               Requested Qty.
             </TableCell>
             <TableCell className={classes.tablecell} align="right">
-              Price
+              Price ($)
             </TableCell>
             <TableCell className={classes.tablecell} align="right">
               Line Total ($)
@@ -61,9 +58,7 @@ function SpanningTable(props) {
               <TableCell className={classes.responsecell}>
                 {row.mealName}
               </TableCell>
-              {/* <TableCell className={classes.responsecell} align="left">
-                {row.pickupAddress}
-              </TableCell> */}
+
               <TableCell className={classes.responsecell} align="left">
                 <Moment format="MM/DD/YYYY">{row.pickupDate}</Moment>
               </TableCell>
@@ -88,13 +83,6 @@ function SpanningTable(props) {
               </TableCell>
             </TableRow>
           ))}
-
-          {/* <TableRow>
-            <TableCell className={classes.responsecell} colSpan={2}>
-              Total
-            </TableCell>
-            <TableCell align="right" />
-          </TableRow> */}
         </TableBody>
       </Table>
     </Paper>
