@@ -18,6 +18,7 @@ class Customer extends Component {
   loadData = () => {
     API.getRequests(localStorage.getItem("userid"))
       .then(res => {
+        debugger;
         this.setState({
           orders: res.data
         });

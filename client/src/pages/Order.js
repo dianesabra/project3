@@ -91,7 +91,7 @@ class Cook extends Component {
         {<h1>Your Meals</h1>}
         <MealsSpanningTable
           meals={this.state.meals}
-          onClickDelete={req => this.deleteOrder(req)}
+          onClickDelete={req => this.deleteMeal(req)}
         />
       </div>
     );

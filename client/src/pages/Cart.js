@@ -34,7 +34,9 @@ class Cart extends Component {
         mealID: item._mealID,
         qtyOutstanding: item.reqQty,
         orderID: item._id
-      }).then(res => {});
+      }).then(res => {
+        console.log("Order Updated");
+      });
     });
   };
 

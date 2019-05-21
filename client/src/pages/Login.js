@@ -96,12 +96,10 @@ class Login extends React.Component {
       let redirect = true;
       if (error === "User does not exist.") {
         this.setState({ open: true });
-        console.log("User does not exist");
         redirect = false;
       }
       if (error === "Incorrect password.") {
         this.setState({ open: true });
-        console.log("Incorrect password");
         redirect = false;
       }
 
@@ -109,9 +107,6 @@ class Login extends React.Component {
         localStorage.setItem("userid", res.data._id);
         document.location.pathname = "/main";
       }
-
-      // need a conditional to check if user is not in error
-      console.log(res.data);
     });
   };
 
@@ -158,7 +153,7 @@ class Login extends React.Component {
                 <br />
                 Fresh Off The Table allows you to purchase and share food with
                 people around you. Login or Signup now to explore how food is
-                supposed to be expereinced!
+                supposed to be experienced!
               </Typography>
             </Paper>
           </Grid>

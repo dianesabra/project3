@@ -28,7 +28,7 @@ class CheckoutForm extends Component {
 
   render() {
     if (this.state.toFoodFeed === true) {
-      return <Redirect to="/main/" />;
+      return <Redirect to="/main" />;
     }
     return (
       <div className="checkout">
@@ -37,7 +37,7 @@ class CheckoutForm extends Component {
           {this.props.totalPrice}?
         </p>
         <CardElement />
-        <button onClick={this.submit}>Send</button>
+        <button onClick={this.submit}>Purchase</button>
       </div>
     );
   }

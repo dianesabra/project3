@@ -7,6 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const styles = theme => ({
   root: {
@@ -36,6 +37,7 @@ function SpanningTable(props) {
             <TableCell className={classes.tablecell} align="left">
               Price ($)
             </TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,6 +48,11 @@ function SpanningTable(props) {
               </TableCell>
               <TableCell className={classes.responsecell} align="left">
                 {row.price}
+              </TableCell>
+              <TableCell className={classes.responsecell} align="left">
+                <DeleteIcon onClick={() => props.onClickDelete(row._id)}>
+                  Delete
+                </DeleteIcon>
               </TableCell>
             </TableRow>
           ))}

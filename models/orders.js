@@ -12,7 +12,6 @@ const OrderSchema = new Schema({
   },
   mealName: { type: String, required: true },
   reqQty: { type: Number, required: true },
-  // pickupAddress: { type: String, required: true },
   pickupDate: { type: Date, required: true },
   specInstructions: { type: String, required: true },
   qtyFulfilled: { type: Boolean, default: false },

@@ -51,7 +51,6 @@ module.exports = {
   },
   // only for the cook
   getOrders(req, res) {
-    console.log(req.params.id);
     db.Orders.find({ _cookuserID: req.params.id }).then(function(dbOrders) {
       res.json(dbOrders);
       // filter by user ID and meal ID
@@ -122,7 +121,7 @@ module.exports = {
           {
             qtyFulfilled: true
           }
-        ).then(console.log("Diane"));
+        ).then(console.log("Order Updated"));
 
         res.json(dbMeals);
       });

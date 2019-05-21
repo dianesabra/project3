@@ -3,7 +3,6 @@ const orderController = require("../../controller/index");
 
 // Matches with "/api/orders"
 router.route("/").post(orderController.postOrders);
-// .get(orderController.getOrdersForRequests);
 
 router.route("/:id/:qtyFulfilled").get(orderController.getOrderForCart);
 
