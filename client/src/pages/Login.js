@@ -19,6 +19,9 @@ import { InputAdornment } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Background from "../images/food.jpg";
 
+
+
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -121,7 +124,9 @@ class Login extends React.Component {
       <div
         style={{
           backgroundImage: `url(${Background})`,
-          height: "100vh",
+          height: "100%",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           backgroundSize: "cover"
         }}
       >
@@ -132,19 +137,30 @@ class Login extends React.Component {
                 width: "75%",
                 marginTop: "5%"
               }}
+      
             >
               <Typography
                 style={{
-                  textAlign: "center"
+                  textAlign: "center",
+                  fontFamily: "'Great Vibes', cursive",
+                  marginTop: "10px"
                 }}
+                variant="h2"
               >
-                Welcome to Fresh Off The Table!
+              Welcome to Fresh Off The Table!
+              </Typography>
+
+              <Typography
+              style={{
+                textAlign: "center",
+                
+              }}>
+              
                 <br />
-                Have leftovers from dinner? Don't have time to cook? Don't feel
-                like going out to eat? Try Fresh Off The Table!
+                Don't have time to cook? Want to try something new? Have leftovers? Want to share your favorite dishes with those around you? Try Fresh Off The Table!
                 <br />
                 Fresh Off The Table allows you to purchase and share food with
-                people around you.
+                people around you. Login or Signup now to explore how food is supposed to be expereinced!
               </Typography>
             </Paper>
           </Grid>
