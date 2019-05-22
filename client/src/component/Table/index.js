@@ -37,9 +37,6 @@ function SpanningTable(props) {
           <TableRow>
             <TableCell className={classes.tablecell}>Meal Name</TableCell>
             <TableCell className={classes.tablecell} align="left">
-              Pick-up Address
-            </TableCell>
-            <TableCell className={classes.tablecell} align="left">
               Pickup Date
             </TableCell>
             <TableCell className={classes.tablecell} align="right">
@@ -59,9 +56,6 @@ function SpanningTable(props) {
             <TableRow key={row.id}>
               <TableCell className={classes.responsecell}>
                 {row.mealName}
-              </TableCell>
-              <TableCell className={classes.responsecell} align="left">
-                {row.pickupAddress}
               </TableCell>
               <TableCell className={classes.responsecell} align="left">
                 <Moment format="MM/DD/YYYY">{row.pickupDate}</Moment>
