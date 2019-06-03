@@ -1,10 +1,6 @@
 # PROJECT 3: Fresh Off The Table
 
-By: Diane Sabra, Emmanuel Wada, Shank Ranganathan and Dara Anya
-
 Fresh Off The Table is a web application that allows people to share and purchase food they and others have made.
-
-This application is powered by React.js, Node.js, MongoDB, Mongoose and Material UI.
 
 How it Works:
 
@@ -22,4 +18,17 @@ How it Works:
           2) From POST FORM, input Food Title, Food Description and Uploaded Food Image
           3) Post and Update Database
           
-          
+## Built With
+
+* [React.js](https://reactjs.org/) - UI library
+* [express.js](https://expressjs.com) - server
+* [MongoDB](https://docs.mongodb.com/) - database
+* [Mongoose](https://mongoosejs.com/) - object modeling for node.js
+* [Material UI](https://material-ui.com) - UI compnents
+
+## Authors
+
+* **Diane Sabra - backend** 
+* **Emmanuel Wada - backend** 
+* **Dara Anya - frontend** 
+* **Shank Ranganathan - frontend** 
